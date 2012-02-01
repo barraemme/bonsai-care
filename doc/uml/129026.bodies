@@ -1,0 +1,5 @@
+class BonsaiWorker
+!!!144770.cpp!!!	fetched(inout _t1 : Bonsai) : void
+
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);

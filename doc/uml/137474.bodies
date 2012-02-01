@@ -1,0 +1,27 @@
+class Operation
+!!!151938.cpp!!!	Operation(inout parent : QObject = 0)
+    //m_model = new BonsaiModel(m_date, m_name, m_itemId, this);
+!!!152066.cpp!!!	Operation(in operation : Operation)
+    m_id = operation.index();
+    m_last_date = operation.lastDate();
+    m_name = operation.name();
+    m_bonsaiId = operation.bonsaiId();
+    //m_model = new BonsaiModel(m_date, m_name, m_itemId, this);
+!!!152194.cpp!!!	~Operation()
+    //delete m_model;
+!!!152322.cpp!!!	index() : int
+    return m_id;
+!!!152450.cpp!!!	setIndex(in index : int) : void
+    m_id = index;
+!!!152578.cpp!!!	bonsaiId() : int
+    return m_bonsaiId;
+!!!152706.cpp!!!	setBonsaiId(in bonsaiId : int) : void
+    m_bonsaiId = bonsaiId;
+!!!152834.cpp!!!	lastDate() : QDate
+    return m_last_date;
+!!!152962.cpp!!!	setLastDate(in date : QDate) : void
+    m_last_date = date;
+!!!153090.cpp!!!	name() : QString
+    return m_name;
+!!!153218.cpp!!!	setName(in name : QString) : void
+    m_name = name;
