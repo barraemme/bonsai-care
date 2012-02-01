@@ -1,0 +1,93 @@
+class Timeslot
+!!!139522.cpp!!!	Timeslot(in hourId : int, in start : QTime, inout parent : QObject = 0)
+
+!!!139650.cpp!!!	~Timeslot()
+
+!!!139778.cpp!!!	setStartTime(in time : QTime) : bool
+
+    if (time != m_start) {
+        m_start = time;
+        emit dataChanged();
+        return true;
+    }
+
+    return false;
+!!!139906.cpp!!!	setItemData(in data : QString) : bool
+
+    if (data != m_data) {
+        m_data = data;
+        // Uncomment, if you want debug output of the event's description changes.
+//        qDebug() << "Item data changed to: " << data;
+        emit dataChanged();
+        return true;
+    }
+
+    return false;
+!!!140034.cpp!!!	setHourSpan(in hours : int) : bool
+
+    if (hours != m_hours) {
+        qDebug() << "Timeslot::setHourSpan():" << hours << "(on item" << m_hourId << ")";
+        m_hours = hours;
+        emit dataChanged();
+        return true;
+    }
+
+    return false;
+!!!140162.cpp!!!	setSpanStatus(in spanned : bool, in parentIndex : int) : bool
+
+    qDebug() << "setSpanStatus:" << spanned << "on Item:" << m_hourId
+             << "with parentIndex:" << parentIndex;
+    m_spanned = spanned;
+    if (m_spanned) {
+        m_parentIndex = parentIndex;
+    } else {
+        m_parentIndex = -1;
+    }
+
+    emit dataChanged();
+
+    return true;
+!!!140290.cpp!!!	startTime() : QString
+
+    return m_start.toString("HH:mm");
+!!!140418.cpp!!!	endTime() : QString
+
+    // Add the hourSpan to the start time in seconds, and return the end time!
+    QTime endTime = m_start.addSecs(60*60*hourSpan());
+    return endTime.toString("HH:mm");
+!!!140546.cpp!!!	itemData() : QString
+
+    return m_data;
+!!!140674.cpp!!!	hourSpan() : int
+
+    return m_hours;
+!!!140802.cpp!!!	toString() : QString
+
+    return startTime() + ": " + itemData();
+!!!140930.cpp!!!	spanned() : bool
+
+    return m_spanned;
+!!!141058.cpp!!!	parentIndex() : int
+
+    return m_parentIndex;
+!!!141186.cpp!!!	hourId() : int
+
+    return m_hourId;
+!!!141442.cpp!!!	operator <<(inout stream : QDataStream, in timeSlot : Timeslot) : QDataStream
+
+    stream << timeSlot.m_hourId;
+    stream << timeSlot.m_start;
+    stream << timeSlot.m_data;
+    stream << timeSlot.m_hours;
+    stream << timeSlot.m_spanned;
+    stream << timeSlot.m_parentIndex;
+    return stream;
+!!!141570.cpp!!!	operator >>(inout stream : QDataStream, inout timeSlot : Timeslot) : QDataStream
+
+    stream >> timeSlot.m_hourId;
+    stream >> timeSlot.m_start;
+    stream >> timeSlot.m_data;
+    stream >> timeSlot.m_hours;
+    stream >> timeSlot.m_spanned;
+    stream >> timeSlot.m_parentIndex;
+    return stream;

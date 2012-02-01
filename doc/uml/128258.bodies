@@ -1,0 +1,134 @@
+class BonsaiModel
+!!!131842.cpp!!!	roleNames() : QHash<int, QByteArray>
+    QHash<int, QByteArray> roles;
+    roles[IndexRole] = "b_index";
+    roles[NameRole] = "b_name";
+    roles[DateRole] = "b_date";
+    roles[ItemIdRole] = "b_itemId";
+
+    roles[SetIndexRole] = "b_setIndex";
+    roles[SetNameRole] = "b_setName";
+    roles[SetDateRole] = "b_setDate";
+    roles[SetItemIdRole] = "b_setItemId";
+
+    return roles;
+!!!131970.cpp!!!	BonsaiModel(in db : QSqlDatabase, inout itemModel : BonsaiItemModel, inout parent : QObject = 0)
+    qRegisterMetaType<Bonsai>("Bonsai");
+    qRegisterMetaType<QSqlDatabase>("QSqlDatabase");
+
+    // create a Worker Thread
+    thread = new QThread;
+    workerThread = new BonsaiWorker(m_itemmodel);
+    workerThread->moveToThread(thread);
+    setRoleNames(BonsaiModel::roleNames());
+!!!132098.cpp!!!	~BonsaiModel()
+    qDeleteAll(m_items);
+    m_items.clear();
+!!!132226.cpp!!!	data(in index : QModelIndex, in role : int = Qt::DisplayRole) : QVariant
+    if (index.isValid()) {
+        int row = index.row();
+        if (row >= 0 && row < m_items.count()) {
+            Bonsai *item = m_items[row];
+            if (role == IndexRole){
+                return QVariant(item->index());
+            } else if (role == NameRole) {
+                return QVariant(item->name());
+            } else if (role == DateRole) {
+                return item->date();
+            } else if (role == ItemIdRole) {
+                return QVariant(item->itemId());
+            } else {
+                return QVariant("ERR: Unknown role for daymodel: " + role);
+            }
+        } else {
+            return QVariant("ERR: Invalid index");
+        }
+    } else {
+        return QVariant("ERR: Invalid index");
+    }
+
+    return QVariant("ERR: other");
+!!!132354.cpp!!!	flags(in index : QModelIndex) : Qt::ItemFlags
+    if (!index.isValid()) {
+        return 0;
+    }
+
+    return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
+!!!132482.cpp!!!	headerData(in section : int, in orientation : Qt::Orientation, in role : int = Qt::DisplayRole) : QVariant
+    return QVariant("HEADER");
+!!!132610.cpp!!!	rowCount(in parent : QModelIndex = QModelIndex()) : int
+    return m_items.count();
+!!!132738.cpp!!!	setData(in index : QModelIndex, in value : QVariant, in role : int = Qt::EditRole) : bool
+    qDebug() << "setData(), index" << index << "role" << role;
+
+    if (index.isValid()) {
+        int row = index.row();
+        if (row >= 0 && row < m_items.count()) {
+            Bonsai* item = m_items[row];
+            if (role == SetIndexRole){
+                 item->setIndex(value.toInt());
+                 return true;
+            } else if (role == SetNameRole) {
+                item->setName(value.toString());
+                return true;
+            } else if (role == SetDateRole) {
+                item->setDate(value.toDate());
+                return true;
+            } else if (role == SetNameRole) {
+                item->setItemId(value.toInt());
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+
+    return false;
+!!!132866.cpp!!!	init() : void
+    thread->start();
+    connect(this, SIGNAL(fetch(QSqlDatabase &db)), workerThread, SLOT(readAll(QSqlDatabase &db)));
+    connect(workerThread, SIGNAL(fetched(Bonsai* bonsai)),this, SLOT(addRow(Bonsai* bonsai)));
+
+    emit fetch(db);
+!!!132994.cpp!!!	createBonsaiTable(inout db : QSqlDatabase) : bool
+    // Create table
+    bool ret = false;
+    if (db.isOpen()) {
+        QSqlQuery query(db);
+        ret = query.exec("create table Bonsai "
+                         "(id integer primary key, "
+                         "itemid integer, "
+                         "date integer)");
+
+    }
+    return ret;
+!!!133122.cpp!!!	nextId() : Q_INVOKABLE int
+    int ret = 0;
+    if (db.isOpen()) {
+        QSqlQuery query("select id from id", db);
+        if (query.next()) {
+            // Get last used id
+            ret = query.value(0).toInt();
+            // Increase that
+            ret++;
+            // Store new value
+            query.exec(QString("update id set id=%1 where id=%2").arg(ret).arg(ret - 1));
+        }
+        else {
+            // Set first id to zero
+            query.exec("insert into id values(1)");
+            ret = 1;
+        }
+    }
+
+    return ret;
+!!!133250.cpp!!!	addRow(inout item : Bonsai) : void
+    //TODO bloccare m_items
+     beginInsertRows(QModelIndex(), m_items.count(), m_items.count()+1);
+     m_items.append(item);
+     endInsertRows();    
+ 

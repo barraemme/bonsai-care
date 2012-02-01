@@ -1,0 +1,249 @@
+class DayModel
+!!!135554.cpp!!!	roleNames() : QHash<int, QByteArray>
+
+    QHash<int, QByteArray> roles;
+    roles[StartTimeRole] = "startTime";
+    roles[EndTimeRole] = "endTime";
+    roles[DayNameRole] = "dayName";
+    roles[WeekDayIndexRole] = "weekDayIndex";
+    roles[ItemDataRole] = "itemData";
+    roles[HourSpanRole] = "hourSpan";
+    roles[SpannedRole] = "spanned";
+    roles[HourIdRole] = "hourId";
+
+    roles[SetStartTimeRole] = "setStartTime";
+    roles[SetItemDataRole] = "setItemData";
+    roles[SetHourSpanRole] = "setHourSpan";
+
+    return roles;
+!!!135682.cpp!!!	DayModel(in weekDayIndex : int, in name : QString, inout parent : QObject = 0)
+
+//    // Enable following comments, if you would like to generate the day
+//    // full of example events.
+//    QString templateItem("Day %1 Item %2");
+    for (int i = DAYS_FIRST_SLOT; i < SLOTS_IN_A_DAY; i++) {
+        Timeslot *slot = new Timeslot(i-DAYS_FIRST_SLOT, QTime(i,0,0,0));
+        connect(slot, SIGNAL(dataChanged()), this, SLOT(handleItemChange()));
+//        slot->setItemData(templateItem.arg(m_dayName).arg(i));
+        m_items.append(slot);
+    }
+
+    setRoleNames(DayModel::roleNames());
+
+//    // Code for generating randomly hour spans to events.
+//    // Sets the seed within the range 0-999
+//    qsrand(QTime::currentTime().msec());
+//    // Set 0 to 3 spans / day
+//    for (int i = qrand() % 4; i > 0; i--) {
+//        setHourSpan(qrand() % 24, (qrand() % 3) + 2);
+//    }
+!!!135810.cpp!!!	~DayModel()
+
+    qDeleteAll(m_items);
+    m_items.clear();
+!!!135938.cpp!!!	data(in index : QModelIndex, in role : int = Qt::DisplayRole) : QVariant
+
+    if (index.isValid()) {
+        int row = index.row();
+        if (row >= 0 && row < m_items.count()) {
+            Timeslot *slot = m_items[row];
+            if (role == StartTimeRole){
+                return QVariant(slot->startTime());
+            } else if (role == EndTimeRole) {
+                return QVariant(slot->endTime());
+            } else if (role == DayNameRole) {
+                return QVariant(dayName());
+            } else if (role == WeekDayIndexRole) {
+                return QVariant(weekDayIndex());
+            } else if (role == ItemDataRole) {
+                return QVariant(slot->itemData());
+            } else if (role == HourSpanRole) {
+                return QVariant(slot->hourSpan());
+            } else if (role == SpannedRole) {
+                return QVariant(slot->spanned());
+            } else if (role == HourIdRole) {
+                return QVariant(slot->hourId());
+            } else {
+                return QVariant("ERR: Unknown role for daymodel: " + role);
+            }
+        } else {
+            return QVariant("ERR: Invalid index");
+        }
+    } else {
+        return QVariant("ERR: Invalid index");
+    }
+
+    return QVariant("ERR: other");
+!!!136066.cpp!!!	flags(in index : QModelIndex) : Qt::ItemFlags
+
+    if (!index.isValid()) {
+        return 0;
+    }
+
+    return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
+!!!136194.cpp!!!	headerData(in section : int, in orientation : Qt::Orientation, in role : int = Qt::DisplayRole) : QVariant
+
+    return QVariant("HEADER");
+!!!136322.cpp!!!	rowCount(in parent : QModelIndex = QModelIndex()) : int
+
+    return m_items.count();
+!!!136450.cpp!!!	setData(in index : QModelIndex, in value : QVariant, in role : int = Qt::EditRole) : bool
+
+    qDebug() << "setData(), index" << index << "role" << role;
+
+    if (index.isValid()) {
+        int row = index.row();
+        if (row >= 0 && row < m_items.count()) {
+            Timeslot* slot = m_items[row];
+            if (role == SetStartTimeRole){
+                return slot->setStartTime(value.toTime());
+            } else if (role == SetItemDataRole) {
+                return slot->setItemData(value.toString());
+            } else if (role == SetHourSpanRole) {
+                return setHourSpan(row, value.toInt());
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+
+    return false;
+!!!136578.cpp!!!	handleItemChange() : void
+
+    Timeslot *item = static_cast<Timeslot*>(sender());
+    QModelIndex modelIndex = indexFromItem(item);
+    if(modelIndex.isValid()) {
+        emit dataChanged(modelIndex, modelIndex);
+    }
+!!!136706.cpp!!!	mergeDown(in index : int) : void
+
+    if (index == m_items.count()-1) {
+        qDebug() << "Cannot span downwards!";
+    }
+    else if (index >= 0 && index < m_items.count()-1) {
+        // Check that we're not spanning on already spanned hours!
+        int oldHourSpan = m_items[index]->hourSpan();
+        if (m_items[index+oldHourSpan]->hourSpan() > 1) {
+            qDebug() << "Cannot span on already spanned hours! Please split first!";
+        } else {
+            m_items[index]->setHourSpan(oldHourSpan+1);
+            // Set the next item beneath the spanned item as newly spanned!
+            m_items[index+oldHourSpan]->setSpanStatus(true, index);
+        }
+    } else {
+        qDebug() << "Something went severely wrong!";
+    }
+!!!136834.cpp!!!	mergeUp(in index : int) : void
+
+    qDebug() << "DayModel::mergeUp! Index:" << index;
+
+    if (index == 0) {
+        qDebug() << "Cannot span upwards!";
+    } else if (index > 0 && index < m_items.count()) {
+        // Get the previous item, as the hourSpan must be set to it.
+        int parentIndex = m_items[index-1]->parentIndex();
+        qDebug() << "parentIndex:" << parentIndex;
+        if (parentIndex != -1) {
+            qDebug() << "Cannot span on already spanned hours! Please split first!";
+        } else {
+            // The item hasn't been spanned before, the given index is valid.
+            int oldHourSpan = m_items[index]->hourSpan();
+            m_items[index-1]->setHourSpan(oldHourSpan+1);
+            // Reset the span hour count for the current item and set it to
+            // be spanned.
+            m_items[index]->setHourSpan(1);
+            m_items[index]->setSpanStatus(true, index);
+        }
+    } else {
+        qDebug() << "Something went severely wrong!";
+    }
+!!!136962.cpp!!!	hourSpan(in index : int) : int
+
+    if (index >= 0 && index < m_items.count()) {
+        return m_items[index]->hourSpan();
+    }
+!!!137090.cpp!!!	setHourSpan(in index : int, in hourSpan : int) : bool
+
+    bool retVal = false;
+    if (index >= 0 && index < m_items.count()) {
+        retVal = m_items[index]->setHourSpan(hourSpan);
+    }
+
+    for (int i = hourSpan-1; i > 0; i-- ) {
+        m_items[index+i]->setSpanStatus(true, index);
+    }
+
+    return retVal;
+!!!137218.cpp!!!	setItemData(in index : int, in itemData : QString) : void
+
+    if (index >= 0 && index < m_items.count()) {
+        m_items[index]->setItemData(itemData);
+    }
+!!!137346.cpp!!!	split(in index : int) : void
+
+    if (index >= 0 && index < m_items.count()) {
+        int hourSpan = m_items[index]->hourSpan();
+        m_items[index]->setHourSpan(1);
+        for (int i = index; i < index+hourSpan; i++ ) {
+            m_items[i]->setSpanStatus(false, -1);
+        }
+    }
+!!!137474.cpp!!!	isItemSpanned(in index : int) : bool
+
+    if (index >= 0 && index < m_items.count()) {
+        return m_items[index]->spanned();
+    }
+!!!137602.cpp!!!	itemsParent(in index : int) : int
+
+    if (index >= 0 && index < m_items.count()) {
+        return m_items[index]->parentIndex();
+    } else {
+        return -1;
+    }
+!!!137730.cpp!!!	dayName() : QString
+
+    return m_dayName;
+!!!137858.cpp!!!	indexFromItem(in item : Timeslot) : QModelIndex
+
+  Q_ASSERT(item);
+
+  for(int row=0; row<m_items.size(); ++row) {
+    if(m_items.at(row) == item) return index(row);
+  }
+
+  return QModelIndex();
+!!!138114.cpp!!!	weekDayIndex() : int
+
+    return m_weekDayIndex;
+!!!138242.cpp!!!	operator <<(inout stream : QDataStream, in dayModel : DayModel) : QDataStream
+
+    stream << dayModel.m_weekDayIndex;
+    stream << dayModel.m_dayName;
+    stream << dayModel.m_items.size();
+    foreach (Timeslot *slot, dayModel.m_items) {
+        stream << *slot;
+    }
+
+    return stream;
+!!!138370.cpp!!!	operator >>(inout stream : QDataStream, inout dayModel : DayModel) : QDataStream
+
+    stream >> dayModel.m_weekDayIndex;
+    stream >> dayModel.m_dayName;
+    int size = 0;
+    stream >> size;
+    for (int i = 0; i < size; i++) {
+        if ( i < dayModel.m_items.count() ) {
+            Q_ASSERT(dayModel.m_items[i]);
+            stream >> *dayModel.m_items[i];
+        } else {
+            qDebug() << "Incorrect index: ignoring data";
+            QScopedPointer<Timeslot> serializationSlot(new Timeslot(0, QTime(0, 0, 0, 0)));
+            stream >> *serializationSlot;
+        }
+    }
+
+    return stream;

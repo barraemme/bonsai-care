@@ -1,0 +1,15 @@
+window_sizes 1200 896 353 841 702 120
+diagrams
+  active  sequencediagram_ref 128002 // bonsai
+    841 702 100 4 0 0
+end
+show_stereotypes
+selected class_ref 130946 // Main
+open
+  class_ref 129026 // BonsaiWorker
+  deploymentview_ref 128002 // Bonsaicare
+  classview_ref 128130 // qmlapplicationviewer
+  deploymentview_ref 128130 // qmlapplicationviewer
+  usecaseview_ref 128002 // Sequence
+end
+end

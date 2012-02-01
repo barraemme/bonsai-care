@@ -1,0 +1,61 @@
+class MonthModel
+!!!138498.cpp!!!	roleNames() : QHash<int, QByteArray>
+    QHash<int, QByteArray> roles;
+    roles[MonthIndexRole] = "monthIndex";
+    roles[MonthNameRole] = "monthName";
+
+    return roles;
+!!!138626.cpp!!!	MonthModel(inout months : QList<QDate*>, inout parent : QObject = 0)
+//    // Enable following comments, if you would like to generate the day
+//    // full of example events.
+//    QString templateItem("Day %1 Item %2");
+    /*for (int i = DAYS_FIRST_SLOT; i < SLOTS_IN_A_DAY; i++) {
+        Timeslot *slot = new Timeslot(i-DAYS_FIRST_SLOT, QTime(i,0,0,0));
+        connect(slot, SIGNAL(dataChanged()), this, SLOT(handleItemChange()));
+//        slot->setItemData(templateItem.arg(m_dayName).arg(i));
+        m_items.append(slot);
+    }*/
+
+    setRoleNames(MonthModel::roleNames());
+
+//    // Code for generating randomly hour spans to events.
+//    // Sets the seed within the range 0-999
+//    qsrand(QTime::currentTime().msec());
+//    // Set 0 to 3 spans / day
+//    for (int i = qrand() % 4; i > 0; i--) {
+//        setHourSpan(qrand() % 24, (qrand() % 3) + 2);
+//    }
+!!!138754.cpp!!!	~MonthModel()
+    qDeleteAll(m_months);
+    m_months.clear();
+!!!138882.cpp!!!	data(in index : QModelIndex, in role : int = Qt::DisplayRole) : QVariant
+    if (index.isValid()) {
+        int row = index.row();
+        if (row >= 0 && row < m_months.count()) {
+
+            QDate* day = m_months[row];
+            if (role == MonthIndexRole){
+                if(day->isNull()) return QVariant("");
+                return QVariant(day->month());
+            } if (role == MonthNameRole){
+                if(day->isNull()) return QVariant("");
+                return QVariant(QDate::longMonthName(day->month(), QDate::StandaloneFormat));
+            } else {
+                return QVariant("ERR: UnkstartDayn role for MonthModel");
+            }
+        } else {
+            return QVariant("ERR: Invalid index");
+        }
+    } else {
+        return QVariant("ERR: Invalid index");
+    }
+
+    return QVariant("ERR: other");
+!!!139010.cpp!!!	flags(in index : QModelIndex) : Qt::ItemFlags
+    return Qt::ItemIsEnabled;
+!!!139138.cpp!!!	headerData(in section : int, in orientation : Qt::Orientation, in role : int = Qt::DisplayRole) : QVariant
+    return QVariant("HEADER");
+!!!139266.cpp!!!	rowCount(in parent : QModelIndex = QModelIndex()) : int
+    return m_months.count();
+!!!139394.cpp!!!	setData(in index : QModelIndex, in value : QVariant, in role : int = Qt::EditRole) : bool
+    return true;

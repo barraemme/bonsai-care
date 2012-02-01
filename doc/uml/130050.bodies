@@ -1,0 +1,180 @@
+class WeekModel
+!!!141698.cpp!!!	roleNames() : QHash<int, QByteArray>
+
+    QHash<int, QByteArray> roles;
+    roles[DayIndexRole] = "dayIndex";
+    roles[DayNameRole] = "dayName";
+    roles[MonthIndexRole] = "monthIndex";
+    return roles;
+!!!141826.cpp!!!	WeekModel(inout parent : QObject = 0)
+
+    if ( !restore() ) {
+        QDate startDay;
+        int wDay = startDay.dayOfWeek();
+        if(wDay > 1)
+            startDay.setDate(startDay.year(), startDay.month(), startDay.day()-(wDay-1));
+
+        int startMonth = 0;
+        int lastMonth = 0;
+        for (int i = 0; i < DAYS_IN_WEEK; i++) {
+            QDate* day = new QDate(startDay.addDays(i));
+            m_days.append(day);
+
+            //Add the month to model
+            //m_months.append(new QDate());
+            m_months.append(day);
+            //if is last day of the month OR is last index of different month
+            if(day->day() == day->daysInMonth() || (i == (DAYS_IN_WEEK-1) && lastMonth != day->month())){
+                m_months.replace(qFloor((i-startMonth)/2), day);
+                startMonth = i+1;
+                lastMonth = day->month();
+                m_monthsCount++;
+            }
+
+            qDebug() << day->dayOfWeek() << "created";
+        }
+
+    }
+
+    m_model = new MonthModel(m_months);
+
+    setRoleNames(WeekModel::roleNames());
+!!!141954.cpp!!!	~WeekModel()
+
+    save();
+    qDeleteAll(m_days);
+    m_days.clear();
+    qDeleteAll(m_months);
+    m_months.clear();
+!!!142082.cpp!!!	rowCount(in parent : QModelIndex = QModelIndex()) : int
+
+    return m_days.count();
+!!!142210.cpp!!!	data(in index : QModelIndex, in role : int = Qt::DisplayRole) : QVariant
+
+    if (index.isValid()) {
+        int row = index.row();
+        if (row >= 0 && row < m_days.count()) {
+            QDate* day = m_days[row];
+            if (role == DayNameRole){
+                return QVariant(QDate::longDayName(day->dayOfWeek()));
+            } if (role == MonthIndexRole){
+                return QVariant(day->month());
+            }  if (role == DayIndexRole){
+                return QVariant(day->dayOfWeek());
+            }  else {
+                return QVariant("ERR: UnkstartDayn role for weekmodel");
+            }
+        } else {
+            return QVariant("ERR: Invalid index");
+        }
+    } else {
+        return QVariant("ERR: Invalid index");
+    }
+
+    return QVariant("ERR: other");
+!!!142338.cpp!!!	headerData(in section : int, in orientation : Qt::Orientation, in role : int = Qt::DisplayRole) : QVariant
+
+    return QVariant("HEADER");
+!!!142466.cpp!!!	flags(in index : QModelIndex) : Qt::ItemFlags
+
+    return Qt::ItemIsEnabled;
+!!!142594.cpp!!!	setData(in index : QModelIndex, in value : QVariant, in role : int = Qt::EditRole) : bool
+
+    return true;
+!!!142722.cpp!!!	save() : bool
+
+    bool ret = true;
+    QFile file( getSaveFileName() );
+    ret = file.open(QIODevice::WriteOnly);
+    if (ret) {
+        QDataStream out(&file);
+        out << SAVE_FORMAT_VERSION;
+        out << m_days.size();
+        /*foreach(Day *day, m_days) {
+            out << *day;
+        }*/
+    }
+
+    return ret;
+!!!142850.cpp!!!	restore() : bool
+
+    qDebug() << "WeekModel::restore";
+    bool ret = false;
+    QFile file( getSaveFileName() );
+    //ret = file.open(QIODevice::ReadOnly);
+    if (ret) {
+        QDataStream in(&file);
+
+        int version = 0;
+        in >> version;
+        if (version != SAVE_FORMAT_VERSION) {
+            qDebug() << "Incompatible versions";
+            qDebug() << "Read version from QSettings: " << version;
+            qDebug() << "Current version: " << SAVE_FORMAT_VERSION;
+            ret = false;
+        } else {
+            int size = 0;
+            in >> size;
+            for (int i=0; i < size; i++) {
+                /*Day *day = new Day(0, QString(""), this);
+                in >> *day;
+                m_days.append(day);*/
+            }
+        }
+
+        if (in.status() != QDataStream::Ok) {
+            qDebug() << "Error restoring data: " << in.status();
+            qDeleteAll(m_days);
+            m_days.clear();
+            ret = false;
+        }
+    }
+
+    qDebug() << "Restore returning: " << ret;
+    return ret;
+!!!142978.cpp!!!	indexOfFirstDay(in month : int) : Q_INVOKABLE int
+
+    int index = 0;
+    foreach(QDate *day, m_days) {
+        if(day->month() == month)
+            return index;
+        index++;
+    }
+    return 0;
+!!!143106.cpp!!!	indexOfMonth(in dayIndex : int) : Q_INVOKABLE int
+
+    int index = 0;
+    if (dayIndex >= 0 && dayIndex < m_days.count()) {
+        int monthNum = m_days.at(dayIndex)->month();
+        foreach(QDate *month, m_months) {
+            if(month->month() == monthNum)
+                return index;
+            index++;
+        }
+    }
+    return 0;
+!!!143234.cpp!!!	monthsCount() : Q_INVOKABLE int
+
+    return m_monthsCount;
+!!!143362.cpp!!!	getSaveFileName() : QString
+
+    QString location = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+    QString subDir = "weeklyplanner";
+
+    qDebug() << "Save file location: " << location;
+
+    QDir locationDir(location);
+    if (!locationDir.exists()) {
+        qDebug() << "No data directory, creating";
+        locationDir.mkdir(".");
+    }
+
+    if (!locationDir.exists(subDir)) {
+        locationDir.mkdir(subDir);
+    }
+
+    locationDir.cd(subDir);
+    QString path = locationDir.absoluteFilePath("weeklyplanner.txt");
+    qDebug() << "Returning path: " << path;
+
+    return path;

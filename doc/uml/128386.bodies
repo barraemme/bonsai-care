@@ -1,0 +1,16 @@
+class BonsaiItem
+!!!129666.cpp!!!	BonsaiItem(in id : int, in name : QString, inout parent : QObject = 0)
+    //m_model = new BonsaiItemModel(m_id, m_name, this);
+!!!129794.cpp!!!	~BonsaiItem()
+    delete m_model;
+!!!129922.cpp!!!	items() : QObject
+    qDebug() << "Requested BonsaiItem items. We have" << m_model->rowCount();
+    return m_model;
+!!!130050.cpp!!!	index() : int
+    return m_id;
+!!!130178.cpp!!!	setIndex(in id : int) : void
+    m_id = id;
+!!!130306.cpp!!!	name() : QString
+    return m_name;
+!!!130434.cpp!!!	setName(in name : QString) : void
+    m_name = name;

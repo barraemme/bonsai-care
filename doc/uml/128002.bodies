@@ -1,0 +1,32 @@
+class Bonsai
+!!!128002.cpp!!!	Bonsai(in id : int, in date : QDate, in name : QString, in itemId : int, inout parent : QObject = 0)
+    //m_model = new BonsaiModel(m_date, m_name, m_itemId, this);
+!!!128130.cpp!!!	Bonsai(inout parent : QObject = 0)
+    //m_model = new BonsaiModel(m_date, m_name, m_itemId, this);
+!!!128258.cpp!!!	Bonsai(in bonsai : Bonsai)
+    m_id = bonsai.index();
+    m_date = bonsai.date();
+    m_name = bonsai.name();
+    m_itemId = bonsai.itemId();
+    //m_model = new BonsaiModel(m_date, m_name, m_itemId, this);
+!!!128386.cpp!!!	~Bonsai()
+    delete m_model;
+!!!128514.cpp!!!	items() : QObject
+    qDebug() << "Requested Bonsai items. We have" << m_model->rowCount();
+    return m_model;
+!!!128642.cpp!!!	index() : int
+    return m_id;
+!!!128770.cpp!!!	setIndex(in index : int) : void
+    m_id = index;
+!!!128898.cpp!!!	itemId() : int
+    return m_itemId;
+!!!129026.cpp!!!	setItemId(in itemId : int) : void
+    m_itemId = itemId;
+!!!129154.cpp!!!	date() : QDate
+    return m_date;
+!!!129282.cpp!!!	setDate(in date : QDate) : void
+    m_date = date;
+!!!129410.cpp!!!	name() : QString
+    return m_name;
+!!!129538.cpp!!!	setName(in name : QString) : void
+    m_name = name;

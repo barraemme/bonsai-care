@@ -1,0 +1,80 @@
+class DatabaseManager
+!!!133634.cpp!!!	~DatabaseManager()
+    close();
+!!!133762.cpp!!!	open() : void
+    openDB();
+    initDB();
+!!!133890.cpp!!!	close() : void
+    if (db.isOpen()){
+        qDebug() << "DB closed";
+        db.close();
+    }
+!!!134018.cpp!!!	deleteDB() : void
+    db.close();
+
+    QString path(QDir::home().path());
+    path.append(QDir::separator()).append("Bonsai.db.sqlite");
+    path = QDir::toNativeSeparators(path);
+
+    QFile::remove(path);
+!!!134146.cpp!!!	nextId() : Q_INVOKABLE int
+    int ret = 0;
+    if (db.isOpen()) {
+        QSqlQuery query("select id from id");
+        if (query.next()) {
+            // Get last used id
+            ret = query.value(0).toInt();
+            // Increase that
+            ret++;
+            // Store new value
+            query.exec(QString("update id set id=%1 where id=%2").arg(ret).arg(ret - 1));
+        }
+        else {
+            // Set first id to zero
+            query.exec("insert into id values(1)");
+            ret = 1;
+        }
+    }
+
+    return ret;
+!!!134274.cpp!!!	lastError() : QSqlError
+    return db.lastError();
+!!!134402.cpp!!!	getDB() : QSqlDatabase
+    return db;
+!!!134530.cpp!!!	openDB() : bool
+    // Find QSLite driver
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    // http://doc.trolltech.com/sql-driver.html#qsqlite
+
+    QString path(QDir::home().path());
+    path.append(QDir::separator()).append("Bonsai.db.sqlite");
+    path = QDir::toNativeSeparators(path);
+    db.setDatabaseName(path);
+    qDebug() << "DB opened";
+
+    // Open databasee
+    return db.open();
+!!!134658.cpp!!!	initDB() : bool
+    bool ret = true;
+
+    // Create 4 tables
+    if (createIdTable()) {
+        //createBonsaiItemTable();
+        BonsaiModel::createBonsaiTable(this->db);
+        //createBonsaierTable();
+    }
+
+    // Check that tables exists
+    if (db.tables().count() != 4)
+        ret = false;
+
+    return ret;
+!!!134786.cpp!!!	createIdTable() : bool
+    // Create table
+    bool ret = false;
+    if (db.isOpen()) {
+        QSqlQuery query;
+        ret = query.exec("create table id "
+                         "(id integer primary key)");
+    }
+    return ret;

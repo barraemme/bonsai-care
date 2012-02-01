@@ -1,0 +1,16 @@
+class Day
+!!!134914.cpp!!!	Day(in date : QDate, inout parent : QObject = 0)
+
+
+!!!135042.cpp!!!	dayName() : QString
+
+    return QDate::longDayName(m_day.dayOfWeek());
+!!!135170.cpp!!!	monthName() : QString
+
+    return QDate::longMonthName(m_day.month());
+!!!135298.cpp!!!	dayIndex() : int
+
+    return m_day.dayOfWeek();
+!!!135426.cpp!!!	monthIndex() : int
+
+    return m_day.month();
