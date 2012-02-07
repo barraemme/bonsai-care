@@ -8,8 +8,10 @@
 #include <QtCore/QAbstractListModel>
 #include <QtCore/QVariant>
 #include <QtCore/QList>
+#include <QSqlDatabase>
 
 #include "slot.h"
+#include "day.h"
 
 class DayModel : public QAbstractListModel
 {
@@ -23,7 +25,7 @@ public:
     static QHash<int, QByteArray> roleNames();
 
 public:
-    explicit DayModel(const int weekDayIndex, const QString &name, QObject *parent = 0);
+    explicit DayModel(const QDate &day, QObject *parent = 0);
     virtual ~DayModel();
 
 public: // From QAbstractListModel
@@ -33,7 +35,10 @@ public: // From QAbstractListModel
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     bool setData( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
 
-public slots:
+public:
+    Q_INVOKABLE QString dayName() const;
+    Q_INVOKABLE int weekDayIndex() const;
+    Q_INVOKABLE int monthDayIndex() const;
     // Exposed to QML for managing the Cell.
     /*void handleItemChange();
     void mergeDown(int index);
@@ -51,10 +56,9 @@ private: // Methods
     void setSpanStatus(bool spanned, int index, int parentIndex);
     int weekDayIndex() const;*/
 
-private: // Data
-    QString m_dayName;
-    QList<Slot*> m_items;
-    int m_weekDayIndex;
+private: // Data    
+    Day m_day;
+    QList<Slot*> m_items;   
     QSqlDatabase db;
 
     /*friend QDataStream &operator<<(QDataStream &, const DayModel &);

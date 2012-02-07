@@ -3,7 +3,7 @@
 #include <QtCore/QThread>
 #include <QtCore/qmath.h>
 #include "bonsaimodel.h"
-#include "bonsaiitemmodel.h"
+#include "speciemodel.h"
 #include "bonsaiworker.h"
 
 
@@ -26,7 +26,7 @@ QHash<int, QByteArray> BonsaiModel::roleNames()
 // ---------------------------------------------------------------------------
 // Bonsai
 // ---------------------------------------------------------------------------
-BonsaiModel::BonsaiModel(const QSqlDatabase &db, BonsaiItemModel* itemModel, QObject* parent) :
+BonsaiModel::BonsaiModel(const QSqlDatabase &db, SpecieModel* itemModel, QObject* parent) :
     QAbstractListModel(parent), db(db), m_itemmodel(itemModel), m_items()
 {
     qRegisterMetaType<Bonsai>("Bonsai");
@@ -44,6 +44,7 @@ void BonsaiModel::init()
     thread->start();
     connect(this, SIGNAL(fetch()), workerThread, SLOT(readAll()));
     connect(workerThread, SIGNAL(fetched(Bonsai*)),this, SLOT(addRow(Bonsai*)));
+    connect(workerThread, SIGNAL(finished()),this, SLOT(endWorker()));
 
     emit fetch();
 }
@@ -134,7 +135,7 @@ bool BonsaiModel::setData( const QModelIndex &index, const QVariant &value, int 
     return false;
 }
 
-bool BonsaiModel::createBonsaiTable(QSqlDatabase &db)
+bool BonsaiModel::createTable(QSqlDatabase &db)
 {
     // Create table
     bool ret = false;
@@ -171,11 +172,15 @@ bool BonsaiModel::createBonsaiTable(QSqlDatabase &db)
 
 void BonsaiModel::addRow(Bonsai* item)
  {
-    //TODO bloccare m_items
-     qDebug() << Q_FUNC_INFO << QThread::currentThread();
+    //TODO bloccare m_items     
      beginInsertRows(QModelIndex(), m_items.count(), m_items.count()+1);
      m_items.append(item);
      endInsertRows();    
+ }
+
+void BonsaiModel::endWorker()
+ {
+    thread->terminate();
  }
 
 /*bool BonsaiModel::removeRows(int position, int rows, const QModelIndex &parent)
@@ -191,7 +196,7 @@ void BonsaiModel::addRow(Bonsai* item)
 }*/
 
 /*
-void BonsaiModel::insertBonsai(QSqlDatabase &db, const int year, const int month, const int day, const int BonsaiItemId)
+void BonsaiModel::insertBonsai(QSqlDatabase &db, const int year, const int month, const int day, const int SpecieId)
 {
     QDate date;
     date.setDate(year,month,day);
@@ -199,7 +204,7 @@ void BonsaiModel::insertBonsai(QSqlDatabase &db, const int year, const int month
     if (db.isOpen()) {
         BonsaiModel* bonsai = new BonsaiModel();
         bonsai->m_id = this->nextId(db);
-        bonsai->m_itemId = BonsaiItemId;
+        bonsai->m_itemId = SpecieId;
         bonsai->m_date = date.toJulianDay();
 
         QSqlQuery query(db);
@@ -224,7 +229,7 @@ bool BonsaiModel::readAll()
     int itemId;
     while (query.next()) {
         itemId = query.value(1).toInt();
-        name = m_itemmodel->getBonsaiItemNameById(itemId);
+        name = m_itemmodel->getSpecieNameById(itemId);
         Bonsai* item = new Bonsai(query.value(0).toInt(),
                                   QDate::fromJulianDay(query.value(2).toInt()),
                                   name,
@@ -312,8 +317,7 @@ QString BonsaiModel::getAgeString(QDate date){
         result = result + tr("\nHours: ") + QString::number(Years*(24*varYear),'f',2);
         result = result + tr("\nMinutes: ") + QString::number(Years*((24*varYear)*60),'f',2);
         result = result + tr("\nSeconds: ") + QString::number(Years*(((24*varYear)*60)*60),'f',2);
-*/
-     qDebug() << days;
+*/     
     /*int numYears = qRound(days/31536000000);
     int numMonths = qRound((days % 31536000000)/2628000000);
     int numdays = qRound(((days % 31536000000) % 2628000000)/86400000);
@@ -332,12 +336,12 @@ QString BonsaiModel::getAgeString(QDate date){
 }
 
 
-/*bool DatabaseManager::isFreeBonsaiDate(const int BonsaiItemId, const int year, const int month, const int day)
+/*bool DatabaseManager::isFreeBonsaiDate(const int SpecieId, const int year, const int month, const int day)
 {
     QDate date;
     date.setDate(year,month,day);
 
-    QSqlQuery query(QString("select * from Bonsai where date = %1 and itemid = %2").arg(date.toJulianDay()).arg(BonsaiItemId));
+    QSqlQuery query(QString("select * from Bonsai where date = %1 and itemid = %2").arg(date.toJulianDay()).arg(SpecieId));
     while (query.next()) {
         return false;
     }

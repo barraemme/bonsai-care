@@ -1,4 +1,4 @@
-#include "bonsaiitemmodel.h"
+#include "speciemodel.h"
 #include <QStringList>
 #include <QDir>
 #include <QVariant>
@@ -10,9 +10,9 @@
 #include <QMessageBox>
 
 // ---------------------------------------------------------------------------
-// BonsaiItem
+// Specie
 // ---------------------------------------------------------------------------
-QHash<int, QByteArray> BonsaiItemModel::roleNames()
+QHash<int, QByteArray> SpecieModel::roleNames()
 {
     QHash<int, QByteArray> roles;
     roles[IndexRole] = "bi_index";
@@ -23,39 +23,39 @@ QHash<int, QByteArray> BonsaiItemModel::roleNames()
     return roles;
 }
 
-BonsaiItemModel::BonsaiItemModel(QObject *parent):
+SpecieModel::SpecieModel(QObject *parent):
     QAbstractListModel(parent), m_items()
 {
     //QSqlQuery query("select * from bonsai_item");
     this->parseXML();
     /*while (query.next()) {
-        BonsaiItem* item = new BonsaiItem();
+        Specie* item = new Specie();
         item->m_id = query.value(0).toInt();
         item->m_name = query.value(1).toString();
-        m_BonsaiItemsCache.append(item);
+        m_SpeciesCache.append(item);
     }*/
-    //qDebug() << "Bonsai items count :"  << m_BonsaiItemsCache.length();
+    //qDebug() << "Bonsai items count :"  << m_SpeciesCache.length();
 
-    setRoleNames(BonsaiItemModel::roleNames());
+    setRoleNames(SpecieModel::roleNames());
 }
 
 
-BonsaiItemModel::~BonsaiItemModel(){
+SpecieModel::~SpecieModel(){
     qDeleteAll(m_items);
     m_items.clear();
 }
 
-int BonsaiItemModel::rowCount(const QModelIndex &parent) const
+int SpecieModel::rowCount(const QModelIndex &parent) const
 {
     return m_items.count();
 }
 
-QVariant BonsaiItemModel::data(const QModelIndex &index, int role) const
+QVariant SpecieModel::data(const QModelIndex &index, int role) const
 {
     if (index.isValid()) {
         int row = index.row();
         if (row >= 0 && row < m_items.count()) {
-            BonsaiItem *item = m_items[row];
+            Specie *item = m_items[row];
             if (role == IndexRole){
                 return QVariant(item->index());
             } else if (role == NameRole) {
@@ -73,12 +73,12 @@ QVariant BonsaiItemModel::data(const QModelIndex &index, int role) const
     return QVariant("ERR: other");
 }
 
-QVariant BonsaiItemModel::headerData( int section, Qt::Orientation orientation, int role) const
+QVariant SpecieModel::headerData( int section, Qt::Orientation orientation, int role) const
 {
     return QVariant("HEADER");
 }
 
-Qt::ItemFlags BonsaiItemModel::flags( const QModelIndex & index) const
+Qt::ItemFlags SpecieModel::flags( const QModelIndex & index) const
 {
     if (!index.isValid()) {
         return 0;
@@ -88,14 +88,14 @@ Qt::ItemFlags BonsaiItemModel::flags( const QModelIndex & index) const
 }
 
 // For editing
-bool BonsaiItemModel::setData( const QModelIndex &index, const QVariant &value, int role)
+bool SpecieModel::setData( const QModelIndex &index, const QVariant &value, int role)
 {
     qDebug() << "setData(), index" << index << "role" << role;
 
     if (index.isValid()) {
         int row = index.row();
         if (row >= 0 && row < m_items.count()) {
-            BonsaiItem* item = m_items[row];
+            Specie* item = m_items[row];
             if (role == SetIndexRole){
                 item->setIndex(value.toInt());
                 return true;
@@ -115,7 +115,7 @@ bool BonsaiItemModel::setData( const QModelIndex &index, const QVariant &value, 
     return false;
 }
 
-QString BonsaiItemModel::getBonsaiItemNameById(const int &id) const
+QString SpecieModel::getSpecieNameById(const int &id) const
 {
   for(int row=0; row<m_items.size(); ++row) {
     if(m_items.at(row)->index() == id)
@@ -125,7 +125,7 @@ QString BonsaiItemModel::getBonsaiItemNameById(const int &id) const
   return "";
 }
 /*
-QVariant BonsaiItemModel::updateBonsaiItem(QSqlDatabase &db, const QVariant& id,
+QVariant SpecieModel::updateSpecie(QSqlDatabase &db, const QVariant& id,
                                          const QVariant& name
                                          )
 {
@@ -140,17 +140,17 @@ QVariant BonsaiItemModel::updateBonsaiItem(QSqlDatabase &db, const QVariant& id,
     return QVariant(ret);
 }
 
-void BonsaiItemModel::deleteBonsaiItem(QSqlDatabase &db, const int id)
+void SpecieModel::deleteSpecie(QSqlDatabase &db, const int id)
 {
     QSqlQuery query(db);
     query.exec(QString("delete from bonsai_item where id = %1").arg(id));
 }
 
-QVariant BonsaiItemModel::insertBonsaiItem(QSqlDatabase &db, const QVariant& name)
+QVariant SpecieModel::insertSpecie(QSqlDatabase &db, const QVariant& name)
 {
     bool ret = false;
     int retVal = -1;
-    BonsaiItemModel item;
+    SpecieModel item;
     item.m_name = name.toString();
 
 
@@ -180,7 +180,7 @@ QVariant BonsaiItemModel::insertBonsaiItem(QSqlDatabase &db, const QVariant& nam
 }*/
 
 
-bool BonsaiItemModel::parseXML() {
+bool SpecieModel::parseXML() {
 
         /* We'll parse the example.xml */
         QFile* file = new QFile(":/resources/db.xml");
@@ -213,7 +213,7 @@ bool BonsaiItemModel::parseXML() {
                             /*get value of each attribute from QXmlStreamAttributes */
                             QStringRef fID = attrs.value("id");
                             QStringRef fname = attrs.value("name");
-                            BonsaiItem* item = new BonsaiItem(fID.toString().toInt(), fname.toString());
+                            Specie* item = new Specie(fID.toString().toInt(), fname.toString());
 
                             /*
                             xml.readNext();

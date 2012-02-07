@@ -18,7 +18,7 @@ public:
     Bonsai(const Bonsai &bonsai);
     virtual ~Bonsai();
 
-public slots:
+public:
     //QObject *items() const;
 
     int index() const;

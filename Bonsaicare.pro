@@ -43,17 +43,18 @@ SOURCES += main.cpp \
     DatabaseManager.cpp \
     weekmodel.cpp \
     daymodel.cpp \
-    bonsaiitemmodel.cpp \
+    speciemodel.cpp \
     bonsaimodel.cpp \
     bonsai.cpp \
-    bonsaiitem.cpp \
+    specie.cpp \
     monthmodel.cpp \
     day.cpp \
     bonsaiworker.cpp \
     Orientation.cpp \
     operationmodel.cpp \
     operation.cpp \
-    slot.cpp
+    slot.cpp \
+    slotmodel.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -73,10 +74,10 @@ HEADERS += \
     DatabaseManager.h \
     weekmodel.h \
     daymodel.h \
-    bonsaiitemmodel.h \
+    speciemodel.h \
     bonsaimodel.h \
     bonsai.h \
-    bonsaiitem.h \
+    specie.h \
     monthmodel.h \
     day.h \
     bonsaiworker.h \
@@ -84,7 +85,8 @@ HEADERS += \
     Orientation.h \
     operationmodel.h \
     operation.h \
-    slot.h
+    slot.h \
+    slotmodel.h
 
 RESOURCES += \
     resources.qrc

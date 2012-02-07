@@ -7,11 +7,11 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
-#include "bonsaiitem.h"
+#include "specie.h"
 // ---------------------------------------------------------------------------
-// BonsaiItem
+// Specie
 // ---------------------------------------------------------------------------
-class BonsaiItemModel : public QAbstractListModel
+class SpecieModel : public QAbstractListModel
 {
     Q_OBJECT   
 
@@ -25,8 +25,8 @@ public:
     static QHash<int, QByteArray> roleNames();
 
 public:
-    explicit BonsaiItemModel(QObject *parent = 0);
-    virtual ~BonsaiItemModel();
+    explicit SpecieModel(QObject *parent = 0);
+    virtual ~SpecieModel();
 
 public: // From QAbstractListModel
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
@@ -36,18 +36,18 @@ public: // From QAbstractListModel
     bool setData( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
 
 public:
-    // for BonsaiItemTable
-    QString getBonsaiItemNameById(const int &id) const;
+    // for SpecieTable
+    QString getSpecieNameById(const int &id) const;
 
-    /*Q_INVOKABLE QVariant insertBonsaiItem(QSqlDatabase &db, const QVariant& name);
-    Q_INVOKABLE QList<QObject*> BonsaiItems(QSqlDatabase &db, const QVariant& useCache);
-    Q_INVOKABLE QVariant updateBonsaiItem(QSqlDatabase &db, const QVariant& id,
+    /*Q_INVOKABLE QVariant insertSpecie(QSqlDatabase &db, const QVariant& name);
+    Q_INVOKABLE QList<QObject*> Species(QSqlDatabase &db, const QVariant& useCache);
+    Q_INVOKABLE QVariant updateSpecie(QSqlDatabase &db, const QVariant& id,
                                         const QVariant& name);
-    Q_INVOKABLE void deleteBonsaiItem(QSqlDatabase &db, const int id);
+    Q_INVOKABLE void deleteSpecie(QSqlDatabase &db, const int id);
     */
 
 private:
-    QList<BonsaiItem*> m_items;    
+    QList<Specie*> m_items;    
 
 private:
     bool parseXML();

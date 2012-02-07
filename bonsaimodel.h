@@ -9,7 +9,7 @@
 #include <QSqlQuery>
 #include <QDate>
 #include "bonsai.h"
-#include "bonsaiitemmodel.h"
+#include "speciemodel.h"
 #include "bonsaiworker.h"
 
 Q_DECLARE_METATYPE(Bonsai)
@@ -40,7 +40,7 @@ public:
     static QHash<int, QByteArray> roleNames();
 
 public:
-    explicit BonsaiModel(const QSqlDatabase &db, BonsaiItemModel* itemModel, QObject* parent=0);
+    explicit BonsaiModel(const QSqlDatabase &db, SpecieModel* itemModel, QObject* parent=0);
     virtual ~BonsaiModel();
 
 public: // From QAbstractListModel
@@ -52,9 +52,9 @@ public: // From QAbstractListModel
     void init();
 
     // for BonsaiTable
-    static bool createBonsaiTable(QSqlDatabase &db);
+    static bool createTable(QSqlDatabase &db);
     /*Q_INVOKABLE void insertBonsai(QSqlDatabase &db, const int year, const int month, const int day,
-                                  const int BonsaiItemId);
+                                  const int SpecieId);
     Q_INVOKABLE void deleteBonsai(QSqlDatabase &db, const int id);
     Q_INVOKABLE QList<QObject*> Bonsais(QSqlDatabase &db);
     Q_INVOKABLE QList<QObject*> dateBonsais(QSqlDatabase &db, const int year,
@@ -66,6 +66,7 @@ public: // From QAbstractListModel
 public slots:
     // Exposed to QML for managing the model.
     void addRow(Bonsai* item);
+    void endWorker();
 
 signals:
     void fetch();
@@ -73,7 +74,7 @@ signals:
 private:
     QList<Bonsai*> m_items;
     QSqlDatabase db;
-    BonsaiItemModel* m_itemmodel;
+    SpecieModel* m_itemmodel;
     QThread *thread;
     BonsaiWorker *workerThread;
 

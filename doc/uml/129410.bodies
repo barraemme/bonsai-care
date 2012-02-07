@@ -1,32 +1,58 @@
 class DayModel
 !!!135554.cpp!!!	roleNames() : QHash<int, QByteArray>
 
-    QHash<int, QByteArray> roles;
-    roles[StartTimeRole] = "startTime";
-    roles[EndTimeRole] = "endTime";
-    roles[DayNameRole] = "dayName";
+    QHash<int, QByteArray> roles;        
     roles[WeekDayIndexRole] = "weekDayIndex";
-    roles[ItemDataRole] = "itemData";
-    roles[HourSpanRole] = "hourSpan";
-    roles[SpannedRole] = "spanned";
-    roles[HourIdRole] = "hourId";
-
-    roles[SetStartTimeRole] = "setStartTime";
-    roles[SetItemDataRole] = "setItemData";
-    roles[SetHourSpanRole] = "setHourSpan";
-
+    roles[DayNameRole] = "dayName";
     return roles;
 !!!135682.cpp!!!	DayModel(in weekDayIndex : int, in name : QString, inout parent : QObject = 0)
+
+
+    //@TODO get all slot of weekday
+    // Find QSLite driver
+    db = QSqlDatabase::addDatabase("QSQLITE", "bonsaiWorkerConnection");
+    // http://doc.trolltech.com/sql-driver.html#qsqlite
+
+    QString path(QDir::home().path());
+    path.append(QDir::separator()).append("Bonsai.db.sqlite");
+    path = QDir::toNativeSeparators(path);
+    db.setDatabaseName(path);
+
+    qDebug() << Q_FUNC_INFO << QThread::currentThread();
+    db.open();
+    qDebug() << "tables:"<< db.tables();
+
+    QSqlQuery query(db);
+
+    query.exec("select id, item_id, date from bonsai");
+
+    qDebug() << query.lastError().text();
+    while (query.next()) {
+        itemId = query.value(1).toInt();
+        name = m_itemmodel->getBonsaiItemNameById(itemId);
+        Slot* item = new Slot(query.value(0).toInt(),
+                                  query.value(2).toDate(),
+                                  name,
+                                  itemId
+                                  );
+        qDebug()<<"fecth";
+        //TODO emit signal after N fetches
+        emit fetched(item);
+    }
+
+    qDebug() << query.lastError().text();
+
+    db.close();
 
 //    // Enable following comments, if you would like to generate the day
 //    // full of example events.
 //    QString templateItem("Day %1 Item %2");
-    for (int i = DAYS_FIRST_SLOT; i < SLOTS_IN_A_DAY; i++) {
+    /*for (int i = DAYS_FIRST_SLOT; i < SLOTS_IN_A_DAY; i++) {
         Timeslot *slot = new Timeslot(i-DAYS_FIRST_SLOT, QTime(i,0,0,0));
         connect(slot, SIGNAL(dataChanged()), this, SLOT(handleItemChange()));
 //        slot->setItemData(templateItem.arg(m_dayName).arg(i));
         m_items.append(slot);
-    }
+    }*/
 
     setRoleNames(DayModel::roleNames());
 
@@ -46,23 +72,11 @@ class DayModel
     if (index.isValid()) {
         int row = index.row();
         if (row >= 0 && row < m_items.count()) {
-            Timeslot *slot = m_items[row];
-            if (role == StartTimeRole){
-                return QVariant(slot->startTime());
-            } else if (role == EndTimeRole) {
-                return QVariant(slot->endTime());
-            } else if (role == DayNameRole) {
-                return QVariant(dayName());
+            Slot *slot = m_items[row];
+            if (role == DayNameRole) {
+                return QVariant(m_dayName);
             } else if (role == WeekDayIndexRole) {
-                return QVariant(weekDayIndex());
-            } else if (role == ItemDataRole) {
-                return QVariant(slot->itemData());
-            } else if (role == HourSpanRole) {
-                return QVariant(slot->hourSpan());
-            } else if (role == SpannedRole) {
-                return QVariant(slot->spanned());
-            } else if (role == HourIdRole) {
-                return QVariant(slot->hourId());
+                return QVariant(m_weekDayIndex);
             } else {
                 return QVariant("ERR: Unknown role for daymodel: " + role);
             }

@@ -14,16 +14,16 @@ Item {
     property int fontSize: visual.cellFontSize
 
     // Internal properties, don't touch from outside!
-    width: spanned ? 0 : parent.width
-    height: spanned ? 0 : bonsaiSpan * container.itemHeight
+    //width: spanned ? 0 : parent.width
+    //height: spanned ? 0 : bonsaiSpan * container.itemHeight
     // Visible only, if not under bonsai spanning
-    visible: spanned ? false : true
+    //visible: spanned ? false : true
 
     // Gradient rectangle that indicates the "pressed" status of the item.
     Rectangle {
         id: gradientRect
         anchors.fill: parent
-        opacity: ma.pressed ? 1 : 0
+        //opacity: ma.pressed ? 1 : 0
 
         gradient: Gradient {
             GradientStop { position: 0.0; color: Qt.rgba(0,0,0,0.1) }
@@ -39,7 +39,7 @@ Item {
     }
 
     // bonsais are being shown in a vertical list
-    ListView {
+    /*ListView {
         id: operationsList
         anchors.fill: parent
         orientation: ListView.Horizontal
@@ -51,9 +51,9 @@ Item {
         highlightRangeMode: ListView.StrictlyEnforceRange
         // Cache the whole bonsaicolumn into memory.
         cacheBuffer: 1920
-    }
-
-    /*Item {
+    }*/
+    /*
+    Item {
         id: cellItem
 
         width: parent.width
@@ -88,7 +88,7 @@ Item {
             font.pixelSize: container.fontSize
             wrapMode: Text.WordWrap
         }
-    }
+    }*/
 
     // A thin line below the item to separate Cells from each other.
     Rectangle {
@@ -99,7 +99,7 @@ Item {
     }
 
     // Manually adjust the text edit focus.
-    MouseArea {
+    /*MouseArea {
         id: ma
         anchors.fill: parent
 

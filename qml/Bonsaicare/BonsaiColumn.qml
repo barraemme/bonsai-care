@@ -99,11 +99,13 @@ Item {
                 anchors {
                     top: image.bottom
                     topMargin: container.textTopMargin
+                    left: parent.left
+                    leftMargin: 2
                     right: parent.right
                     rightMargin: container.bonsaiMarginRight
                 }
                 font.pixelSize: container.fontSize
-                wrapMode : Text.Wrap
+                wrapMode : Text.WordWrap
                 text: container.model.getAgeString(b_date)
             }
 

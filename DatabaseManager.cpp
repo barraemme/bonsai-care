@@ -3,9 +3,7 @@
  */
 
 #include "DatabaseManager.h"
-#include "bonsaiitemmodel.h"
-#include "operationmodel.h"
-#include "bonsaimodel.h"
+
 #include <QStringList>
 #include <QDir>
 #include <QVariant>
@@ -15,6 +13,11 @@
 #include <QDebug>
 #include <QXmlStreamReader>
 
+//models
+#include "speciemodel.h"
+#include "operationmodel.h"
+#include "bonsaimodel.h"
+#include "slotmodel.h"
 // ---------------------------------------------------------------------------
 // DatabaseManager
 // ---------------------------------------------------------------------------
@@ -64,9 +67,10 @@ bool DatabaseManager::initDB()
 
     // Create 4 tables
     if (createIdTable()) {
-        //createBonsaiItemTable();
-        BonsaiModel::createBonsaiTable(this->db);
-        OperationModel::createOperationsTable(this->db);
+        //createSpecieTable();
+        BonsaiModel::createTable(db);
+        OperationModel::createTable(db);
+        SlotModel::createTable(db);
         //createBonsaierTable();
     }
 

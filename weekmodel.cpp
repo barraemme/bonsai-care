@@ -13,7 +13,7 @@
 #include <QtGui/QDesktopServices>
 
 // Internal includes
-#include "day.h"
+#include "daymodel.h"
 
 // Constants
 const int DAYS_IN_WEEK = 7;
@@ -46,7 +46,7 @@ WeekModel::WeekModel(QObject *parent) :
         /*int startMonth = 0;
         int lastMonth = 0;*/
         for (int i = 0; i < DAYS_IN_WEEK; i++) {
-            Day* day = new Day(startDay.addDays(i));
+            DayModel* day = new DayModel(startDay.addDays(i));
             m_days.append(day);
 
             //Add the month to model
@@ -60,7 +60,7 @@ WeekModel::WeekModel(QObject *parent) :
                 m_monthsCount++;
             }*/
 
-            qDebug() << day->monthIndex() << "created";
+            qDebug() << day->weekDayIndex() << "created";
         }
 
     }
@@ -85,14 +85,14 @@ QVariant WeekModel::data(const QModelIndex &index, int role) const
     if (index.isValid()) {
         int row = index.row();
         if (row >= 0 && row < m_days.count()) {
-            Day* day = m_days[row];
+            DayModel* day = m_days[row];
             if (role == DayNameRole){
                 return QVariant(day->dayName());
             } if (role == MonthIndexRole){
                 //return index of array
-                return QVariant(day->monthIndex());
+                return QVariant(day->monthDayIndex());
             }  if (role == DayIndexRole){
-                return QVariant(day->dayIndex());
+                return QVariant(day->weekDayIndex());
             }  else {
                 return QVariant("ERR: UnkstartDayn role for weekmodel");
             }
@@ -122,34 +122,34 @@ bool WeekModel::setData( const QModelIndex &index, const QVariant &value, int ro
     return true;
 }
 
-/*QString WeekModel::dayName(int index) const
+QString WeekModel::dayName(int index) const
 {
     qDebug() << "Requesting day for index" << index;
     if (index >= 0 && index < m_days.count()) {
-        return QDate::longDayName(m_days.at(index)->weekNumber());
+        return QDate::longDayName(m_days.at(index)->weekDayIndex());
     }
 
     return "";
-}*/
+}
 
 int WeekModel::indexOfFirstDay(int month) const
 {
     int index = 0;
-    foreach(Day *day, m_days) {
-        if(day->monthIndex() == month)
+    foreach(DayModel *day, m_days) {
+        if(day->monthDayIndex() == month)
             return index;
         index++;
     }
     return 0;
 }
 
-/*
+
 int WeekModel::indexOfMonth(int dayIndex) const
 {    
-    int monthNum = m_days.at(dayIndex)->month();
-    qDebug()<<"day "<<m_days.at(dayIndex)->day()<<" month "<<monthNum;
+    int monthNum = m_days.at(dayIndex)->monthDayIndex();
+    qDebug()<<"day "<<m_days.at(dayIndex)->monthDayIndex()<<" month "<<monthNum;
     return monthNum-1;
-}*/
+}
 
 bool WeekModel::save()
 {

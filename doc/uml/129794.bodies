@@ -26,20 +26,15 @@ class MonthModel
 //        setHourSpan(qrand() % 24, (qrand() % 3) + 2);
 //    }
 !!!138754.cpp!!!	~MonthModel()
-    qDeleteAll(m_months);
-    m_months.clear();
+   m_months.clear();
 !!!138882.cpp!!!	data(in index : QModelIndex, in role : int = Qt::DisplayRole) : QVariant
     if (index.isValid()) {
         int row = index.row();
-        if (row >= 0 && row < m_months.count()) {
-
-            QDate* day = m_months[row];
-            if (role == MonthIndexRole){
-                if(day->isNull()) return QVariant("");
-                return QVariant(day->month());
+        if (row >= 0 && row < m_months.count()) {                 
+            if (role == MonthIndexRole){               
+                return row+1;
             } if (role == MonthNameRole){
-                if(day->isNull()) return QVariant("");
-                return QVariant(QDate::longMonthName(day->month(), QDate::StandaloneFormat));
+                return m_months[row];
             } else {
                 return QVariant("ERR: UnkstartDayn role for MonthModel");
             }

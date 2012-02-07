@@ -6,7 +6,7 @@
 #include <QThread>
 #include <QGraphicsObject>
 #include "DatabaseManager.h"
-#include "bonsaiitemmodel.h"
+#include "speciemodel.h"
 #include "bonsaimodel.h"
 #include "qmlapplicationviewer.h"
 #include "orientationfilter.h"
@@ -52,27 +52,36 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     app->setApplicationVersion(VERSION_NUMBER);
 
+    //Open db connection
+    QScopedPointer<DatabaseManager> db(new DatabaseManager());
+    db->open();
 
     //Setting models
+    //used for displaying months on top
     QScopedPointer<MonthModel> months(new MonthModel());
     rootContext->setContextProperty("months", months.data());
 
+    //used for displaying week days on top
     QScopedPointer<WeekModel> week(new WeekModel());
     rootContext->setContextProperty("week", week.data());
 
-    rootContext->setContextProperty(QString("cp_versionNumber"), VERSION_NUMBER);
-    // Setting database Qt class handle to QML
-    QScopedPointer<DatabaseManager> db(new DatabaseManager());
-    db->open();
-    rootContext->setContextProperty("db", db.data());
-
-    QScopedPointer<BonsaiItemModel> bonsaiItem(new BonsaiItemModel());
+    //used to list all species of bonsais
+    QScopedPointer<SpecieModel> bonsaiItem(new SpecieModel());
     qDebug() << "BONSAI ITEM ROW COUNT" << bonsaiItem->rowCount();
     rootContext->setContextProperty("bonsaiItem", bonsaiItem.data());
 
+    //used to get all custom bonsais
     QScopedPointer<BonsaiModel> bonsai(new BonsaiModel(db->getDB(), bonsaiItem.data()));
-    bonsai->init();    
+    bonsai->init();
     rootContext->setContextProperty("bonsai", bonsai.data());
+
+    rootContext->setContextProperty(QString("cp_versionNumber"), VERSION_NUMBER);
+
+    // Setting database Qt class handle to QML
+    /*
+    rootContext->setContextProperty("db", db.data());*/
+
+
 
 
     // App version to QML in Symbian^3 version build
@@ -117,5 +126,6 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     // Start the application
     int ret = app->exec();    
+    db->close();
     return ret;
 }

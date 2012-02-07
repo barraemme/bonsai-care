@@ -8,7 +8,7 @@ QHash<int, QByteArray> OperationModel::roleNames()
     roles[IndexRole] = "o_index";
     roles[NameRole] = "o_name";
     roles[LastDateRole] = "o_lastDate";
-    roles[BonsaiIdRole] = "o_bonsaiId";
+    roles[SlotIdRole] = "o_slotId";
 
     roles[SetIndexRole] = "o_setIndex";
     roles[SetNameRole] = "o_setName";
@@ -18,9 +18,10 @@ QHash<int, QByteArray> OperationModel::roleNames()
     return roles;
 }
 
-OperationModel::OperationModel(const QSqlDatabase &db, QObject* parent) :
-    QAbstractListModel(parent), db(db), m_items()
+OperationModel::OperationModel(const QSqlDatabase &db, const int slotId, QObject* parent) :
+    QAbstractListModel(parent), db(db), m_items(), m_slot_id(slotId)
 {
+    init();
     setRoleNames(OperationModel::roleNames());
 }
 
@@ -29,6 +30,48 @@ OperationModel::~OperationModel()
     qDeleteAll(m_items);
     m_items.clear();
 }
+
+void OperationModel::init()
+{
+    /*thread->start();
+    connect(this, SIGNAL(fetch()), workerThread, SLOT(readAll()));
+    connect(workerThread, SIGNAL(fetched(Bonsai*)),this, SLOT(addRow(Bonsai*)));
+    connect(workerThread, SIGNAL(finished()),this, SLOT(endWorker()));
+
+    emit fetch();*/
+
+
+    if (db.isOpen()) {
+
+        QSqlQuery query(db);
+
+        query.prepare("select id, last_date, name, slot_id,  from operations where slot_id = ?");
+        query.bindValue(0, m_slot_id);
+
+        if( !query.exec() )
+            qDebug() << query.lastError();
+          else
+            qDebug() << "Table created!";
+
+        while (query.next()) {
+           Operation* op = new Operation(
+                       query.value(0).toInt(),
+                       query.value(1).toDate(),
+                       query.value(2).toString(),
+                       query.value(3).toInt()
+           );
+           addRow(op);
+        }
+    }
+}
+
+void OperationModel::addRow(Operation* item)
+ {
+     //qDebug() << Q_FUNC_INFO << QThread::currentThread();
+     beginInsertRows(QModelIndex(), m_items.count(), m_items.count()+1);
+     m_items.append(item);
+     endInsertRows();
+ }
 
 int OperationModel::rowCount(const QModelIndex &parent) const
 {
@@ -47,8 +90,8 @@ QVariant OperationModel::data(const QModelIndex &index, int role) const
                 return QVariant(item->name());
             } else if (role == LastDateRole) {
                 return QVariant(item->lastDate());
-            } else if (role == BonsaiIdRole) {
-                return QVariant(item->bonsaiId());
+            } else if (role == SlotIdRole) {
+                return QVariant(item->slotId());
             } else {
                 return QVariant("ERR: Unknown role for daymodel: " + role);
             }
@@ -95,7 +138,7 @@ bool OperationModel::setData( const QModelIndex &index, const QVariant &value, i
                 item->setLastDate(value.toDate());
                 return true;
             } else if (role == SetBonsaiIdRole) {
-                item->setBonsaiId(value.toInt());
+                item->setSlotId(value.toInt());
                 return true;
             } else {
                 return false;
@@ -110,7 +153,7 @@ bool OperationModel::setData( const QModelIndex &index, const QVariant &value, i
     return false;
 }
 
-bool OperationModel::createOperationsTable(QSqlDatabase &db)
+bool OperationModel::createTable(QSqlDatabase &db)
 {
     // Create table
     bool ret = false;
@@ -118,13 +161,14 @@ bool OperationModel::createOperationsTable(QSqlDatabase &db)
         QSqlQuery query(db);
         ret = query.exec("CREATE TABLE operations "
                          "(id integer primary key, "
-                         "bonsai_id integer, "
+                         "name varchar(15)"
+                         "slot_id integer, "
                          "last_date date)");
 
          if( !ret )
             qDebug() << query.lastError();
          else
-            qDebug() << "Table created!";
+            qDebug() << "Table operations created!";
     }
     return ret;
 }

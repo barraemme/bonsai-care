@@ -29,7 +29,7 @@ QString Day::dayName() const
     return QDate::longDayName(m_day.dayOfWeek());
 }
 
-int Day::dayIndex() const
+int Day::dayOfWeekIndex() const
 {
     return m_day.dayOfWeek();
 }
@@ -42,6 +42,11 @@ QString Day::monthName() const
 int Day::monthIndex() const
 {
     return m_day.month();
+}
+
+int Day::dayIndex() const
+{
+    return m_day.toJulianDay();
 }
 
 

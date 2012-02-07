@@ -9,43 +9,40 @@ class WeekModel
 !!!141826.cpp!!!	WeekModel(inout parent : QObject = 0)
 
     if ( !restore() ) {
-        QDate startDay;
+        QDate startDay = QDate::currentDate ();
+
         int wDay = startDay.dayOfWeek();
         if(wDay > 1)
-            startDay.setDate(startDay.year(), startDay.month(), startDay.day()-(wDay-1));
+            startDay.setDate(startDay.year(), startDay.month(), startDay.day()-(wDay-1)+7);
 
-        int startMonth = 0;
-        int lastMonth = 0;
+        /*int startMonth = 0;
+        int lastMonth = 0;*/
         for (int i = 0; i < DAYS_IN_WEEK; i++) {
-            QDate* day = new QDate(startDay.addDays(i));
+            Day* day = new Day(startDay.addDays(i));
             m_days.append(day);
 
             //Add the month to model
-            //m_months.append(new QDate());
-            m_months.append(day);
+           /* m_months.append(new QDate());
+            //m_months.append(day);
             //if is last day of the month OR is last index of different month
             if(day->day() == day->daysInMonth() || (i == (DAYS_IN_WEEK-1) && lastMonth != day->month())){
                 m_months.replace(qFloor((i-startMonth)/2), day);
                 startMonth = i+1;
                 lastMonth = day->month();
                 m_monthsCount++;
-            }
+            }*/
 
-            qDebug() << day->dayOfWeek() << "created";
+            qDebug() << day->monthIndex() << "created";
         }
 
     }
-
-    m_model = new MonthModel(m_months);
 
     setRoleNames(WeekModel::roleNames());
 !!!141954.cpp!!!	~WeekModel()
 
     save();
     qDeleteAll(m_days);
-    m_days.clear();
-    qDeleteAll(m_months);
-    m_months.clear();
+    m_days.clear();   
 !!!142082.cpp!!!	rowCount(in parent : QModelIndex = QModelIndex()) : int
 
     return m_days.count();
@@ -54,13 +51,14 @@ class WeekModel
     if (index.isValid()) {
         int row = index.row();
         if (row >= 0 && row < m_days.count()) {
-            QDate* day = m_days[row];
+            Day* day = m_days[row];
             if (role == DayNameRole){
-                return QVariant(QDate::longDayName(day->dayOfWeek()));
+                return QVariant(day->dayName());
             } if (role == MonthIndexRole){
-                return QVariant(day->month());
+                //return index of array
+                return QVariant(day->monthIndex());
             }  if (role == DayIndexRole){
-                return QVariant(day->dayOfWeek());
+                return QVariant(day->dayIndex());
             }  else {
                 return QVariant("ERR: UnkstartDayn role for weekmodel");
             }
@@ -135,8 +133,8 @@ class WeekModel
 !!!142978.cpp!!!	indexOfFirstDay(in month : int) : Q_INVOKABLE int
 
     int index = 0;
-    foreach(QDate *day, m_days) {
-        if(day->month() == month)
+    foreach(Day *day, m_days) {
+        if(day->monthIndex() == month)
             return index;
         index++;
     }

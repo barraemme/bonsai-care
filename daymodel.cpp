@@ -4,12 +4,14 @@
 
 // Class header
 #include "daymodel.h"
-#include "slot.h"
 
 // Platform includes
 #include <QtCore/QDebug>
 #include <QSqlQuery>
+#include <QThread>
 
+#include "slotmodel.h"
+#include "day.h"
 // Constants
 //const int DAYS_FIRST_SLOT = 6;
 
@@ -21,51 +23,15 @@
 
 QHash<int, QByteArray> DayModel::roleNames()
 {
-    QHash<int, QByteArray> roles;        
+    QHash<int, QByteArray> roles;
     roles[WeekDayIndexRole] = "weekDayIndex";
     roles[DayNameRole] = "dayName";
     return roles;
 }
 
-DayModel::DayModel(const int weekDayIndex, const QString &name, QObject *parent) :
-    QAbstractListModel(parent), m_dayName(name), m_items(), m_weekDayIndex(weekDayIndex)
-{
-
-    //@TODO get all slot of weekday
-    // Find QSLite driver
-    db = QSqlDatabase::addDatabase("QSQLITE", "bonsaiWorkerConnection");
-    // http://doc.trolltech.com/sql-driver.html#qsqlite
-
-    QString path(QDir::home().path());
-    path.append(QDir::separator()).append("Bonsai.db.sqlite");
-    path = QDir::toNativeSeparators(path);
-    db.setDatabaseName(path);
-
-    qDebug() << Q_FUNC_INFO << QThread::currentThread();
-    db.open();
-    qDebug() << "tables:"<< db.tables();
-
-    QSqlQuery query(db);
-
-    query.exec("select id, item_id, date from bonsai");
-
-    qDebug() << query.lastError().text();
-    while (query.next()) {
-        itemId = query.value(1).toInt();
-        name = m_itemmodel->getBonsaiItemNameById(itemId);
-        Slot* item = new Slot(query.value(0).toInt(),
-                                  query.value(2).toDate(),
-                                  name,
-                                  itemId
-                                  );
-        qDebug()<<"fecth";
-        //TODO emit signal after N fetches
-        emit fetched(item);
-    }
-
-    qDebug() << query.lastError().text();
-
-    db.close();
+DayModel::DayModel(const QDate &day, QObject *parent) :
+    QAbstractListModel(parent), m_day(day), m_items()
+{    
 
 //    // Enable following comments, if you would like to generate the day
 //    // full of example events.
@@ -106,9 +72,9 @@ QVariant DayModel::data(const QModelIndex &index, int role) const
         if (row >= 0 && row < m_items.count()) {
             Slot *slot = m_items[row];
             if (role == DayNameRole) {
-                return QVariant(m_dayName);
+                return QVariant(m_day.dayName());
             } else if (role == WeekDayIndexRole) {
-                return QVariant(m_weekDayIndex);
+                return QVariant(m_day.dayOfWeekIndex());
             } else {
                 return QVariant("ERR: Unknown role for daymodel: " + role);
             }
@@ -139,7 +105,7 @@ Qt::ItemFlags DayModel::flags( const QModelIndex & index) const
 // For editing
 bool DayModel::setData( const QModelIndex &index, const QVariant &value, int role)
 {
-    qDebug() << "setData(), index" << index << "role" << role;
+   /* qDebug() << "setData(), index" << index << "role" << role;
 
     if (index.isValid()) {
         int row = index.row();
@@ -159,7 +125,7 @@ bool DayModel::setData( const QModelIndex &index, const QVariant &value, int rol
         }
     } else {
         return false;
-    }
+    }*/
 
     return false;
 }
@@ -284,17 +250,22 @@ int DayModel::itemsParent(int index)
         return -1;
     }
 }
-
+*/
 QString DayModel::dayName() const
 {
-    return m_dayName;
+    return m_day.dayName();
 }
 
 int DayModel::weekDayIndex() const
 {
-    return m_weekDayIndex;
+    return m_day.dayOfWeekIndex();
 }
 
+int DayModel::monthDayIndex() const
+{
+    return m_day.monthIndex();
+}
+/*
 QDataStream &operator<<(QDataStream &stream, const DayModel &dayModel)
 {
     stream << dayModel.m_weekDayIndex;

@@ -4,15 +4,15 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
-class BonsaiItemModel;
+class SpecieModel;
 
-class BonsaiItem : public QObject
+class Specie : public QObject
 {
     Q_OBJECT
 
 public:
-    BonsaiItem(const int id, const QString &name, QObject *parent = 0);
-    virtual ~BonsaiItem();
+    Specie(const int id, const QString &name, QObject *parent = 0);
+    virtual ~Specie();
 
 public slots:
     QObject *items() const;
@@ -22,7 +22,7 @@ public slots:
     void setName(const QString &name);
 
 private:
-    BonsaiItemModel *m_model;
+    SpecieModel *m_model;
     int m_id;
     QString m_name;
 };

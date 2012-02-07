@@ -23,8 +23,9 @@ public slots:
     //QObject *items() const;
     QString dayName() const;
     QString monthName() const;
-    int dayIndex() const;
+    int dayOfWeekIndex() const;
     int monthIndex() const;
+    int dayIndex() const;
 
 private:
     QDate m_day;

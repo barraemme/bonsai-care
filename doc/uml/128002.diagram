@@ -1,4 +1,4 @@
-format 70
+format 74
 
 classinstance 128002 class_ref 129026 // BonsaiWorker
   name ""   xyz 311 4 2000 life_line_z 2000
@@ -10,30 +10,30 @@ durationcanvas 129794 classinstance_ref 129282 // :Main
   xyzwh 60 80 2010 11 40
 end
 durationcanvas 129922 classinstance_ref 128258 // :BonsaiModel
-  xyzwh 173 80 2010 11 25
+  xyzwh 172 80 2010 11 25
 end
 durationcanvas 130178 classinstance_ref 128002 // :BonsaiWorker
-  xyzwh 354 93 2010 11 66
+  xyzwh 351 93 2010 11 66
 end
 durationcanvas 130434 classinstance_ref 128258 // :BonsaiModel
-  xyzwh 173 140 2010 11 25
+  xyzwh 172 140 2010 11 25
 end
 msg 130050 synchronous
   from durationcanvas_ref 129794
   to durationcanvas_ref 129922
   yz 80 2015 msg operation_ref 132866 // "init() : void"
-  show_full_operations_definition default drawing_language default
+  show_full_operations_definition default drawing_language default show_context_mode default
   label_xy 106 65
 msg 130306 asynchronous
   from durationcanvas_ref 129922
   to durationcanvas_ref 130178
   yz 93 2015 msg operation_ref 144898 // "readAll(inout db : QSqlDatabase) : void"
-  show_full_operations_definition default drawing_language default
+  show_full_operations_definition default drawing_language default show_context_mode default
   label_xy 242 78
 msg 130562 asynchronous
   from durationcanvas_ref 130178
   to durationcanvas_ref 130434
   yz 140 2020 msg operation_ref 133250 // "addRow(inout item : Bonsai) : void"
-  show_full_operations_definition default drawing_language default
+  show_full_operations_definition default drawing_language default show_context_mode default
   label_xy 238 125
 end

@@ -10,7 +10,7 @@ class Bonsai
     m_itemId = bonsai.itemId();
     //m_model = new BonsaiModel(m_date, m_name, m_itemId, this);
 !!!128386.cpp!!!	~Bonsai()
-    delete m_model;
+    //delete m_model;
 !!!128514.cpp!!!	items() : QObject
     qDebug() << "Requested Bonsai items. We have" << m_model->rowCount();
     return m_model;

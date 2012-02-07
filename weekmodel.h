@@ -8,8 +8,7 @@
 #include <QtCore/QAbstractListModel>
 #include <QtCore/QList>
 
-#include "day.h"
-//#include "monthmodel.h"
+#include "daymodel.h"
 
 class WeekModel : public QAbstractListModel
 {
@@ -35,17 +34,17 @@ public: // From QAbstractListModel
     bool setData( const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
 
 public:    
-    //Q_INVOKABLE QString dayName(int index) const;
+    Q_INVOKABLE QString dayName(int index) const;
     Q_INVOKABLE bool save();
     Q_INVOKABLE bool restore();
     Q_INVOKABLE int indexOfFirstDay(int month) const;
-    //Q_INVOKABLE int indexOfMonth(int dayIndex) const;
+    Q_INVOKABLE int indexOfMonth(int dayIndex) const;
 
 private:
     QString getSaveFileName() const;
 
 private:
-    QList<Day*> m_days;
+    QList<DayModel*> m_days;
 };
 
 #endif // WEEKMODEL_H

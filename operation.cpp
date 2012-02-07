@@ -4,15 +4,15 @@
 #include <QtCore/QDebug>
 #include <QtCore/QDate>
 
-Operation::Operation(const int id, const QDate &date, const QString &name, const int bonsaiId, QObject *parent):
-    QObject(parent), m_id(id), m_last_date(date), m_name(name), m_bonsaiId(bonsaiId)
+Operation::Operation(const int id, const QDate &date, const QString &name, const int slot_id, QObject *parent):
+    QObject(parent), m_id(id), m_last_date(date), m_name(name), m_slot_id(slot_id)
 {
 }
 
 Operation::Operation(QObject *parent ):
-    QObject(parent), m_id(-1), m_last_date(), m_name(), m_bonsaiId(-1)
+    QObject(parent), m_id(-1), m_last_date(), m_name(), m_slot_id(-1)
 {
-    //m_model = new BonsaiModel(m_date, m_name, m_itemId, this);
+
 }
 
 Operation::Operation(const Operation &operation): QObject(0)
@@ -20,13 +20,12 @@ Operation::Operation(const Operation &operation): QObject(0)
     m_id = operation.index();
     m_last_date = operation.lastDate();
     m_name = operation.name();
-    m_bonsaiId = operation.bonsaiId();
-    //m_model = new BonsaiModel(m_date, m_name, m_itemId, this);
+    m_slot_id = operation.slotId();
 }
 
 Operation::~Operation()
 {
-    //delete m_model;
+
 }
 
 QString Operation::name() const
@@ -49,14 +48,14 @@ void Operation::setIndex(const int index)
     m_id = index;
 }
 
-int Operation::bonsaiId() const
+int Operation::slotId() const
 {
-    return m_bonsaiId;
+    return m_slot_id;
 }
 
-void Operation::setBonsaiId(const int bonsaiId)
+void Operation::setSlotId(const int slot_id)
 {
-    m_bonsaiId = bonsaiId;
+    m_slot_id = slot_id;
 }
 
 QDate Operation::lastDate() const

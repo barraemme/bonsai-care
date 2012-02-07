@@ -6,7 +6,7 @@
 #include <QFile>
 #include "bonsaiworker.h"
 
-BonsaiWorker::BonsaiWorker(BonsaiItemModel* m_model):m_itemmodel(m_model){
+BonsaiWorker::BonsaiWorker(SpecieModel* m_model):m_itemmodel(m_model){
     qDebug() << Q_FUNC_INFO << QThread::currentThread();
 
     // Find QSLite driver
@@ -17,28 +17,25 @@ BonsaiWorker::BonsaiWorker(BonsaiItemModel* m_model):m_itemmodel(m_model){
     path.append(QDir::separator()).append("Bonsai.db.sqlite");
     path = QDir::toNativeSeparators(path);
     db.setDatabaseName(path);
-    qDebug() << "DB opened";
+    qDebug() << "DB opened ";
+    qDebug() << "END" << Q_FUNC_INFO << QThread::currentThread();
 }
 
 BonsaiWorker::~BonsaiWorker(){}
 
 void BonsaiWorker::readAll() {
-
     QString name;
     int itemId;
 
     qDebug() << Q_FUNC_INFO << QThread::currentThread();
-    db.open();
-    qDebug() << "tables:"<< db.tables();
-
+    db.open();    
     QSqlQuery query(db);
-
     query.exec("select id, item_id, date from bonsai");
-
     qDebug() << query.lastError().text();
+
     while (query.next()) {
         itemId = query.value(1).toInt();
-        name = m_itemmodel->getBonsaiItemNameById(itemId);
+        name = m_itemmodel->getSpecieNameById(itemId);
         Bonsai* item = new Bonsai(query.value(0).toInt(),
                                   query.value(2).toDate(),
                                   name,
@@ -49,9 +46,8 @@ void BonsaiWorker::readAll() {
         emit fetched(item);
     }
 
-    qDebug() << query.lastError().text();
-
     db.close();
+    emit finished();
     qDebug() << "END" << Q_FUNC_INFO << QThread::currentThread();
 }
 

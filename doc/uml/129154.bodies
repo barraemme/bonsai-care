@@ -61,6 +61,7 @@ class DatabaseManager
     if (createIdTable()) {
         //createBonsaiItemTable();
         BonsaiModel::createBonsaiTable(this->db);
+        OperationModel::createOperationsTable(this->db);
         //createBonsaierTable();
     }
 

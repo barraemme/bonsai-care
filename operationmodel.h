@@ -19,7 +19,7 @@ public:
         IndexRole = Qt::UserRole+1,
         NameRole,
         LastDateRole,
-        BonsaiIdRole,
+        SlotIdRole,
         SetIndexRole,
         SetNameRole,
         SetLastDateRole,
@@ -28,7 +28,7 @@ public:
     static QHash<int, QByteArray> roleNames();
 
 public:
-    explicit OperationModel(const QSqlDatabase &db, QObject* parent=0);
+    explicit OperationModel(const QSqlDatabase &db, const int slotId, QObject* parent=0);
     virtual ~OperationModel();
 
 public: // From QAbstractListModel
@@ -40,9 +40,11 @@ public: // From QAbstractListModel
     void init();
 
     // for BonsaiTable
-    static bool createOperationsTable(QSqlDatabase &db);
+    static bool createTable(QSqlDatabase &db);
+    void addRow(Operation* item);
+
     /*Q_INVOKABLE void insertBonsai(QSqlDatabase &db, const int year, const int month, const int day,
-                                  const int BonsaiItemId);
+                                  const int SpecieId);
     Q_INVOKABLE void deleteBonsai(QSqlDatabase &db, const int id);
     Q_INVOKABLE QList<QObject*> Bonsais(QSqlDatabase &db);
     Q_INVOKABLE QList<QObject*> dateBonsais(QSqlDatabase &db, const int year,
@@ -61,6 +63,7 @@ public: // From QAbstractListModel
 private:
     QList<Operation*> m_items;
     QSqlDatabase db;
+    int m_slot_id;
     //QThread *thread;
     //BonsaiWorker *workerThread;
 

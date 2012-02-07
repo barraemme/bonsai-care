@@ -25,7 +25,8 @@ Rectangle {
     // Attributes for tracking the application current views (current day).
     property Item currentPage
     property int currentPageIndex: 0
-    property string currentDayName: week.dayName(currentPageIndex)
+
+    //property string currentDayName: week.dayName(currentPageIndex)
 
     // Internal properties, don't set from outside. This is used to
     // determine in which orientation the screen is.
@@ -67,20 +68,16 @@ Rectangle {
         container.currentPage.popEnter(immediate);
     }*/
 
-    /*function __initializePage(pageIndex, hidden) {
-        console.log("CurrentPage: " + container.currentPage);
-        var pageComp = pivotPageComp;
+
+    function __initializePage(pageIndex, hidden) {
         // Instantiate the component!
-        if (pageComp.status == Component.Ready) {
-            console.log("PageComp rdy: " + pageComp);
-            container.currentPage = pageComp.createObject(contentArea);
+        if (pivotPageComp.status == Component.Ready) {
+            container.currentPage = pivotPageComp.createObject(contentArea);
             //container.currentPage.model = container.model.day(pageIndex).items();
             container.currentPage.state = hidden ? "Hidden" : "";
             container.currentPageIndex = pageIndex;
-
-            console.log("CurrentPage rdy: " + container.currentPage);
         }
-    }*/
+    }
 
     Component {
         id: pivotPageComp
@@ -122,7 +119,6 @@ Rectangle {
     }
 
     // Pivot headers, used for navigation.
-
     PivotHeader {
         id: headerRow
 
@@ -136,6 +132,7 @@ Rectangle {
         headerTextSize: container.headerTextSize
         landscapeLayout: landscapeLayout
         generalLeftMargin: container.generalLeftMargin
+        currentIndex: container.currentPageIndex
         // If the header should work both ways and by flicking,
         // set this property to true.
         flickable: true
@@ -149,7 +146,7 @@ Rectangle {
         onIndexChanged: {
             console.log("BEFORE PAGECHANGE, container.currentPage: "
                         + container.currentPage);
-           //__switchPage(index, true);
+           __switchPage(index, true);
             console.log("AFTER PAGECHANGE, container.currentPage: "
                         + container.currentPage);
         }
@@ -204,8 +201,11 @@ Rectangle {
     }
 
     // Initialize the first Day item.
-    /*Component.onCompleted: {
-        __initializePage(0);
-        container.currentPageIndex = 0;       
-    }*/
+    Component.onCompleted: {
+        var now = new Date();
+        var dayNum = now.getDay();
+        dayNum = dayNum-1;
+        __initializePage(dayNum);
+        //container.currentPageIndex = dayNum;
+    }
 }

@@ -1,44 +1,44 @@
-#include "bonsaiitem.h"
+#include "specie.h"
 
 // Platform includes
 #include <QtCore/QDebug>
 
 // Internal includes
-#include "bonsaiitemmodel.h"
+#include "speciemodel.h"
 
-BonsaiItem::BonsaiItem(const int id, const QString &name, QObject *parent):
+Specie::Specie(const int id, const QString &name, QObject *parent):
             QObject(parent), m_id(id), m_name(name)
 {
-    //m_model = new BonsaiItemModel(m_id, m_name, this);
+    //m_model = new SpecieModel(m_id, m_name, this);
 }
 
-BonsaiItem::~BonsaiItem()
+Specie::~Specie()
 {
     delete m_model;
 }
 
-QObject* BonsaiItem::items() const
+QObject* Specie::items() const
 {
-    qDebug() << "Requested BonsaiItem items. We have" << m_model->rowCount();
+    qDebug() << "Requested Specie items. We have" << m_model->rowCount();
     return m_model;
 }
 
-int BonsaiItem::index() const
+int Specie::index() const
 {
     return m_id;
 }
 
-void BonsaiItem::setIndex(const int id)
+void Specie::setIndex(const int id)
 {
     m_id = id;
 }
 
-QString BonsaiItem::name() const
+QString Specie::name() const
 {
     return m_name;
 }
 
-void BonsaiItem::setName(const QString &name)
+void Specie::setName(const QString &name)
 {
     m_name = name;
 }
