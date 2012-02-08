@@ -33,7 +33,7 @@ QHash<int, QByteArray> WeekModel::roleNames()
     return roles;
 }
 
-WeekModel::WeekModel(QObject *parent) :
+WeekModel::WeekModel(const BonsaiModel *bonsaiModel, QObject *parent) :
     QAbstractListModel(parent), m_days()
 {
     if ( !restore() ) {
@@ -41,12 +41,12 @@ WeekModel::WeekModel(QObject *parent) :
 
         int wDay = startDay.dayOfWeek();
         if(wDay > 1)
-            startDay.setDate(startDay.year(), startDay.month(), startDay.day()-(wDay-1)+7);
+            startDay.setDate(startDay.year(), startDay.month(), startDay.day()-(wDay-1));
 
         /*int startMonth = 0;
         int lastMonth = 0;*/
         for (int i = 0; i < DAYS_IN_WEEK; i++) {
-            DayModel* day = new DayModel(startDay.addDays(i));
+            DayModel* day = new DayModel(startDay.addDays(i), bonsaiModel);
             m_days.append(day);
 
             //Add the month to model

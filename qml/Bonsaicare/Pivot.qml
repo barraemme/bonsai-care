@@ -83,8 +83,7 @@ Rectangle {
         id: pivotPageComp
 
         PivotPage {
-            id: pivotPage
-
+            id: pivotPage            
             flickMargin: visual.flickMargin
             itemHeight: container.itemHeight
             borderColor: container.borderColor

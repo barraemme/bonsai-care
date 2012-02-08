@@ -1,6 +1,23 @@
 #include "slotmodel.h"
 
-SlotModel::SlotModel(QObject* parent)
+/*QHash<int, QByteArray> OperationModel::roleNames()
+{
+    QHash<int, QByteArray> roles;
+    roles[IndexRole] = "s_index";
+    roles[NameRole] = "s_name";
+    roles[LastDateRole] = "s_lastDate";
+    roles[SlotIdRole] = "s_slotId";
+
+    roles[SetIndexRole] = "s_setIndex";
+    roles[SetNameRole] = "s_setName";
+    roles[SetLastDateRole] = "s_setLastDate";
+    roles[SetBonsaiIdRole] = "s_setBonsaiId";
+
+    return roles;
+}
+
+SlotModel::SlotModel(QObject* parent):
+    QAbstractListModel(parent)
 {
 }
 
@@ -31,3 +48,4 @@ bool SlotModel::setData(const QModelIndex &index, const QVariant &value, int rol
 bool SlotModel::createTable(QSqlDatabase &db)
 {
 }
+*/

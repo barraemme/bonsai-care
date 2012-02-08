@@ -101,6 +101,7 @@ Item {
                     font {
                         pixelSize: container.headerTextSize*2
                         bold: false
+                        weight: Font.Light
                     }
 
                     Behavior on color {
@@ -184,8 +185,8 @@ Item {
                     text: dayName
 
                     font {
-                        pixelSize: container.headerTextSize
-                        bold: true
+                        pixelSize: container.headerTextSize                        
+                        weight: Font.Bold
                     }
 
                     Behavior on color {

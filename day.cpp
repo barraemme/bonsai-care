@@ -8,9 +8,10 @@
 // Platform includes
 #include <QtCore/QDataStream>
 #include <QtCore/QDebug>
+#include <QDate>
 
 // Internal includes
-//#include "daymodel.h"
+#include "operationmodel.h"
 //#include "timeslot.h"
 
 /*!
@@ -49,6 +50,10 @@ int Day::dayIndex() const
     return m_day.toJulianDay();
 }
 
+QDate Day::date() const
+{
+    return m_day;
+}
 
 /*QDataStream &operator<<(QDataStream &stream, const Day &day)
 {

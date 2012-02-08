@@ -176,12 +176,18 @@ void BonsaiModel::addRow(Bonsai* item)
      beginInsertRows(QModelIndex(), m_items.count(), m_items.count()+1);
      m_items.append(item);
      endInsertRows();    
+     emit addedBonsaiRow(item);
  }
 
 void BonsaiModel::endWorker()
  {
     thread->terminate();
  }
+
+int BonsaiModel::getIdByIndex(const int index) const
+{
+   return m_items.at(index)->index();
+}
 
 /*bool BonsaiModel::removeRows(int position, int rows, const QModelIndex &parent)
 {

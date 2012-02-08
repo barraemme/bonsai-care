@@ -9,14 +9,14 @@
 #include <QtCore/QTime>
 #include <QtCore/QVariant>
 #include <QtCore/QHash>
-#include "operation.h"
+#include "operationmodel.h"
 
 class Slot : public QObject
 {
     Q_OBJECT
 
 public:
-    Slot(int bonsaiId, QObject *parent = 0);
+    Slot(const int bonsaiId, const QDate &day, OperationModel* operationModel, QObject *parent = 0);
     virtual ~Slot();
 
 public:
@@ -34,20 +34,20 @@ public:
 
     bool spanned() const;
     int parentIndex() const;
-    int hourId() const;*/
+    int hourId() const;
 
-/*signals:
+signals:
       void dataChanged();*/
 
-private:    
-    QList<Operation*> m_items;
+private:
     /*QString m_data;
     int m_hours;
     bool m_spanned;*/
     int m_bonsai_id;
-
+    QDate m_date;
+    OperationModel* m_operation_model;
     /*friend QDataStream &operator<<(QDataStream &, const Timeslot &);
     friend QDataStream &operator>>(QDataStream &, Timeslot &);*/
 };
 
-#endif // TIMESLOT_H
+#endif // SLOT_H

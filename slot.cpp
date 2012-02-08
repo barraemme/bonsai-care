@@ -14,15 +14,14 @@
   \brief Slot depicts one calendar event, which can span over multiple hours.
 */
 
-Slot::Slot(int bonsaiId, QObject *parent) :
-    QObject(parent), m_bonsai_id(bonsaiId), m_items()
+Slot::Slot(const int bonsaiId, const QDate &day, OperationModel* operationModel, QObject *parent) :
+    QObject(parent), m_bonsai_id(bonsaiId), m_date(day), m_operation_model(operationModel)
 {
+    qDebug() << "created Slot " << bonsaiId << " - " << day;
 }
 
 Slot::~Slot()
 {
-    qDeleteAll( m_items);
-    m_items.clear();
 }
 
 /*
@@ -61,6 +60,7 @@ bool Slot::setHourSpan(int hours)
 
     return false;
 }
+
 
 QString Slot::startTime() const
 {

@@ -17,15 +17,17 @@ class Day : public QObject
 
 public:
     Day(const QDate &date, QObject *parent = 0);
+    Day(const Day &date, QObject *parent = 0);
     //virtual ~Day();
 
-public slots:
+public:
     //QObject *items() const;
-    QString dayName() const;
-    QString monthName() const;
-    int dayOfWeekIndex() const;
-    int monthIndex() const;
-    int dayIndex() const;
+    Q_INVOKABLE QString dayName() const;
+    Q_INVOKABLE QString monthName() const;
+    Q_INVOKABLE int dayOfWeekIndex() const;
+    Q_INVOKABLE int monthIndex() const;
+    Q_INVOKABLE int dayIndex() const;
+    QDate date() const;
 
 private:
     QDate m_day;

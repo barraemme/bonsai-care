@@ -9,6 +9,7 @@
 #include <QSqlQuery>
 #include <QDate>
 #include "operation.h"
+#include "day.h"
 
 class OperationModel : public QAbstractListModel
 {
@@ -19,7 +20,7 @@ public:
         IndexRole = Qt::UserRole+1,
         NameRole,
         LastDateRole,
-        SlotIdRole,
+        BonsaiIdRole,
         SetIndexRole,
         SetNameRole,
         SetLastDateRole,
@@ -28,7 +29,7 @@ public:
     static QHash<int, QByteArray> roleNames();
 
 public:
-    explicit OperationModel(const QSqlDatabase &db, const int slotId, QObject* parent=0);
+    explicit OperationModel(const int bonsaiId, const QDate &lastDate, QObject* parent=0);
     virtual ~OperationModel();
 
 public: // From QAbstractListModel
@@ -63,7 +64,8 @@ public: // From QAbstractListModel
 private:
     QList<Operation*> m_items;
     QSqlDatabase db;
-    int m_slot_id;
+    int m_bonsai_id;
+    QDate m_last_date;
     //QThread *thread;
     //BonsaiWorker *workerThread;
 

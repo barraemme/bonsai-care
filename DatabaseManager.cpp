@@ -70,7 +70,7 @@ bool DatabaseManager::initDB()
         //createSpecieTable();
         BonsaiModel::createTable(db);
         OperationModel::createTable(db);
-        SlotModel::createTable(db);
+        //SlotModel::createTable(db);
         //createBonsaierTable();
     }
 

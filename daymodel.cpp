@@ -10,8 +10,10 @@
 #include <QSqlQuery>
 #include <QThread>
 
+#include "operationmodel.h"
 #include "slotmodel.h"
 #include "day.h"
+
 // Constants
 //const int DAYS_FIRST_SLOT = 6;
 
@@ -29,19 +31,15 @@ QHash<int, QByteArray> DayModel::roleNames()
     return roles;
 }
 
-DayModel::DayModel(const QDate &day, QObject *parent) :
-    QAbstractListModel(parent), m_day(day), m_items()
+DayModel::DayModel(const QDate &day, const BonsaiModel *bonsaiModel, QObject *parent) :
+    QAbstractListModel(parent), m_day(day), m_bonsai_model(bonsaiModel), m_items()
 {    
 
 //    // Enable following comments, if you would like to generate the day
 //    // full of example events.
-//    QString templateItem("Day %1 Item %2");
-    /*for (int i = DAYS_FIRST_SLOT; i < SLOTS_IN_A_DAY; i++) {
-        Timeslot *slot = new Timeslot(i-DAYS_FIRST_SLOT, QTime(i,0,0,0));
-        connect(slot, SIGNAL(dataChanged()), this, SLOT(handleItemChange()));
-//        slot->setItemData(templateItem.arg(m_dayName).arg(i));
-        m_items.append(slot);
-    }*/
+//    QString templateItem("Day %1 Item %2");    
+
+    connect(bonsaiModel, SIGNAL(addedBonsaiRow(Bonsai*)),this, SLOT(addSlot(Bonsai*)));
 
     setRoleNames(DayModel::roleNames());
 
@@ -54,11 +52,28 @@ DayModel::DayModel(const QDate &day, QObject *parent) :
 //    }
 }
 
+void DayModel::addSlot(Bonsai* bonsai)
+{
+    OperationModel* op = new OperationModel(bonsai->index(), m_day.date());
+    Slot *sl = new Slot(bonsai->index(), m_day.date(), op);
+    m_items.append(sl);
+}
+
 DayModel::~DayModel()
 {
     qDeleteAll(m_items);
     m_items.clear();
 }
+
+/*OperationModel* DayModel::daySlots(){
+    SlotModel *sl = new SlotModel(m_day.date());
+    return sl;
+}
+
+OperationModel* DayModel::dayOperationsByBonsaiId(const int bonsaiId){
+    OperationModel *op = new OperationModel(bonsaiId, m_day.date());
+    return op;
+}*/
 
 int DayModel::rowCount(const QModelIndex &parent) const
 {
@@ -103,9 +118,9 @@ Qt::ItemFlags DayModel::flags( const QModelIndex & index) const
 }
 
 // For editing
-bool DayModel::setData( const QModelIndex &index, const QVariant &value, int role)
+/*bool DayModel::setData( const QModelIndex &index, const QVariant &value, int role)
 {
-   /* qDebug() << "setData(), index" << index << "role" << role;
+    qDebug() << "setData(), index" << index << "role" << role;
 
     if (index.isValid()) {
         int row = index.row();
@@ -125,7 +140,7 @@ bool DayModel::setData( const QModelIndex &index, const QVariant &value, int rol
         }
     } else {
         return false;
-    }*/
+    }
 
     return false;
 }

@@ -31,11 +31,10 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QDeclarativeContext *rootContext = viewer->rootContext();
 
     // Set font
-    int fontId = QFontDatabase::addApplicationFont("qml/resources/nokia_pure_font.ttf");
-    QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
-    for(int i = 0; i < fontFamilies.count(); i++) {
-        qDebug() << "Font family: " << fontFamilies.at(i);
-    }
+    QFontDatabase::addApplicationFont("qml/Bonsaicare/resources/NokiaPureText.ttf");
+    QFontDatabase::addApplicationFont("qml/Bonsaicare/resources/NokiaPureTextBold.ttf");
+    QFontDatabase::addApplicationFont("qml/Bonsaicare/resources/NokiaPureTextLight.ttf");
+
 
     QFont nokiaFont;
     nokiaFont.setFamily("Nokia Pure Text");
@@ -61,9 +60,6 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QScopedPointer<MonthModel> months(new MonthModel());
     rootContext->setContextProperty("months", months.data());
 
-    //used for displaying week days on top
-    QScopedPointer<WeekModel> week(new WeekModel());
-    rootContext->setContextProperty("week", week.data());
 
     //used to list all species of bonsais
     QScopedPointer<SpecieModel> bonsaiItem(new SpecieModel());
@@ -74,6 +70,11 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QScopedPointer<BonsaiModel> bonsai(new BonsaiModel(db->getDB(), bonsaiItem.data()));
     bonsai->init();
     rootContext->setContextProperty("bonsai", bonsai.data());
+
+    //used for displaying week days on top
+    QScopedPointer<WeekModel> week(new WeekModel(bonsai.data()));
+    rootContext->setContextProperty("week", week.data());
+
 
     rootContext->setContextProperty(QString("cp_versionNumber"), VERSION_NUMBER);
 

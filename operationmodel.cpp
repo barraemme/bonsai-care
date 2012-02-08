@@ -1,6 +1,11 @@
 #include <QtCore/QDebug>
 #include <QtGlobal>
+#include <QDir>
+#include <QVariant>
+#include <QBuffer>
+#include <QFile>
 #include "operationmodel.h"
+#include "day.h"
 
 QHash<int, QByteArray> OperationModel::roleNames()
 {
@@ -8,7 +13,7 @@ QHash<int, QByteArray> OperationModel::roleNames()
     roles[IndexRole] = "o_index";
     roles[NameRole] = "o_name";
     roles[LastDateRole] = "o_lastDate";
-    roles[SlotIdRole] = "o_slotId";
+    roles[BonsaiIdRole] = "o_slotId";
 
     roles[SetIndexRole] = "o_setIndex";
     roles[SetNameRole] = "o_setName";
@@ -18,9 +23,18 @@ QHash<int, QByteArray> OperationModel::roleNames()
     return roles;
 }
 
-OperationModel::OperationModel(const QSqlDatabase &db, const int slotId, QObject* parent) :
-    QAbstractListModel(parent), db(db), m_items(), m_slot_id(slotId)
+OperationModel::OperationModel(const int bonsaiId, const QDate &lastDate, QObject* parent) :
+    QAbstractListModel(parent), m_items(), m_bonsai_id(bonsaiId), m_last_date(lastDate)
 {
+    // Find QSLite driver
+    db = QSqlDatabase::addDatabase("QSQLITE", "OperationModelConnection");
+    // http://doc.trolltech.com/sql-driver.html#qsqlite
+
+    QString path(QDir::home().path());
+    path.append(QDir::separator()).append("Bonsai.db.sqlite");
+    path = QDir::toNativeSeparators(path);
+    db.setDatabaseName(path);
+
     init();
     setRoleNames(OperationModel::roleNames());
 }
@@ -40,13 +54,13 @@ void OperationModel::init()
 
     emit fetch();*/
 
-
-    if (db.isOpen()) {
+    db.open();
 
         QSqlQuery query(db);
 
-        query.prepare("select id, last_date, name, slot_id,  from operations where slot_id = ?");
-        query.bindValue(0, m_slot_id);
+        query.prepare("select id, last_date, name, bonsai_id,  from operations where bonsai_id = ? and last_date = ?");
+        query.bindValue(0, m_bonsai_id);
+        query.bindValue(0, m_last_date);
 
         if( !query.exec() )
             qDebug() << query.lastError();
@@ -62,7 +76,8 @@ void OperationModel::init()
            );
            addRow(op);
         }
-    }
+   db.close();
+
 }
 
 void OperationModel::addRow(Operation* item)
@@ -90,7 +105,7 @@ QVariant OperationModel::data(const QModelIndex &index, int role) const
                 return QVariant(item->name());
             } else if (role == LastDateRole) {
                 return QVariant(item->lastDate());
-            } else if (role == SlotIdRole) {
+            } else if (role == BonsaiIdRole) {
                 return QVariant(item->slotId());
             } else {
                 return QVariant("ERR: Unknown role for daymodel: " + role);
@@ -162,7 +177,7 @@ bool OperationModel::createTable(QSqlDatabase &db)
         ret = query.exec("CREATE TABLE operations "
                          "(id integer primary key, "
                          "name varchar(15)"
-                         "slot_id integer, "
+                         "bonsai_id integer, "
                          "last_date date)");
 
          if( !ret )

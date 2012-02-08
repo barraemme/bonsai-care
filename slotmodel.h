@@ -8,10 +8,10 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QDate>
-#include "bonsai.h"
-#include "operation.h"
+//#include "bonsai.h"
+//#include "daymodel.h"
 
-class SlotModel : public QAbstractListModel
+/*class SlotModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
@@ -23,7 +23,7 @@ public:
     static QHash<int, QByteArray> roleNames();
 
 public:
-    explicit SlotModel(QObject* parent=0);
+    explicit SlotModel(QDate &day, QObject* parent=0);
     virtual ~SlotModel();
 
 public: // From QAbstractListModel
@@ -38,6 +38,6 @@ public:
 private:
     QList<Operation*> m_items;
     QSqlDatabase db;
-};
+};*/
 
 #endif // SLOTMODEL_H
