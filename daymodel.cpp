@@ -26,10 +26,25 @@
 QHash<int, QByteArray> DayModel::roleNames()
 {
     QHash<int, QByteArray> roles;
-    roles[WeekDayIndexRole] = "weekDayIndex";
-    roles[DayNameRole] = "dayName";
+    roles[WeekDayIndexRole] = "d_weekDayIndex";
+    roles[DayNameRole] = "d_dayName";
     return roles;
 }
+
+DayModel::DayModel(QObject *parent):
+    QAbstractListModel(parent), m_day(), m_items()
+{
+    setRoleNames(DayModel::roleNames());
+}
+
+DayModel::DayModel(const DayModel& dayModel,  QObject *parent):
+    QAbstractListModel(parent)
+{
+    m_day = dayModel.day();
+    m_items = dayModel.items();
+    setRoleNames(DayModel::roleNames());
+}
+
 
 DayModel::DayModel(const QDate &day, const BonsaiModel *bonsaiModel, QObject *parent) :
     QAbstractListModel(parent), m_day(day), m_bonsai_model(bonsaiModel), m_items()
@@ -39,7 +54,7 @@ DayModel::DayModel(const QDate &day, const BonsaiModel *bonsaiModel, QObject *pa
 //    // full of example events.
 //    QString templateItem("Day %1 Item %2");    
 
-    connect(bonsaiModel, SIGNAL(addedBonsaiRow(Bonsai*)),this, SLOT(addSlot(Bonsai*)));
+    connect(bonsaiModel, SIGNAL(addedBonsaiRow(Bonsai*)),this, SLOT(addRow(Bonsai*)));
 
     setRoleNames(DayModel::roleNames());
 
@@ -52,11 +67,37 @@ DayModel::DayModel(const QDate &day, const BonsaiModel *bonsaiModel, QObject *pa
 //    }
 }
 
-void DayModel::addSlot(Bonsai* bonsai)
+Day& DayModel::day()
 {
+    return m_day;
+}
+
+QList<Slot*>& DayModel::items()
+{
+    return m_items;
+}
+
+BonsaiModel* DayModel::bonsaiModel() const
+{
+    return m_bonsai_model;
+}
+
+
+void DayModel::addRow(Bonsai* bonsai)
+{    
+    qDebug() << Q_FUNC_INFO;
+
     OperationModel* op = new OperationModel(bonsai->index(), m_day.date());
     Slot *sl = new Slot(bonsai->index(), m_day.date(), op);
+
+    qDebug() << "beginInsertRows";
+    beginInsertRows(QModelIndex(), m_items.count(), m_items.count());
+
     m_items.append(sl);
+
+    qDebug() << "endInsertRows "<<m_items.count();
+    endInsertRows();
+    qDebug() << "END" <<Q_FUNC_INFO;
 }
 
 DayModel::~DayModel()

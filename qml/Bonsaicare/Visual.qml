@@ -12,7 +12,7 @@ Item {
     property bool isE6: false
 
     // General definitions (to define the Cell & Header item height, colors etc.)
-    property int generalFontSize: 15//platformStyle.fontSizeMedium
+    property int generalFontSize: platformStyle.fontSizeMedium
     property int generalLeftMargin: inLandscape ? 50 : 25
     property int generalRightMargin: inLandscape ? 50 : 10
     property int generalTopMargin: 10
@@ -21,14 +21,14 @@ Item {
     property int textTopMargin: 3
     property color borderColor: "#C4AE94"
     property color generalTextColor: "#6A5147"
-    property int itemHeight: 170
-    property int bonsaiColumnWidth: inLandscape ? 140 : 100
+    property int itemHeight: 250
+    //property int bonsaiColumnWidth: inLandscape ? 140 : 100
 
     // For PivotHeader
     property int landscapeHeaderItemWidth: 214
     property int portraitHeaderItemWidth: 182
     property int headerHeight: isE6 ? 100 : 75
-    property int headerTextSize: /*platformStyle.fontSizeMedium*/ 15 * 1.75
+    property int headerTextSize: platformStyle.fontSizeMedium * 1.75
 
     // For bonsaiColumn
     property color delimiterColor: "#DF4C34"
@@ -46,7 +46,7 @@ Item {
 
     // For EventDetailsView
     property int largeTopMargin: 50
-    property int detailsFontSize: 20 /*platformStyle.fontSizeLarge*/
+    property int detailsFontSize: platformStyle.fontSizeLarge
     property color detailsTextColor: generalTextColor
     property color detailsHeaderTextColor: "#BE5215"
 

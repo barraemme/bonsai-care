@@ -26,8 +26,9 @@ QHash<int, QByteArray> BonsaiModel::roleNames()
 // ---------------------------------------------------------------------------
 // Bonsai
 // ---------------------------------------------------------------------------
-BonsaiModel::BonsaiModel(const QSqlDatabase &db, SpecieModel* itemModel, QObject* parent) :
-    QAbstractListModel(parent), db(db), m_itemmodel(itemModel), m_items()
+
+BonsaiModel::BonsaiModel(SpecieModel* itemModel, QObject* parent) :
+    QAbstractListModel(parent), m_itemmodel(itemModel), m_items()
 {
     qRegisterMetaType<Bonsai>("Bonsai");
     qRegisterMetaType<QSqlDatabase>("QSqlDatabase");
@@ -36,16 +37,20 @@ BonsaiModel::BonsaiModel(const QSqlDatabase &db, SpecieModel* itemModel, QObject
     thread = new QThread;
     workerThread = new BonsaiWorker(m_itemmodel);
     workerThread->moveToThread(thread);
+
+    //start thread with readAll on init
+    connect(this, SIGNAL(fetch()), workerThread, SLOT(readAll()));
+    //add row to model
+    connect(workerThread, SIGNAL(fetched(Bonsai*)),this, SLOT(addRow(Bonsai*)));
+    //notify job done
+    connect(workerThread, SIGNAL(finished()),thread, SLOT(quit()));
+
     setRoleNames(BonsaiModel::roleNames());
 }
 
 void BonsaiModel::init()
 {
     thread->start();
-    connect(this, SIGNAL(fetch()), workerThread, SLOT(readAll()));
-    connect(workerThread, SIGNAL(fetched(Bonsai*)),this, SLOT(addRow(Bonsai*)));
-    connect(workerThread, SIGNAL(finished()),this, SLOT(endWorker()));
-
     emit fetch();
 }
 
@@ -146,9 +151,10 @@ bool BonsaiModel::createTable(QSqlDatabase &db)
                          "item_id integer, "
                          "date date)");
 
+        /****** TODO da eliminare **********************/
         query.prepare("INSERT INTO bonsai VALUES (?,?,?);");
         query.bindValue(0,1);
-        query.bindValue(1,6);
+        query.bindValue(1,1);
         query.bindValue(2,QDate::fromString("20000510", "yyyyMMdd"));
 
         if( !query.exec() )
@@ -166,27 +172,38 @@ bool BonsaiModel::createTable(QSqlDatabase &db)
             qDebug() << query.lastError();
          else
             qDebug() << "Table created!";
+
+         /********* FINE ELIMINAZIONE *******************************/
     }
     return ret;
 }
 
 void BonsaiModel::addRow(Bonsai* item)
  {
-    //TODO bloccare m_items     
-     beginInsertRows(QModelIndex(), m_items.count(), m_items.count()+1);
-     m_items.append(item);
-     endInsertRows();    
-     emit addedBonsaiRow(item);
- }
+     qDebug() << Q_FUNC_INFO;
 
-void BonsaiModel::endWorker()
- {
-    thread->terminate();
+     //TODO bloccare m_items
+     qDebug() << "beginInsertRows";
+     beginInsertRows(QModelIndex(), m_items.count(), m_items.count());
+
+     m_items.append(item);
+
+     qDebug() << "endInsertRows "<<m_items.count();
+     endInsertRows();
+
+     qDebug() << "emit addedBonsaiRow(item);";
+     emit addedBonsaiRow(item);     
+
+     qDebug() << "END " << Q_FUNC_INFO;
  }
 
 int BonsaiModel::getIdByIndex(const int index) const
 {
-   return m_items.at(index)->index();
+    qDebug() << Q_FUNC_INFO;
+    qDebug() << "count :"<< m_items.count() <<", index: "<<index;
+    if(index < m_items.count())
+        return m_items.at(index)->index();
+    return 0;
 }
 
 /*bool BonsaiModel::removeRows(int position, int rows, const QModelIndex &parent)
@@ -283,7 +300,7 @@ bool BonsaiModel::readAll()
 int BonsaiModel::nextId()
 {
     int ret = 0;
-    if (db.isOpen()) {
+    /*if (db.isOpen()) {
         QSqlQuery query("select id from id", db);
         if (query.next()) {
             // Get last used id
@@ -298,7 +315,7 @@ int BonsaiModel::nextId()
             query.exec("insert into id values(1)");
             ret = 1;
         }
-    }
+    }*/
 
     return ret;
 }
@@ -307,8 +324,6 @@ QString BonsaiModel::getAgeString(QDate date){
 
     double varYear = 365.25;
     double varMonth = 30.43;
-
-    qDebug() << "DATE :"<<date.toString();
 
     int days = date.daysTo(QDate::currentDate());
     int years = qFloor(days / varYear);
@@ -337,7 +352,6 @@ QString BonsaiModel::getAgeString(QDate date){
     if(years>0)
         result.append(QString("%1 years ").arg(years));
 
-    qDebug() << "date span from NOW :"<< result;
     return result;
 }
 

@@ -40,7 +40,7 @@ public:
     static QHash<int, QByteArray> roleNames();
 
 public:
-    explicit BonsaiModel(const QSqlDatabase &db, SpecieModel* itemModel, QObject* parent=0);
+    explicit BonsaiModel(SpecieModel* itemModel, QObject* parent=0);
     virtual ~BonsaiModel();
 
 public: // From QAbstractListModel
@@ -62,20 +62,18 @@ public: // From QAbstractListModel
                                           const int day);*/
     Q_INVOKABLE int nextId();
     Q_INVOKABLE QString getAgeString(QDate date);
-    int getIdByIndex(const int index) const;
+    Q_INVOKABLE int getIdByIndex(const int index) const;
 
 public slots:
     // Exposed to QML for managing the model.
-    void addRow(Bonsai* item);
-    void endWorker();
+    void addRow(Bonsai* item);    
 
 signals:
     void fetch();
     void addedBonsaiRow(Bonsai* item);
 
 private:
-    QList<Bonsai*> m_items;
-    QSqlDatabase db;
+    QList<Bonsai*> m_items;    
     SpecieModel* m_itemmodel;
     QThread *thread;
     BonsaiWorker *workerThread;

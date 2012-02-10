@@ -26,6 +26,8 @@ public:
     static QHash<int, QByteArray> roleNames();
 
 public:
+    explicit DayModel(QObject *parent = 0);
+    explicit DayModel(const DayModel& dayModel,  QObject *parent = 0);
     explicit DayModel(const QDate &day, const BonsaiModel* bonsaiModel, QObject *parent = 0);
     virtual ~DayModel();
 
@@ -36,13 +38,17 @@ public: // From QAbstractListModel
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     //bool setData( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
 
+    Day& day();
+    QList<Slot*>& items();
+    BonsaiModel* bonsaiModel() const;
+
 public:
     Q_INVOKABLE QString dayName() const;
     Q_INVOKABLE int weekDayIndex() const;
     Q_INVOKABLE int monthDayIndex() const;
 
 public slots:
-    void addSlot(Bonsai* bonsai);
+    void addRow(Bonsai* bonsai);
     //Q_INVOKABLE OperationModel* dayOperations(const int bonsaiId);
     // Exposed to QML for managing the Cell.
     /*void handleItemChange();

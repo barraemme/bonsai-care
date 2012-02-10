@@ -1,71 +1,16 @@
-import QtQuick 1.0
+import QtQuick 1.1
+import com.nokia.symbian 1.1
+//import com.nokia.meego 1.0
 import "Core" 1.1 as Core
 import "resources/script.js" as Script
 
-Rectangle {
-    id: window;
+Window {
+    id: mainWindow;
 
-    // Platform differentitation for visual style & theming.
-    Visual {
-        id: visual
+    property bool landscapeLayout: !mainWindow.inPortrait
 
-        // Bind the landscape layout property in order to get the correct
-        // margin values etc. for the different layouts
-        inLandscape: view.inPortrait
-
-        // Check, whether or not the device is E6
-        isE6: window.height == 480
-    }
-
-    function orientationChanged(orientation) {
-
-            if(orientation == 1) {
-                view.state = "Portrait"
-                //view.rotation = 0
-                //view.width = window.width; view.height = window.height
-            }
-            else if(orientation == 2) {
-                view.state = "PortraitInverted"
-               // view.rotation = 180
-                //view.width = window.width; view.height = window.height
-            }
-            else if(orientation == 3) {
-                view.state = "LandscapeInverted"
-               //view.rotation = 270
-                //view.width = window.height; view.height = window.width
-            }
-            else if(orientation == 4) {
-                view.state = "Landscape"
-                //view.rotation = 90
-                //view.width = window.height; view.height = window.width
-            }
-        }
-
-
-    Rectangle {
-        id: view
-        state:  "Landscape"
-        property bool inPortrait: (state == "Portrait" || state == "PortraitInverted");
-        Behavior on rotation { RotationAnimation { direction: RotationAnimation.Shortest; duration: 500; easing.type: Easing.OutBounce } }
-        Behavior on width    { NumberAnimation   { duration: 500 } }
-        Behavior on height   { NumberAnimation   { duration: 500 } }
-        property int angle: 0;
-        anchors.centerIn: parent
-        width: window.width; height: window.height
-
-        Loader{
-            id:loader
-            source: "Pivot.qml"
-            width: view.width;
-            height: view.height
-            anchors.fill: parent
-
-        }
-
-        /*Connections {
-            target: loader.item
-            onChangeApp: Script.switchApp(app)
-         }*/
+    state: "start"
+    
     // Background image for the Pages
     /*Image {
         id: bgImg
@@ -81,68 +26,124 @@ Rectangle {
                   : "Core/images/diary_360x640.png"
     }*/
 
+    // Platform differentitation for visual style & theming.
+    Visual {
+        id: visual
+
+        // Bind the landscape layout property in order to get the correct
+        // margin values etc. for the different layouts
+        inLandscape: mainWindow.landscapeLayout
+
+        // Check, whether or not the device is E6
+        isE6: mainWindow.height == 480
+    }
+
+    /*ListModel {
+        id: titles
+                ListElement {
+                    title: "New Bonsai"
+                }
+
+                ListElement {
+                    title: "Edit Bonsai"
+                }
+            }*/
+
+    // Application uses the statusbar, for balancing the view look and feel
+    // as it also uses the toolbar.
+    StatusBar {
+        id: statusBar
+        anchors.top: parent.top
+    }
+
+    PageStack {
+        id: pageStack
+        toolBar: toolBar
+
+        anchors {
+            top: statusBar.bottom
+            bottom: toolBar.top
+            left: parent.left
+            right: parent.right
+        }
+
+        onCurrentPageChanged: {
+            // Force the keyboard focus always on the PivotPage.
+            // (coz e.g. EventEditView's text input might have changed it).
+            /*if (pageStack.currentPage == mainPivot) {
+                mainPivot.currentPage.forceKeyboardFocus();
+            }*/
+        }
+
+        // Uses the Pivot component for showing/navigating through content.
+        Pivot {
+            id: mainPivot
+            anchors.fill: parent
+
+            // Default ToolBarLayout, shown when the main Pivot view is visible.
+            tools: ToolBarLayout {
+                // Button for exiting the application.
+                ToolButton {
+                    iconSource: "toolbar-back"
+                    onClicked: {
+                        if (pageStack.depth > 1) {
+                            pageStack.pop();
+                        } else {
+                            Qt.quit();
+                        }
+                    }
+                }
+
+                ToolButton {
+                    iconSource: "toolbar-add"
+                    onClicked: {
+                        pageStack.push(Qt.resolvedUrl("BonsaiAddView.qml"));
+                    }
+                }                
+            }
+        }
+    }
+
+    // ToolBar. Used for exiting the app & adding new event etc.
+    ToolBar {
+        id: toolBar
+        anchors.bottom: parent.bottom
+        tools: defaultTools
+    }
+
     states: [
         State {
-              name: "Landscape"
-              PropertyChanges {
-                target: view
-                /*rotation: 90
-                angle: 90
-                width: window.height
-                height: window.width*/
-              }
-            },
-            State {
-              name: "LandscapeInverted"
-              PropertyChanges {
-                target: view
-                /*rotation: 270
-                angle: 270
-                width: window.height
-                height: window.width*/
-              }
-            },
-            State {
-              name: "Portrait"
-              PropertyChanges {
-                target: view
-                /*rotation: 0
-                angle: 0
-                width: window.width
-                height: window.height*/
-              }
-            },
-            State {
-              name: "PortraitInverted"
-              PropertyChanges {
-                target: view
-                /*rotation: 180
-                angle: 180
-                width: window.width
-                height: window.height*/
-              }
+            name: "start"
+            PropertyChanges { target: mainWindow; x: width / 2; opacity: 0 }
+        },
+        State {
+            name: "end"
+            PropertyChanges { target: mainWindow; x: 0; opacity: 1 }
         }
     ]
 
     transitions: [
         Transition {
-            from: "*"
-            to: "*"
-
+            from: "start"; to: "end"
             ParallelAnimation {
-              RotationAnimation {
-                properties: "rotation"
-                duration: 250
-                direction: RotationAnimation.Shortest
-              }
-              PropertyAnimation {
-                target: window
-                properties: "x,y,width,height"
-                duration: 250
-              }
+                PropertyAnimation {
+                    properties: "x"
+                    easing.type: Easing.OutQuad
+                    duration: 300
+                }
+                PropertyAnimation {
+                    properties: "opacity"
+                    easing.type: Easing.Linear
+                    duration: 300
+                }
             }
-          }
+        }
     ]
-}
+
+
+    Component.onCompleted: {
+        pageStack.push(mainPivot);
+        mainWindow.state = "end";
+    }
 
 }

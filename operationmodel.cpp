@@ -27,7 +27,7 @@ OperationModel::OperationModel(const int bonsaiId, const QDate &lastDate, QObjec
     QAbstractListModel(parent), m_items(), m_bonsai_id(bonsaiId), m_last_date(lastDate)
 {
     // Find QSLite driver
-    db = QSqlDatabase::addDatabase("QSQLITE", "OperationModelConnection");
+    db = QSqlDatabase::addDatabase("QSQLITE", "OperationModelConnection"+bonsaiId+lastDate.toString());
     // http://doc.trolltech.com/sql-driver.html#qsqlite
 
     QString path(QDir::home().path());
@@ -35,7 +35,7 @@ OperationModel::OperationModel(const int bonsaiId, const QDate &lastDate, QObjec
     path = QDir::toNativeSeparators(path);
     db.setDatabaseName(path);
 
-    init();
+    //init();
     setRoleNames(OperationModel::roleNames());
 }
 
@@ -60,7 +60,7 @@ void OperationModel::init()
 
         query.prepare("select id, last_date, name, bonsai_id,  from operations where bonsai_id = ? and last_date = ?");
         query.bindValue(0, m_bonsai_id);
-        query.bindValue(0, m_last_date);
+        query.bindValue(1, m_last_date);
 
         if( !query.exec() )
             qDebug() << query.lastError();
@@ -82,10 +82,11 @@ void OperationModel::init()
 
 void OperationModel::addRow(Operation* item)
  {
-     //qDebug() << Q_FUNC_INFO << QThread::currentThread();
+     qDebug() << Q_FUNC_INFO;
      beginInsertRows(QModelIndex(), m_items.count(), m_items.count()+1);
      m_items.append(item);
      endInsertRows();
+     qDebug() << "END " << Q_FUNC_INFO;
  }
 
 int OperationModel::rowCount(const QModelIndex &parent) const

@@ -58,9 +58,7 @@ WeekModel::WeekModel(const BonsaiModel *bonsaiModel, QObject *parent) :
                 startMonth = i+1;
                 lastMonth = day->month();
                 m_monthsCount++;
-            }*/
-
-            qDebug() << day->weekDayIndex() << "created";
+            }*/           
         }
 
     }
@@ -124,7 +122,6 @@ bool WeekModel::setData( const QModelIndex &index, const QVariant &value, int ro
 
 QString WeekModel::dayName(int index) const
 {
-    qDebug() << "Requesting day for index" << index;
     if (index >= 0 && index < m_days.count()) {
         return QDate::longDayName(m_days.at(index)->weekDayIndex());
     }
@@ -147,8 +144,13 @@ int WeekModel::indexOfFirstDay(int month) const
 int WeekModel::indexOfMonth(int dayIndex) const
 {    
     int monthNum = m_days.at(dayIndex)->monthDayIndex();
-    qDebug()<<"day "<<m_days.at(dayIndex)->monthDayIndex()<<" month "<<monthNum;
     return monthNum-1;
+}
+
+DayModel* WeekModel::day(int dayIndex) const
+{
+    qDebug() << Q_FUNC_INFO;
+    return m_days.at(dayIndex);
 }
 
 bool WeekModel::save()
@@ -170,11 +172,12 @@ bool WeekModel::save()
 
 bool WeekModel::restore()
 {
-    qDebug() << "WeekModel::restore";
+
     bool ret = false;
     QFile file( getSaveFileName() );
     //ret = file.open(QIODevice::ReadOnly);
     if (ret) {
+        qDebug() << "WeekModel::restore";
         QDataStream in(&file);
 
         int version = 0;

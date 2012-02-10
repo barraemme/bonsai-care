@@ -2,25 +2,24 @@
 #include <QtGui/QFontDatabase>
 #include <QtCore/QDebug>
 #include <QtDeclarative/QDeclarativeContext>
-#include <QOrientationSensor>
+//#include <QOrientationSensor>
 #include <QThread>
-#include <QGraphicsObject>
+//#include <QGraphicsObject>
 #include "DatabaseManager.h"
 #include "speciemodel.h"
 #include "bonsaimodel.h"
 #include "qmlapplicationviewer.h"
-#include "orientationfilter.h"
 #include "monthmodel.h"
 #include "weekmodel.h"
 
-#ifdef Q_OS_SYMBIAN
+/*#ifdef Q_OS_SYMBIAN
     // Lock orientation in Symbian
     #include <eikenv.h>
     #include <eikappui.h>
     #include <aknenv.h>
     #include <aknappui.h>
 #endif
-
+*/
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
     QScopedPointer<QApplication> app(createApplication(argc, argv));
@@ -67,13 +66,14 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     rootContext->setContextProperty("bonsaiItem", bonsaiItem.data());
 
     //used to get all custom bonsais
-    QScopedPointer<BonsaiModel> bonsai(new BonsaiModel(db->getDB(), bonsaiItem.data()));
-    bonsai->init();
+    QScopedPointer<BonsaiModel> bonsai(new BonsaiModel(bonsaiItem.data()));
     rootContext->setContextProperty("bonsai", bonsai.data());
+    bonsai->init();
 
     //used for displaying week days on top
     QScopedPointer<WeekModel> week(new WeekModel(bonsai.data()));
     rootContext->setContextProperty("week", week.data());
+
 
 
     rootContext->setContextProperty(QString("cp_versionNumber"), VERSION_NUMBER);
@@ -94,7 +94,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     viewer->setMainQmlFile(QLatin1String("qml/Bonsaicare/main.qml"));
 
     //Attivo il sensore di orientamento
-    QOrientationSensor sensor;
+    /*QOrientationSensor sensor;
     OrientationFilter filter;
     sensor.addFilter(&filter);
     QObject *item = viewer->rootObject();
@@ -110,7 +110,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     QGLWidget *glWidget = new QGLWidget(fmt);
     viewer->setViewport(glWidget);
-#endif
+#endif*/
 
 #if defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(QT_SIMULATOR)
     viewer->showFullScreen();

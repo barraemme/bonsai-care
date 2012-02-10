@@ -1,7 +1,8 @@
 import QtQuick 1.0
+import com.nokia.symbian 1.1
 import "Core" 1.1 as Core
 
-Rectangle {
+Page {
     id: container
 
     property variant model: week
@@ -17,7 +18,7 @@ Rectangle {
     property alias headerPageIndex: headerRow.currentIndex
     // Attributes to define the Cell item height, colors etc.
     property int itemHeight: visual.itemHeight
-    property int bonsaiColumnWidth: visual.bonsaiColumnWidth
+    //property int bonsaiColumnWidth: visual.bonsaiColumnWidth
     property int generalLeftMargin: visual.generalLeftMargin
     property color borderColor: visual.borderColor
     property color headerTextColor: visual.headerTextColor
@@ -34,7 +35,7 @@ Rectangle {
     // TODO: Bind this rather to main Window's inPortrait property!
     property bool landscape: width > height
 
-    property bool landscapeLayout: !view.inPortrait
+    property bool landscapeLayout: mainWindow.landscapeLayout
 
 
     // A function to determine, whether we should show left to right or
@@ -70,52 +71,17 @@ Rectangle {
 
 
     function __initializePage(pageIndex, hidden) {
+        var pageComp = pivotPageComp;
+
         // Instantiate the component!
-        if (pivotPageComp.status == Component.Ready) {
-            container.currentPage = pivotPageComp.createObject(contentArea);
-            //container.currentPage.model = container.model.day(pageIndex).items();
+        if (pageComp.status == Component.Ready) {
+            console.log("PIVOT pageComp.createObject(contentArea)");
+            container.currentPage = pageComp.createObject(contentArea);
+            container.currentPage.model = container.model.day(pageIndex);
             container.currentPage.state = hidden ? "Hidden" : "";
             container.currentPageIndex = pageIndex;
         }
-    }
-
-    Component {
-        id: pivotPageComp
-
-        PivotPage {
-            id: pivotPage            
-            flickMargin: visual.flickMargin
-            itemHeight: container.itemHeight
-            borderColor: container.borderColor
-            textColor: container.headerTextColor
-            bonsaiIndex: bonsaiColumn.bonsaiIndex
-
-            onFlickedLeft: {
-                var idxx = 0;
-                if (container.currentPageIndex == 6) {
-                    console.log("Switching to page: 0 (FORCED)");
-                    idxx = 0;
-                } else {
-                    idxx = container.currentPageIndex + 1;
-                    console.log("Switching to page: " + idxx);
-                }
-                // Switch the page by setting the header to correct index too.
-                container.headerPageIndex = idxx;
-            }
-
-            onFlickedRight: {
-                var idxx = 0;
-                if (container.currentPageIndex == 0) {
-                    console.log("Switching to page: 6 (FORCED)");
-                    idxx = 6;
-                } else {
-                    idxx = container.currentPageIndex - 1;
-                    console.log("Switching to page: " + idxx);
-                }
-                container.headerPageIndex = idxx;
-            }
-        }
-    }
+    }    
 
     // Pivot headers, used for navigation.
     PivotHeader {
@@ -142,13 +108,13 @@ Rectangle {
             top: parent.top
         }
 
-        onIndexChanged: {
+        /*onIndexChanged: {
             console.log("BEFORE PAGECHANGE, container.currentPage: "
                         + container.currentPage);
            __switchPage(index, true);
             console.log("AFTER PAGECHANGE, container.currentPage: "
                         + container.currentPage);
-        }
+        }*/
     }
 
     // Show an hour column on the left side of the screen. Doesn't 'slide in/out'
@@ -159,7 +125,7 @@ Rectangle {
 
         // Set the bonsaiColumn to be quite narrow. The anchors will
         // define the bonsaiColumn's height.
-        width: container.bonsaiColumnWidth
+        width: parent.width//container.bonsaiColumnWidth
         itemHeight: container.itemHeight
         model: bonsai
         borderColor: container.borderColor
@@ -168,6 +134,7 @@ Rectangle {
             top: headerRow.bottom
             bottom: parent.bottom
             left: parent.left
+            right:parent.right
         }
 
         // Bind the bonsaiColumn's content Y-coordinate to the PivotPage's
@@ -186,17 +153,69 @@ Rectangle {
         }
     }
 
+    //Layer with tasks
+    Component {
+        id: pivotPageComp
+
+        PivotPage {
+            id: pivotPage
+            flickMargin: visual.flickMargin
+            itemHeight: container.itemHeight
+            borderColor: container.borderColor
+            textColor: container.headerTextColor
+            bonsaiIndex: bonsaiColumn.bonsaiIndex
+
+            model: week.day(0)
+            /*onFlickedLeft: {
+                var idxx = 0;
+                if (container.currentPageIndex == 6) {
+                    console.log("Switching to page: 0 (FORCED)");
+                    idxx = 0;
+                } else {
+                    idxx = container.currentPageIndex + 1;
+                    console.log("Switching to page: " + idxx);
+                }
+                // Switch the page by setting the header to correct index too.
+                container.headerPageIndex = idxx;
+            }
+
+            onFlickedRight: {
+                var idxx = 0;
+                if (container.currentPageIndex == 0) {
+                    console.log("Switching to page: 6 (FORCED)");
+                    idxx = 6;
+                } else {
+                    idxx = container.currentPageIndex - 1;
+                    console.log("Switching to page: " + idxx);
+                }
+                container.headerPageIndex = idxx;
+            }*/
+
+            // Initialize the first Day item.
+            Component.onCompleted: {
+                //console.log("PIVOT PivotPage created, count "+week.day(0).count);
+            }
+        }
+    }
+
 
     Item {
         id: contentArea
 
+        z: 1;
         clip: true
         anchors {
             top: headerRow.bottom
-            left: bonsaiColumn.right
+            //left: bonsaiColumn.right
+            left: parent.left
             right: parent.right
             bottom: parent.bottom
         }
+
+        Component.onCompleted: {
+            console.log("PIVOT contentArea created");
+        }
+
     }
 
     // Initialize the first Day item.
