@@ -1,8 +1,8 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'day.h'
 **
-** Created: Tue 31. Jan 19:05:36 2012
-**      by: The Qt Meta Object Compiler version 62 (Qt 4.7.3)
+** Created: Fri 10. Feb 18:31:18 2012
+**      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -11,7 +11,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'day.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 62
-#error "This file was generated using the moc from 4.7.3. It"
+#error "This file was generated using the moc from 4.7.4. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -23,25 +23,27 @@ static const uint qt_meta_data_Day[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
- // slots: signature, parameters, type, tag, flags
-      13,    4,    5,    4, 0x0a,
-      23,    4,    5,    4, 0x0a,
-      39,    4,   35,    4, 0x0a,
-      50,    4,   35,    4, 0x0a,
+ // methods: signature, parameters, type, tag, flags
+      13,    4,    5,    4, 0x02,
+      23,    4,    5,    4, 0x02,
+      39,    4,   35,    4, 0x02,
+      56,    4,   35,    4, 0x02,
+      69,    4,   35,    4, 0x02,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_Day[] = {
     "Day\0\0QString\0dayName()\0monthName()\0"
-    "int\0dayIndex()\0monthIndex()\0"
+    "int\0dayOfWeekIndex()\0monthIndex()\0"
+    "dayIndex()\0"
 };
 
 const QMetaObject Day::staticMetaObject = {
@@ -77,13 +79,15 @@ int Day::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
         case 1: { QString _r = monthName();
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 2: { int _r = dayIndex();
+        case 2: { int _r = dayOfWeekIndex();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
         case 3: { int _r = monthIndex();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
+        case 4: { int _r = dayIndex();
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
         default: ;
         }
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }
