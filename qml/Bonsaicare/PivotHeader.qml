@@ -52,6 +52,7 @@ Item {
         pathItemCount: 1
         preferredHighlightBegin: parent.landscapeLayout ? 2/4 : 2/3
         preferredHighlightEnd: parent.landscapeLayout ? 2/4 : 2/3
+        z:1
 
         path: Path {
             id: monthPath

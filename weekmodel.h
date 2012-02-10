@@ -11,6 +11,8 @@
 #include "daymodel.h"
 #include "bonsaimodel.h"
 
+Q_DECLARE_METATYPE(DayModel)
+
 class WeekModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -40,6 +42,7 @@ public:
     Q_INVOKABLE bool restore();
     Q_INVOKABLE int indexOfFirstDay(int month) const;
     Q_INVOKABLE int indexOfMonth(int dayIndex) const;
+    Q_INVOKABLE DayModel* day(int dayIndex) const;
 
 private:
     QString getSaveFileName() const;

@@ -1,4 +1,5 @@
 import QtQuick 1.0
+import com.nokia.symbian 1.1
 import "Core" 1.1 as Core
 
 // Flickable element is used for emulating left/right swiping page switch.
@@ -40,7 +41,7 @@ Flickable {
     width: parent ? parent.width : 0
     height: parent ? parent.height : 0
     contentWidth: parent.width
-    flickableDirection: Flickable.HorizontalFlick
+    flickableDirection: Flickable.HorizontalAndVerticalFlick
 
     // Use the x-axis to determine, if the user has 'flicked' far enough to
     // trigger the page change. This emulates the swipe gesture.
@@ -54,18 +55,68 @@ Flickable {
         }
     }
 
-
     // This ListView Element is the beef of the PivotPage, it contains the
     // day event data in a list.
     ListView {
         id: weekDay
 
+        anchors.fill: parent
+        model: container.model
+        snapMode: ListView.SnapToItem
+        interactive: true
+        //contentHeight: container.itemHeight * container.model.count
+        //cacheBuffer: 1920
+
+        delegate: Core.Cell {
+            itemHeight: container.itemHeight
+            textColor: container.textColor
+            borderColor: container.borderColor
+        }
+
+
+        onCountChanged: {
+            // When the component is FINALLY loaded, set the list to correct position.
+            console.log("WEEKDAY + its model loaded fully, position the ListView at: "
+                        + container.__startingBonsaiIndex);
+            console.log("PIVOTPAGE index: "+ container.bonsaiIndex+" WEEKDAY count:"+weekDay.model.count);
+            var idx = container.__startingBonsaiIndex;
+            /*if (model.isItemSpanned(idx)) {
+                // Ask for the spanned item's parent index and
+                // focus on that instead!
+                container.__startingBonsaiIndex = model.itemsParent(idx);
+                console.log("Trying to position on spanned index. " +
+                            "New parent index to be focused: "
+                            + container.__startingBonsaiIndex);
+            }*/
+            /*weekDay.positionViewAtIndex(container.__startingBonsaiIndex,
+                                        ListView.Beginning);
+            currentIndex = container.__startingBonsaiIndex;*/
+
+            // ALARM! Here's an ugly hack fix for the issue with long events not
+            // focusing the lists (weekDay & hourColumn) correctly. The root cause
+            // is unknown, but this has something to do with the ListView's
+            // contentHeight being calculated incorrectly, if there's delegates of
+            // different sizes...
+            //
+            // TODO HACK FIX WARNING ALARM
+            //
+            /*if (contentY != container.itemHeight*currentIndex) {
+                // Don't set the hack fix offset if it's negative
+                var offset = contentY - container.itemHeight*currentIndex;
+                if (offset > 0) {
+                    container.hackFixListOffset = weekDay.atYEnd
+                            ? (visual.isE6 ? offset+1 : offset+8)
+                            : offset
+                    console.log("ALARM! ALARM! Setting hack fix offset: "
+                                + container.hackFixListOffset);
+                }
+                console.log("Offset was: " + offset);
+            }*/
+        }
+
         Component.onCompleted: {
-            console.log("weekDay w*h: (" + weekDay.width +
-                        "x" + weekDay.height +
-                        ") content w*h: (" + weekDay.contentWidth +
-                        "x" + weekDay.contentHeight + ")" +
-                        " weekDay.count: " + weekDay.count);
+
+            console.log("PIVOTPAGE index: "+ container.bonsaiIndex+ ", count: "+weekDay.model.count);
 
             // TODO: As the PivotPage is being created dynamically, the ListView
             // isn't really complete when Component.onCompleted is called, but it's
@@ -78,60 +129,9 @@ Flickable {
 //            weekDay.forceActiveFocus();
         }
 
-        onCountChanged: {
-            // When the component is FINALLY loaded, set the list to correct position.
-            console.log("weekDay + its model loaded fully, position the ListView at: "
-                        + container.__startingBonsaiIndex);
-            var idx = container.__startingBonsaiIndex;
-            if (model.isItemSpanned(idx)) {
-                // Ask for the spanned item's parent index and
-                // focus on that instead!
-                container.__startingBonsaiIndex = model.itemsParent(idx);
-                console.log("Trying to position on spanned index. " +
-                            "New parent index to be focused: "
-                            + container.__startingBonsaiIndex);
-            }
-            weekDay.positionViewAtIndex(container.__startingBonsaiIndex,
-                                        ListView.Beginning);
-            currentIndex = container.__startingBonsaiIndex;
-
-            // ALARM! Here's an ugly hack fix for the issue with long events not
-            // focusing the lists (weekDay & hourColumn) correctly. The root cause
-            // is unknown, but this has something to do with the ListView's
-            // contentHeight being calculated incorrectly, if there's delegates of
-            // different sizes...
-            //
-            // TODO HACK FIX WARNING ALARM
-            //
-            if (contentY != container.itemHeight*currentIndex) {
-                // Don't set the hack fix offset if it's negative
-                var offset = contentY - container.itemHeight*currentIndex;
-                if (offset > 0) {
-                    container.hackFixListOffset = weekDay.atYEnd
-                            ? (visual.isE6 ? offset+1 : offset+8)
-                            : offset
-                    console.log("ALARM! ALARM! Setting hack fix offset: "
-                                + container.hackFixListOffset);
-                }
-                console.log("Offset was: " + offset);
-            }
-        }
-
-        anchors.fill: parent
-        model: container.model
-        snapMode: ListView.SnapToItem
-        interactive: true
-        //contentHeight: container.itemHeight * weekDay.count
-        //cacheBuffer: 1920
-
-        delegate: Core.Cell {
-            itemHeight: container.itemHeight
-            textColor: container.textColor
-            borderColor: container.borderColor
-        }
 
         onFlickEnded: {
-            console.log("flick ended");
+            console.log("PivotPage flick ended");
         }
 
         onCurrentIndexChanged: {
@@ -144,7 +144,7 @@ Flickable {
 
         // ScrollBar indicator.
         // Take the bottommost search field height into account.
-        /*ScrollDecorator {
+        ScrollDecorator {
             anchors {
                 right: parent.right
                 top: parent.top
@@ -152,7 +152,7 @@ Flickable {
             }
             // flickableItem binds the scroll decorator to the ListView.
             flickableItem: weekDay
-        }*/
+        }
 
         // Key navigation handling.
         // NOTE! Key navigation is currently disabled, as it doesn't fully work
@@ -406,4 +406,5 @@ Flickable {
             }
         }
     ]
+
 }

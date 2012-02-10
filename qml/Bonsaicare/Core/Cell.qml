@@ -18,6 +18,10 @@ Item {
     //height: spanned ? 0 : bonsaiSpan * container.itemHeight
     // Visible only, if not under bonsai spanning
     //visible: spanned ? false : true
+    Component.onCompleted: {
+        console.log("Cell" +d_dayName);
+    }
+
 
     // Gradient rectangle that indicates the "pressed" status of the item.
     Rectangle {
@@ -26,9 +30,9 @@ Item {
         //opacity: ma.pressed ? 1 : 0
 
         gradient: Gradient {
-            GradientStop { position: 0.0; color: Qt.rgba(0,0,0,0.1) }
-            GradientStop { position: 0.8; color: Qt.rgba(0,0,0,0.5) }
-            GradientStop { position: 1.0; color: Qt.rgba(0,0,0,0.1) }
+            GradientStop { position: 0.0; color: Qt.rgba(9,0,0,0.1) }
+            GradientStop { position: 0.8; color: Qt.rgba(9,0,0,0.5) }
+            GradientStop { position: 1.0; color: Qt.rgba(9,0,0,0.1) }
         }
 
         Behavior on opacity {
@@ -52,7 +56,7 @@ Item {
         // Cache the whole bonsaicolumn into memory.
         cacheBuffer: 1920
     }*/
-    /*
+
     Item {
         id: cellItem
 
@@ -61,7 +65,7 @@ Item {
         anchors.left: parent.left
         clip: true
 
-        BorderImage {
+        /*BorderImage {
             visible: cellText.text ? true : false
             width: container.selectionIndicatorWidth
             height: cellItem.height
@@ -69,7 +73,7 @@ Item {
                               : "gfx/selection_turquoise.png"
             border.left: 3; border.top: 10
             border.right: 35; border.bottom: 10
-        }
+        }*/
 
         Text {
             id: cellText
@@ -83,12 +87,12 @@ Item {
                 bottom: parent.bottom
                 bottomMargin: container.textTopMargin/2
             }
-            text: itemData
+            text: d_dayName//itemData
             color: container.textColor
             font.pixelSize: container.fontSize
             wrapMode: Text.WordWrap
         }
-    }*/
+    }
 
     // A thin line below the item to separate Cells from each other.
     Rectangle {
