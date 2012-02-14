@@ -54,7 +54,8 @@ SOURCES += main.cpp \
     operationmodel.cpp \
     operation.cpp \
     slot.cpp \
-    slotmodel.cpp
+    slotmodel.cpp \
+    scheduler.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -86,7 +87,8 @@ HEADERS += \
     operationmodel.h \
     operation.h \
     slot.h \
-    slotmodel.h
+    slotmodel.h \
+    scheduler.h
 
 RESOURCES += \
     resources.qrc
