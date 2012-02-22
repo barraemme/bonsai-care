@@ -6,14 +6,12 @@
 #include <QtCore/QDate>
 
 
-class BonsaiModel;
-
 class Bonsai : public QObject
 {
     Q_OBJECT
 
 public:
-    Bonsai(const int id, const QDate &date, const QString &name, const int itemId, QObject *parent = 0 );
+    Bonsai(const int id, const int year, const QString &name, const int itemId, QObject *parent = 0 );
     Bonsai(QObject *parent = 0);
     Bonsai(const Bonsai &bonsai);
     virtual ~Bonsai();
@@ -27,8 +25,8 @@ public:
     int itemId() const;
     void setItemId(const int);
 
-    QDate date() const;
-    void setDate(const QDate &date);
+    int date() const;
+    void setDate(const int date);
 
     QString name() const;
     void setName(const QString &name);
@@ -38,7 +36,7 @@ private:
     int m_id;
     int m_itemId;
     QString m_name;
-    QDate m_date;
+    int m_date;
 };
 
 #endif // BONSAI_H

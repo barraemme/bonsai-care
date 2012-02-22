@@ -15,11 +15,11 @@
 QHash<int, QByteArray> SpecieModel::roleNames()
 {
     QHash<int, QByteArray> roles;
-    roles[IndexRole] = "bi_index";
-    roles[NameRole] = "bi_name";
-
-    roles[SetIndexRole] = "bi_setIndex";
-    roles[SetNameRole] = "bi_setName";
+    roles[IndexRole] = "index";
+    roles[NameRole] = "name";
+    roles[DataRole] = "modelData";
+    roles[SetIndexRole] = "setIndex";
+    roles[SetNameRole] = "setName";
     return roles;
 }
 
@@ -52,16 +52,17 @@ int SpecieModel::rowCount(const QModelIndex &parent) const
 
 QVariant SpecieModel::data(const QModelIndex &index, int role) const
 {
+    qDebug()<<"Specie Model data: "<<role;
     if (index.isValid()) {
         int row = index.row();
         if (row >= 0 && row < m_items.count()) {
             Specie *item = m_items[row];
             if (role == IndexRole){
                 return QVariant(item->index());
-            } else if (role == NameRole) {
+            } else if (role == NameRole || role == DataRole) {
                 return QVariant(item->name());
             } else {
-                return QVariant("ERR: Unknown role for daymodel: " + role);
+                return QVariant("ERR: Unknown role for speciemodel: " + role);
             }
         } else {
             return QVariant("ERR: Invalid index");
@@ -115,7 +116,12 @@ bool SpecieModel::setData( const QModelIndex &index, const QVariant &value, int 
     return false;
 }
 
-QString SpecieModel::getSpecieNameById(const int &id) const
+int SpecieModel::count() const
+{
+    return m_items.count();
+}
+
+QString SpecieModel::getNameById(const int id) const
 {
   for(int row=0; row<m_items.size(); ++row) {
     if(m_items.at(row)->index() == id)
@@ -123,6 +129,16 @@ QString SpecieModel::getSpecieNameById(const int &id) const
   }
 
   return "";
+}
+
+QString SpecieModel::getNameByIndex(const int index) const
+{
+  return m_items.at(index)->name();
+}
+
+int SpecieModel::getIdByIndex(const int index) const
+{
+  return m_items.at(index)->index();
 }
 /*
 QVariant SpecieModel::updateSpecie(QSqlDatabase &db, const QVariant& id,
@@ -242,6 +258,8 @@ bool SpecieModel::parseXML() {
                             }
                             */
                             m_items.append(item);
+                            emit countChanged(m_items.count());
+
                         }
                 }
         }

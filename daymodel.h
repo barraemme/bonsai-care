@@ -26,9 +26,9 @@ public:
     static QHash<int, QByteArray> roleNames();
 
 public:
-    explicit DayModel(QObject *parent = 0);
-    explicit DayModel(const DayModel& dayModel,  QObject *parent = 0);
-    explicit DayModel(const QDate &day, const BonsaiModel* bonsaiModel, QObject *parent = 0);
+    /*explicit DayModel(QObject *parent = 0);
+    explicit DayModel(const DayModel &dayModel,  QObject *parent = 0);*/
+    explicit DayModel(const QDate &day, QObject *parent = 0);
     virtual ~DayModel();
 
 public: // From QAbstractListModel
@@ -40,7 +40,7 @@ public: // From QAbstractListModel
 
     Day& day();
     QList<Slot*>& items();
-    BonsaiModel* bonsaiModel() const;
+
 
 public:
     Q_INVOKABLE QString dayName() const;
@@ -71,7 +71,7 @@ private: // Data
     Day m_day;
     QList<Slot*> m_items;
     QSqlDatabase db;
-    const BonsaiModel *m_bonsai_model;
+
 
     /*friend QDataStream &operator<<(QDataStream &, const DayModel &);
     friend QDataStream &operator>>(QDataStream &, DayModel &);*/

@@ -15,10 +15,14 @@ class SpecieModel : public QAbstractListModel
 {
     Q_OBJECT   
 
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
+
+
 public:
     enum Roles {
         IndexRole = Qt::UserRole+1,
         NameRole,
+        DataRole,
         SetIndexRole,
         SetNameRole
       };
@@ -34,10 +38,13 @@ public: // From QAbstractListModel
     QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     bool setData( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
+    int count() const;
 
 public:
     // for SpecieTable
-    QString getSpecieNameById(const int &id) const;
+    Q_INVOKABLE QString getNameById(const int id) const;
+    Q_INVOKABLE QString getNameByIndex(const int index) const;
+    Q_INVOKABLE int getIdByIndex(const int index) const;
 
     /*Q_INVOKABLE QVariant insertSpecie(QSqlDatabase &db, const QVariant& name);
     Q_INVOKABLE QList<QObject*> Species(QSqlDatabase &db, const QVariant& useCache);
@@ -45,6 +52,8 @@ public:
                                         const QVariant& name);
     Q_INVOKABLE void deleteSpecie(QSqlDatabase &db, const int id);
     */
+signals:
+    void countChanged(int newCount);
 
 private:
     QList<Specie*> m_items;    

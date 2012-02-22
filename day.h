@@ -16,9 +16,9 @@ class Day : public QObject
     Q_OBJECT
 
 public:
-    Day(QObject *parent = 0);
+    //Day(QObject *parent = 0);
     Day(const QDate &date, QObject *parent = 0);
-    Day(const Day &date, QObject *parent = 0);
+    //Day(const Day &date, QObject *parent = 0);
     //virtual ~Day();
 
 public:

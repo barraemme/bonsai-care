@@ -31,7 +31,7 @@ Component {
              Loading { x: 1; y: 1; width: 65; height: 65; visible: realImage.status != Image.Ready }
              Image {
                  id: realImage;
-                 source: "images/small/s_spc_"+bi_index+".jpg";
+                 source: "images/small/s_spc_"+index+".jpg";
                  x: 1; y: 1;
                  width:65; height:65; opacity:0 ;
                  onStatusChanged: {
@@ -48,7 +48,7 @@ Component {
          }
 
          Text {
-             text: bi_name
+             text: name
              width: parent.width;
              font.pixelSize: 20;
              font.bold: true;

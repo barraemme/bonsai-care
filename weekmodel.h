@@ -11,7 +11,7 @@
 #include "daymodel.h"
 #include "bonsaimodel.h"
 
-Q_DECLARE_METATYPE(DayModel)
+//Q_DECLARE_METATYPE(DayModel)
 
 class WeekModel : public QAbstractListModel
 {
@@ -26,7 +26,7 @@ public:
     static QHash<int, QByteArray> roleNames();
 
 public:
-    explicit WeekModel(const BonsaiModel *bonsaiModel, QObject *parent = 0);
+    explicit WeekModel(const BonsaiModel &bonsaiModel, QObject *parent = 0);
     virtual ~WeekModel();
 
 public: // From QAbstractListModel

@@ -10,7 +10,7 @@ class BonsaiWorker: public QObject {
     Q_OBJECT
 
 public:
-    BonsaiWorker(SpecieModel* m_model);
+    BonsaiWorker(SpecieModel &m_model);
     virtual ~BonsaiWorker();
 
 signals:
@@ -19,8 +19,12 @@ signals:
 
 public slots:
     void readAll();
+    void insertBonsai(const int specieId, const int year);
+
+public:
+    int nextId();
 private:
-    SpecieModel* m_itemmodel;
+    SpecieModel &m_itemmodel;
     QSqlDatabase db;
 
 };

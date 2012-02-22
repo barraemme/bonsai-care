@@ -11,11 +11,11 @@ class Scheduler: public QObject
     Q_OBJECT
 public:
     Scheduler();
-    virtual ~Scheduler();
+    //virtual ~Scheduler();
 
 private:
-    SpecieModel* m_itemmodel;
-    QSqlDatabase db;
+    /*SpecieModel* m_itemmodel;
+    QSqlDatabase db;*/
 
 };
 

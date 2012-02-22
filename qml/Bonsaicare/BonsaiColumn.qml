@@ -19,7 +19,7 @@ Item {
     // Settable colors.
     property int fontSize: visual.generalFontSize
     property color textColor: visual.headerTextColor
-    // Defined in order to scorll the bonsai column with content pane.
+    // Defined in order to scroll the bonsai column with content pane.
     property alias contentY: bonsaiColumn.contentY
     property alias bonsaiIndex: bonsaiColumn.currentIndex
 
@@ -96,37 +96,12 @@ Item {
                     left: parent.left
                     leftMargin: container.bonsaiMarginRight
                 }
+                font.weight: Font.Bold
                 font.pixelSize: container.fontSize
                 wrapMode : Text.Wrap
                 text: b_name
             }
 
-            /*Item {
-                id: image; x: 6; width: 65; height: 65; smooth: true
-                anchors {
-                    top: nameTxt.bottom
-                    topMargin: container.textTopMargin
-                    left: parent.left
-                    leftMargin: 0
-                }
-
-                Core.Loading { x: 1; y: 1; width: 65; height: 65; visible: realImage.status != Image.Ready }
-                Image {
-                    id: realImage;
-                    source: "images/small/s_spc_"+b_itemId+".jpg";
-                    width:65; height:65; opacity:0 ;
-                    onStatusChanged: {
-                        if(status==Image.Ready)
-                            image.state="loaded"
-                    }
-                }
-                states: State {
-                    name: "loaded";
-                    PropertyChanges { target: realImage ; opacity:1 }
-                }
-                transitions: Transition { NumberAnimation { target: realImage; property: "opacity"; duration: 200 } }
-
-            }*/
             Item {
                 id: image;
                 width: 200;

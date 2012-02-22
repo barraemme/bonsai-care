@@ -116,7 +116,7 @@ Flickable {
 
         Component.onCompleted: {
 
-            console.log("PIVOTPAGE index: "+ container.bonsaiIndex+ ", count: "+weekDay.model.count);
+            //console.log("PIVOTPAGE index: "+ container.bonsaiIndex+ ", count: "+weekDay.model.count);
 
             // TODO: As the PivotPage is being created dynamically, the ListView
             // isn't really complete when Component.onCompleted is called, but it's

@@ -19,11 +19,11 @@
   \brief Day is a wrapper class for DayModel.
 */
 
-Day::Day(QObject *parent) :
+/*Day::Day(QObject *parent) :
     QObject(parent), m_day()
 {
 
-}
+}*/
 
 Day::Day(const QDate &date, QObject *parent) :
     QObject(parent), m_day(date)

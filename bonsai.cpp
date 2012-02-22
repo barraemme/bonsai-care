@@ -5,7 +5,7 @@
 #include <QtCore/QDebug>
 #include <QtCore/QDate>
 
-Bonsai::Bonsai(const int id, const QDate &date, const QString &name, const int itemId, QObject *parent ):
+Bonsai::Bonsai(const int id, const int date, const QString &name, const int itemId, QObject *parent ):
     QObject(parent), m_id(id), m_date(date), m_name(name), m_itemId(itemId)
 {
     //m_model = new BonsaiModel(m_date, m_name, m_itemId, this);
@@ -67,12 +67,12 @@ void Bonsai::setItemId(const int itemId)
     m_itemId = itemId;
 }
 
-QDate Bonsai::date() const
+int Bonsai::date() const
 {
     return m_date;
 }
 
-void Bonsai::setDate(const QDate &date)
+void Bonsai::setDate(const int date)
 {
     m_date = date;
 }

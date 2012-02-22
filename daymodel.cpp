@@ -31,30 +31,30 @@ QHash<int, QByteArray> DayModel::roleNames()
     return roles;
 }
 
-DayModel::DayModel(QObject *parent):
+/*DayModel::DayModel(QObject *parent):
     QAbstractListModel(parent), m_day(), m_items()
 {
     setRoleNames(DayModel::roleNames());
 }
 
-DayModel::DayModel(const DayModel& dayModel,  QObject *parent):
+DayModel::DayModel(const DayModel &dayModel,  QObject *parent):
     QAbstractListModel(parent)
 {
     m_day = dayModel.day();
     m_items = dayModel.items();
     setRoleNames(DayModel::roleNames());
-}
+}*/
 
 
-DayModel::DayModel(const QDate &day, const BonsaiModel *bonsaiModel, QObject *parent) :
-    QAbstractListModel(parent), m_day(day), m_bonsai_model(bonsaiModel), m_items()
+DayModel::DayModel(const QDate &day, QObject *parent) :
+    QAbstractListModel(parent), m_day(day), m_items()
 {    
 
 //    // Enable following comments, if you would like to generate the day
 //    // full of example events.
 //    QString templateItem("Day %1 Item %2");    
 
-    connect(bonsaiModel, SIGNAL(addedBonsaiRow(Bonsai*)),this, SLOT(addRow(Bonsai*)));
+
 
     setRoleNames(DayModel::roleNames());
 
@@ -75,11 +75,6 @@ Day& DayModel::day()
 QList<Slot*>& DayModel::items()
 {
     return m_items;
-}
-
-BonsaiModel* DayModel::bonsaiModel() const
-{
-    return m_bonsai_model;
 }
 
 

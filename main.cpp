@@ -51,28 +51,27 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     app->setApplicationVersion(VERSION_NUMBER);
 
     //Open db connection
-    QScopedPointer<DatabaseManager> db(new DatabaseManager());
-    db->open();
+    DatabaseManager db;
+    db.open();
 
     //Setting models
     //used for displaying months on top
-    QScopedPointer<MonthModel> months(new MonthModel());
-    rootContext->setContextProperty("months", months.data());
-
+    MonthModel months;
+    rootContext->setContextProperty("months", &months);
 
     //used to list all species of bonsais
-    QScopedPointer<SpecieModel> bonsaiItem(new SpecieModel());
-    qDebug() << "BONSAI ITEM ROW COUNT" << bonsaiItem->rowCount();
-    rootContext->setContextProperty("bonsaiItem", bonsaiItem.data());
+    SpecieModel species;
+    qDebug() << "BONSAI ITEM ROW COUNT" << species.rowCount();
+    rootContext->setContextProperty("species", &species);
 
     //used to get all custom bonsais
-    QScopedPointer<BonsaiModel> bonsai(new BonsaiModel(bonsaiItem.data()));
-    rootContext->setContextProperty("bonsai", bonsai.data());
-    bonsai->init();
+    BonsaiModel bonsai(species);
+    rootContext->setContextProperty("bonsai", &bonsai);
+    bonsai.init();
 
     //used for displaying week days on top
-    QScopedPointer<WeekModel> week(new WeekModel(bonsai.data()));
-    rootContext->setContextProperty("week", week.data());
+    WeekModel week(bonsai);
+    rootContext->setContextProperty("week", &week);
 
 
 
@@ -127,6 +126,6 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     // Start the application
     int ret = app->exec();    
-    db->close();
+    db.close();
     return ret;
 }

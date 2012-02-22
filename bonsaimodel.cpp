@@ -27,7 +27,7 @@ QHash<int, QByteArray> BonsaiModel::roleNames()
 // Bonsai
 // ---------------------------------------------------------------------------
 
-BonsaiModel::BonsaiModel(SpecieModel* itemModel, QObject* parent) :
+BonsaiModel::BonsaiModel(SpecieModel &itemModel, QObject* parent) :
     QAbstractListModel(parent), m_itemmodel(itemModel), m_items()
 {
     qRegisterMetaType<Bonsai>("Bonsai");
@@ -38,8 +38,13 @@ BonsaiModel::BonsaiModel(SpecieModel* itemModel, QObject* parent) :
     workerThread = new BonsaiWorker(m_itemmodel);
     workerThread->moveToThread(thread);
 
+    /** connect THIS -> WORKER THREAD **/
     //start thread with readAll on init
     connect(this, SIGNAL(fetch()), workerThread, SLOT(readAll()));
+    //add insert row to DB
+    connect(this, SIGNAL(doInsert(const int, const int)), workerThread, SLOT(insertBonsai(const int,const int)));
+
+    /** connect WORKER HTREAD -> THIS **/
     //add row to model
     connect(workerThread, SIGNAL(fetched(Bonsai*)),this, SLOT(addRow(Bonsai*)));
     //notify job done
@@ -122,7 +127,7 @@ bool BonsaiModel::setData( const QModelIndex &index, const QVariant &value, int 
                 item->setName(value.toString());
                 return true;
             } else if (role == SetDateRole) {
-                item->setDate(value.toDate());
+                item->setDate(value.toInt());
                 return true;
             } else if (role == SetItemIdRole) {
                 item->setItemId(value.toInt());
@@ -147,12 +152,12 @@ bool BonsaiModel::createTable(QSqlDatabase &db)
     if (db.isOpen()) {
         QSqlQuery query(db);
         ret = query.exec("CREATE TABLE bonsai "
-                         "(id integer primary key, "
+                         "(id INTEGER PRIMARY KEY AUTOINCREMENT, "
                          "item_id integer, "
-                         "date date)");
+                         "date integer)");
 
         /****** TODO da eliminare **********************/
-        query.prepare("INSERT INTO bonsai VALUES (?,?,?);");
+        /*query.prepare("INSERT INTO bonsai VALUES (?,?,?);");
         query.bindValue(0,1);
         query.bindValue(1,1);
         query.bindValue(2,QDate::fromString("20000510", "yyyyMMdd"));
@@ -172,7 +177,7 @@ bool BonsaiModel::createTable(QSqlDatabase &db)
             qDebug() << query.lastError();
          else
             qDebug() << "Table created!";
-
+        */
          /********* FINE ELIMINAZIONE *******************************/
     }
     return ret;
@@ -218,25 +223,15 @@ int BonsaiModel::getIdByIndex(const int index) const
     return true;
 }*/
 
-/*
-void BonsaiModel::insertBonsai(QSqlDatabase &db, const int year, const int month, const int day, const int SpecieId)
+
+void BonsaiModel::insert(const int specieId, const int year)
 {
-    QDate date;
-    date.setDate(year,month,day);
-
-    if (db.isOpen()) {
-        BonsaiModel* bonsai = new BonsaiModel();
-        bonsai->m_id = this->nextId(db);
-        bonsai->m_itemId = SpecieId;
-        bonsai->m_date = date.toJulianDay();
-
-        QSqlQuery query(db);
-        query.exec(QString("insert into Bonsai values(%1,'%2',%3)").arg(bonsai->m_id).arg(
-                       bonsai->m_itemId).arg(bonsai->m_date));
-        delete bonsai;
-    }
+    qDebug() << Q_FUNC_INFO << QThread::currentThread();
+    thread->start();
+    emit doInsert(specieId, year);
+    qDebug() << "END " << Q_FUNC_INFO << QThread::currentThread();
 }
-
+/*
 void BonsaiModel::deleteBonsai(QSqlDatabase &db, const int id)
 {
     if (db.isOpen()) {
@@ -297,28 +292,7 @@ bool BonsaiModel::readAll()
     return result;
 }*/
 
-int BonsaiModel::nextId()
-{
-    int ret = 0;
-    /*if (db.isOpen()) {
-        QSqlQuery query("select id from id", db);
-        if (query.next()) {
-            // Get last used id
-            ret = query.value(0).toInt();
-            // Increase that
-            ret++;
-            // Store new value
-            query.exec(QString("update id set id=%1 where id=%2").arg(ret).arg(ret - 1));
-        }
-        else {
-            // Set first id to zero
-            query.exec("insert into id values(1)");
-            ret = 1;
-        }
-    }*/
 
-    return ret;
-}
 
 QString BonsaiModel::getAgeString(QDate date){
 
