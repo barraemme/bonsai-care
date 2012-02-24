@@ -1,39 +1,115 @@
 format 74
 
 classinstance 128002 class_ref 129026 // BonsaiWorker
-  name ""   xyz 311 4 2000 life_line_z 2000
+  name ""   xyz 576 9 2000 life_line_z 2000
 classinstance 128258 class_ref 128258 // BonsaiModel
-  name ""   xyz 134 4 2000 life_line_z 2000
+  name ""   xyz 412 6 2000 life_line_z 2000
 classinstance 129282 class_ref 130946 // Main
   name ""   xyz 41 4 2000 life_line_z 2000
-durationcanvas 129794 classinstance_ref 129282 // :Main
-  xyzwh 60 80 2010 11 40
-end
-durationcanvas 129922 classinstance_ref 128258 // :BonsaiModel
-  xyzwh 172 80 2010 11 25
-end
+classinstance 130690 class_ref 144770 // SpecieModel
+  name ""   xyz 208 4 2000 life_line_z 2000
+classinstance 135426 class_ref 144514 // Scheduler
+  name ""   xyz 730 4 2000 life_line_z 2000
 durationcanvas 130178 classinstance_ref 128002 // :BonsaiWorker
-  xyzwh 351 93 2010 11 66
+  xyzwh 616 188 2010 11 144
+  overlappingdurationcanvas 134530
+    xyzwh 622 189 2020 11 79
+  end
 end
 durationcanvas 130434 classinstance_ref 128258 // :BonsaiModel
-  xyzwh 172 140 2010 11 25
+  xyzwh 450 298 2010 11 31
 end
-msg 130050 synchronous
-  from durationcanvas_ref 129794
-  to durationcanvas_ref 129922
-  yz 80 2015 msg operation_ref 132866 // "init() : void"
-  show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 106 65
-msg 130306 asynchronous
-  from durationcanvas_ref 129922
-  to durationcanvas_ref 130178
-  yz 93 2015 msg operation_ref 144898 // "readAll(inout db : QSqlDatabase) : void"
-  show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 242 78
+durationcanvas 132098 classinstance_ref 129282 // :Main
+  xyzwh 60 60 2010 11 40
+end
+durationcanvas 132226 classinstance_ref 130690 // :SpecieModel
+  xyzwh 246 60 2010 11 26
+end
+durationcanvas 132482 classinstance_ref 128002 // :BonsaiWorker
+  xyzwh 616 72 2010 11 91
+end
+durationcanvas 132738 classinstance_ref 130690 // :SpecieModel
+  xyzwh 246 101 2010 11 27
+end
+durationcanvas 132994 classinstance_ref 130690 // :SpecieModel
+  xyzwh 246 140 2010 11 56
+end
+durationcanvas 134018 classinstance_ref 128258 // :BonsaiModel
+  xyzwh 450 160 2010 11 131
+  overlappingdurationcanvas 136322
+    xyzwh 456 171 2020 11 27
+  end
+end
+durationcanvas 134786 classinstance_ref 129282 // :Main
+  xyzwh 60 378 2010 11 40
+end
+durationcanvas 134914 classinstance_ref 128258 // :BonsaiModel
+  xyzwh 450 378 2010 11 25
+end
+durationcanvas 135170 classinstance_ref 128002 // :BonsaiWorker
+  xyzwh 616 387 2010 11 84
+end
+durationcanvas 135554 classinstance_ref 128258 // :BonsaiModel
+  xyzwh 450 421 2010 11 66
+end
 msg 130562 asynchronous
   from durationcanvas_ref 130178
   to durationcanvas_ref 130434
-  yz 140 2020 msg operation_ref 133250 // "addRow(inout item : Bonsai) : void"
+  yz 309 2020 msg operation_ref 133250 // "addRow(inout item : Bonsai) : void"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 238 125
+  label_xy 516 294
+msg 132354 asynchronous
+  from durationcanvas_ref 132098
+  to durationcanvas_ref 132226
+  yz 60 2015 msg operation_ref 164098 // "init() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 145 44
+msg 132610 asynchronous
+  from durationcanvas_ref 132226
+  to durationcanvas_ref 132482
+  yz 73 2015 explicitmsg "doFetchSpecies()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 384 57
+msg 132866 asynchronous
+  from durationcanvas_ref 132482
+  to durationcanvas_ref 132738
+  yz 101 2015 explicitmsg "specieRowFetchDone(Specie) : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 396 85
+msg 133122 asynchronous
+  from durationcanvas_ref 132482
+  to durationcanvas_ref 132994
+  yz 140 2015 explicitmsg "fetchSpeciesDone()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 397 124
+msg 134658 asynchronous
+  from durationcanvas_ref 134018
+  to durationcanvas_ref 134530
+  yz 225 2025 explicitmsg "readAllBonsai()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 485 209
+msg 135042 synchronous
+  from durationcanvas_ref 134786
+  to durationcanvas_ref 134914
+  yz 378 2015 explicitmsg "insert()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 240 362
+msg 135298 asynchronous
+  from durationcanvas_ref 134914
+  to durationcanvas_ref 135170
+  yz 387 2020 explicitmsg "doInsert()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 503 371
+msg 135682 asynchronous
+  from durationcanvas_ref 135170
+  to durationcanvas_ref 135554
+  yz 453 2015 explicitmsg "bonsaiRowFetched()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 468 437
+msg 136450 synchronous
+  from durationcanvas_ref 132994
+  to durationcanvas_ref 136322
+  yz 171 2025 explicitmsg "doInit()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 336 155
 end

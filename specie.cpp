@@ -12,16 +12,29 @@ Specie::Specie(const int id, const QString &name, QObject *parent):
     //m_model = new SpecieModel(m_id, m_name, this);
 }
 
-Specie::~Specie()
+Specie::Specie(QObject *parent):
+    QObject(parent),m_id(-1), m_name()
 {
-    delete m_model;
+
 }
 
-QObject* Specie::items() const
+Specie::Specie(const Specie &specie): QObject(0)
+{
+    m_id = specie.index();
+    m_name = specie.name();
+
+}
+
+Specie::~Specie()
+{
+   // delete m_model;
+}
+
+/*QObject* Specie::items() const
 {
     qDebug() << "Requested Specie items. We have" << m_model->rowCount();
     return m_model;
-}
+}*/
 
 int Specie::index() const
 {

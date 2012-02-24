@@ -13,7 +13,7 @@
 #include "bonsaiworker.h"
 
 Q_DECLARE_METATYPE(Bonsai)
-Q_DECLARE_METATYPE(QSqlDatabase)
+
 // ---------------------------------------------------------------------------
 // Bonsai
 // ---------------------------------------------------------------------------
@@ -32,15 +32,14 @@ public:
         NameRole,
         DateRole,
         ItemIdRole,
-        SetIndexRole,
-        SetNameRole,
+        SetIndexRole,       
         SetDateRole,
         SetItemIdRole
       };
     static QHash<int, QByteArray> roleNames();
 
 public:
-    explicit BonsaiModel(SpecieModel &itemModel, QObject* parent=0);
+    explicit BonsaiModel(SpecieModel &species, BonsaiWorker* worker, QObject* parent=0);
     virtual ~BonsaiModel();
 
 public: // From QAbstractListModel
@@ -49,7 +48,7 @@ public: // From QAbstractListModel
     QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     bool setData( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
-    void init();
+
 
     // for BonsaiTable
     static bool createTable(QSqlDatabase &db);
@@ -59,22 +58,22 @@ public: // From QAbstractListModel
     Q_INVOKABLE QList<QObject*> dateBonsais(QSqlDatabase &db, const int year,
                                           const int month,
                                           const int day);*/
-    Q_INVOKABLE QString getAgeString(QDate date);
+    Q_INVOKABLE QString getAgeString(const int date);
     Q_INVOKABLE int getIdByIndex(const int index) const;
 
 public slots:
     // Exposed to QML for managing the model.
     void addRow(Bonsai* item);    
+    void init();
 
 signals:
-    void fetch();
+    void doFetchAllBonsai();
     void addedBonsaiRow(Bonsai* item);
     void doInsert(const int specieId, const int year);
 
 private:
     QList<Bonsai*> m_items;    
-    SpecieModel &m_itemmodel;
-    QThread *thread;
+    SpecieModel &m_itemmodel;    
     BonsaiWorker *workerThread;
 
 };

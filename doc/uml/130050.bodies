@@ -51,14 +51,14 @@ class WeekModel
     if (index.isValid()) {
         int row = index.row();
         if (row >= 0 && row < m_days.count()) {
-            Day* day = m_days[row];
+            DayModel* day = m_days[row];
             if (role == DayNameRole){
                 return QVariant(day->dayName());
             } if (role == MonthIndexRole){
                 //return index of array
-                return QVariant(day->monthIndex());
+                return QVariant(day->monthDayIndex());
             }  if (role == DayIndexRole){
-                return QVariant(day->dayIndex());
+                return QVariant(day->weekDayIndex());
             }  else {
                 return QVariant("ERR: UnkstartDayn role for weekmodel");
             }
@@ -96,11 +96,12 @@ class WeekModel
     return ret;
 !!!142850.cpp!!!	restore() : bool
 
-    qDebug() << "WeekModel::restore";
+
     bool ret = false;
     QFile file( getSaveFileName() );
     //ret = file.open(QIODevice::ReadOnly);
     if (ret) {
+        qDebug() << "WeekModel::restore";
         QDataStream in(&file);
 
         int version = 0;
@@ -133,24 +134,16 @@ class WeekModel
 !!!142978.cpp!!!	indexOfFirstDay(in month : int) : Q_INVOKABLE int
 
     int index = 0;
-    foreach(Day *day, m_days) {
-        if(day->monthIndex() == month)
+    foreach(DayModel *day, m_days) {
+        if(day->monthDayIndex() == month)
             return index;
         index++;
     }
     return 0;
 !!!143106.cpp!!!	indexOfMonth(in dayIndex : int) : Q_INVOKABLE int
-
-    int index = 0;
-    if (dayIndex >= 0 && dayIndex < m_days.count()) {
-        int monthNum = m_days.at(dayIndex)->month();
-        foreach(QDate *month, m_months) {
-            if(month->month() == monthNum)
-                return index;
-            index++;
-        }
-    }
-    return 0;
+    
+    int monthNum = m_days.at(dayIndex)->monthDayIndex();
+    return monthNum-1;
 !!!143234.cpp!!!	monthsCount() : Q_INVOKABLE int
 
     return m_monthsCount;

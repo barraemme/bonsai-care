@@ -6,8 +6,9 @@
 #include <QFile>
 #include <QDebug>
 #include <QXmlStreamReader>
+#include <QtCore/QThread>
 
-#include <QMessageBox>
+#include "bonsaiworker.h"
 
 // ---------------------------------------------------------------------------
 // Specie
@@ -23,11 +24,11 @@ QHash<int, QByteArray> SpecieModel::roleNames()
     return roles;
 }
 
-SpecieModel::SpecieModel(QObject *parent):
-    QAbstractListModel(parent), m_items()
+SpecieModel::SpecieModel(BonsaiWorker* worker, QObject *parent):
+    QAbstractListModel(parent), workerThread(worker), m_items()
 {
     //QSqlQuery query("select * from bonsai_item");
-    this->parseXML();
+
     /*while (query.next()) {
         Specie* item = new Specie();
         item->m_id = query.value(0).toInt();
@@ -36,9 +37,31 @@ SpecieModel::SpecieModel(QObject *parent):
     }*/
     //qDebug() << "Bonsai items count :"  << m_SpeciesCache.length();
 
+    qRegisterMetaType<Specie>("Specie");
+
+    // create a Worker Thread
+    //thread = new QThread;
+    //workerThread = new BonsaiWorker();
+    //workerThread->moveToThread(thread);
+
+    /** connect THIS -> WORKER THREAD **/
+    //start thread with readAll on init
+    connect(this, SIGNAL(doFetchSpecies()), workerThread, SLOT(fetchAllSpecies()));
+
+    /** connect WORKER HTREAD -> THIS **/
+    //add row to model
+    connect(workerThread, SIGNAL(specieRowFetchDone(Specie*)),this, SLOT(addRow(Specie*)));
+    //notify job done
+    connect(workerThread, SIGNAL(fetchSpeciesDone()),this, SLOT(commit()));
+
     setRoleNames(SpecieModel::roleNames());
 }
 
+void SpecieModel::init()
+{
+    //thread->start();
+    emit doFetchSpecies();
+}
 
 SpecieModel::~SpecieModel(){
     qDeleteAll(m_items);
@@ -140,6 +163,28 @@ int SpecieModel::getIdByIndex(const int index) const
 {
   return m_items.at(index)->index();
 }
+
+void SpecieModel::addRow(Specie* item)
+ {
+     qDebug() << Q_FUNC_INFO;
+
+     //TODO bloccare m_items
+     qDebug() << "beginInsertRows";
+     beginInsertRows(QModelIndex(), m_items.count(), m_items.count());
+
+     m_items.append(item);
+
+     qDebug() << "endInsertRows "<<m_items.count();
+     endInsertRows();
+
+     qDebug() << "END " << Q_FUNC_INFO;
+}
+
+void SpecieModel::commit()
+{
+    //thread->quit();
+    emit doInit();
+}
 /*
 QVariant SpecieModel::updateSpecie(QSqlDatabase &db, const QVariant& id,
                                          const QVariant& name
@@ -196,77 +241,4 @@ QVariant SpecieModel::insertSpecie(QSqlDatabase &db, const QVariant& name)
 }*/
 
 
-bool SpecieModel::parseXML() {
 
-        /* We'll parse the example.xml */
-        QFile* file = new QFile(":/resources/db.xml");
-        /* If we can't open it, let's show an error message. */
-        if (!file->open(QIODevice::ReadOnly | QIODevice::Text)) {
-                qDebug() << "parseXML, Couldn't open db.xml";
-                return false;
-        }
-        /* QXmlStreamReader takes any QIODevice. */
-        QXmlStreamReader xml(file);
-
-        /* We'll parse the XML until we reach end of it.*/
-        while(!xml.atEnd() && !xml.hasError()) {
-                /* Read next element.*/
-                QXmlStreamReader::TokenType token = xml.readNext();
-                /* If token is just StartDocument, we'll go to next.*/
-                if(token == QXmlStreamReader::StartDocument) {
-                        continue;
-                }
-                /* If token is StartElement, we'll see if we can read it.*/
-                if(token == QXmlStreamReader::StartElement) {
-                        /* If it's named persons, we'll go to the next.*/
-                        if(xml.name() == "items") {
-                                continue;
-                        }
-                        /* If it's named person, we'll dig the information from there.*/
-                        if(xml.name() == "item") {
-
-                            QXmlStreamAttributes attrs = xml.attributes();
-                            /*get value of each attribute from QXmlStreamAttributes */
-                            QStringRef fID = attrs.value("id");
-                            QStringRef fname = attrs.value("name");
-                            Specie* item = new Specie(fID.toString().toInt(), fname.toString());
-
-                            /*
-                            xml.readNext();
-                            while(!(xml.tokenType() == QXmlStreamReader::EndElement &&
-                                            xml.name() == "person")) {
-                                    if(xml.tokenType() == QXmlStreamReader::StartElement) {
-
-                                            if(xml.name() == "firstname") {
-                                                    this->addElementDataToMap(xml, person);
-                                            }
-
-                                            if(xml.name() == "surname") {
-                                                    this->addElementDataToMap(xml, person);
-                                            }
-
-                                            if(xml.name() == "email") {
-                                                    this->addElementDataToMap(xml, person);
-                                            }
-
-                                            if(xml.name() == "website") {
-                                                    this->addElementDataToMap(xml, person);
-                                            }
-                                    }
-
-                                    xml.readNext();
-                            }
-                            */
-                            m_items.append(item);
-                            emit countChanged(m_items.count());
-
-                        }
-                }
-        }
-        /* Error handling. */
-       if(xml.hasError()) {
-           qDebug() << xml.errorString();
-        }
-        xml.clear();
-        return xml.hasError();
-}

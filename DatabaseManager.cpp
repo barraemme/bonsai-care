@@ -24,6 +24,7 @@
 DatabaseManager::DatabaseManager(QObject *parent) :
     QObject(parent)
 {
+    qRegisterMetaType<QSqlDatabase>("QSqlDatabase");
 }
 
 DatabaseManager::~DatabaseManager()

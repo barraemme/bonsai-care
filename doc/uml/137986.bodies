@@ -3,5 +3,3 @@ class Slot
 
 !!!155394.cpp!!!	~Slot()
 
-    qDeleteAll( m_items);
-    m_items.clear();

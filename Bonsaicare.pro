@@ -3,6 +3,7 @@ folder_01.source = qml/Bonsaicare
 folder_01.target = qml
 DEPLOYMENTFOLDERS = folder_01
 QT += sql core gui declarative
+QT += xmlpatterns
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
 VERSION = 1.1
@@ -55,7 +56,8 @@ SOURCES += main.cpp \
     operation.cpp \
     slot.cpp \
     slotmodel.cpp \
-    scheduler.cpp
+    scheduler.cpp \
+    bonsaiserializer.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -69,7 +71,9 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/control \
     qtc_packaging/debian_harmattan/compat \
     qtc_packaging/debian_harmattan/changelog \
-    resources/db.xml
+    resources/db.xml \
+    resources/operations-by-specie.xq \
+    resources/species.xq
 
 HEADERS += \
     DatabaseManager.h \
@@ -88,7 +92,8 @@ HEADERS += \
     operation.h \
     slot.h \
     slotmodel.h \
-    scheduler.h
+    scheduler.h \
+    bonsaiserializer.h
 
 RESOURCES += \
     resources.qrc

@@ -15,8 +15,7 @@ QHash<int, QByteArray> BonsaiModel::roleNames()
     roles[DateRole] = "b_date";
     roles[ItemIdRole] = "b_itemId";
 
-    roles[SetIndexRole] = "b_setIndex";
-    roles[SetNameRole] = "b_setName";
+    roles[SetIndexRole] = "b_setIndex";    
     roles[SetDateRole] = "b_setDate";
     roles[SetItemIdRole] = "b_setItemId";
 
@@ -27,36 +26,37 @@ QHash<int, QByteArray> BonsaiModel::roleNames()
 // Bonsai
 // ---------------------------------------------------------------------------
 
-BonsaiModel::BonsaiModel(SpecieModel &itemModel, QObject* parent) :
-    QAbstractListModel(parent), m_itemmodel(itemModel), m_items()
+BonsaiModel::BonsaiModel(SpecieModel &species, BonsaiWorker* worker, QObject* parent) :
+    QAbstractListModel(parent), m_items(), m_itemmodel(species), workerThread(worker)
 {
     qRegisterMetaType<Bonsai>("Bonsai");
-    qRegisterMetaType<QSqlDatabase>("QSqlDatabase");
 
-    // create a Worker Thread
-    thread = new QThread;
-    workerThread = new BonsaiWorker(m_itemmodel);
-    workerThread->moveToThread(thread);
+    //m_itemmodel = species;
+
+    connect(&m_itemmodel, SIGNAL(doInit()), this, SLOT(init()));
 
     /** connect THIS -> WORKER THREAD **/
     //start thread with readAll on init
-    connect(this, SIGNAL(fetch()), workerThread, SLOT(readAll()));
+    connect(this, SIGNAL(doFetchAllBonsai()), workerThread, SLOT(fetchAllBonsai()));
     //add insert row to DB
     connect(this, SIGNAL(doInsert(const int, const int)), workerThread, SLOT(insertBonsai(const int,const int)));
 
     /** connect WORKER HTREAD -> THIS **/
     //add row to model
-    connect(workerThread, SIGNAL(fetched(Bonsai*)),this, SLOT(addRow(Bonsai*)));
+    connect(workerThread, SIGNAL(bonsaiRowFetchDone(Bonsai*)),this, SLOT(addRow(Bonsai*)));
     //notify job done
-    connect(workerThread, SIGNAL(finished()),thread, SLOT(quit()));
+    //connect(workerThread, SIGNAL(jobDone()),thread, SLOT(quit()));
 
     setRoleNames(BonsaiModel::roleNames());
 }
 
 void BonsaiModel::init()
 {
-    thread->start();
-    emit fetch();
+
+    qDebug() << Q_FUNC_INFO;
+    //thread->start();
+    emit doFetchAllBonsai();
+    qDebug() << "END " <<Q_FUNC_INFO;
 }
 
 BonsaiModel::~BonsaiModel()
@@ -79,7 +79,7 @@ QVariant BonsaiModel::data(const QModelIndex &index, int role) const
             if (role == IndexRole){
                 return QVariant(item->index());
             } else if (role == NameRole) {
-                return QVariant(item->name());
+                return QVariant(m_itemmodel.getNameById(item->itemId()));
             } else if (role == DateRole) {
                 return QVariant(item->date());
             } else if (role == ItemIdRole) {
@@ -123,9 +123,6 @@ bool BonsaiModel::setData( const QModelIndex &index, const QVariant &value, int 
             if (role == SetIndexRole){
                  item->setIndex(value.toInt());
                  return true;
-            } else if (role == SetNameRole) {
-                item->setName(value.toString());
-                return true;
             } else if (role == SetDateRole) {
                 item->setDate(value.toInt());
                 return true;
@@ -227,7 +224,7 @@ int BonsaiModel::getIdByIndex(const int index) const
 void BonsaiModel::insert(const int specieId, const int year)
 {
     qDebug() << Q_FUNC_INFO << QThread::currentThread();
-    thread->start();
+    //thread->start();
     emit doInsert(specieId, year);
     qDebug() << "END " << Q_FUNC_INFO << QThread::currentThread();
 }
@@ -294,37 +291,31 @@ bool BonsaiModel::readAll()
 
 
 
-QString BonsaiModel::getAgeString(QDate date){
+QString BonsaiModel::getAgeString(const int date){
 
+    /*
     double varYear = 365.25;
-    double varMonth = 30.43;
-
+    double varMonth = 30.43;    
     int days = date.daysTo(QDate::currentDate());
     int years = qFloor(days / varYear);
     days -= years*varYear;
     int months = qFloor(days/varMonth);
     days -= months*varMonth;
-/*
-        QString result = tr("\nYears: ") + ;
-        result = result + tr("\nMonths: ") + ;
-        result = result + tr("\nWeeks: ") + QString::number(Days/7,'f',2);
-        result = result + tr("\nDays: ") + ;
-        result = result + tr("\nHours: ") + QString::number(Years*(24*varYear),'f',2);
-        result = result + tr("\nMinutes: ") + QString::number(Years*((24*varYear)*60),'f',2);
-        result = result + tr("\nSeconds: ") + QString::number(Years*(((24*varYear)*60)*60),'f',2);
-*/     
-    /*int numYears = qRound(days/31536000000);
-    int numMonths = qRound((days % 31536000000)/2628000000);
-    int numdays = qRound(((days % 31536000000) % 2628000000)/86400000);
     */
+    int currentYear = QDate::currentDate().year();
+    int years = currentYear - date;
+
     QString result = "";
 
-    if(days>0)
+    /*if(days>0)
         result.append(QString("%1 days, ").arg(days));
     if(months>0)
-        result.append(QString("%1 months, ").arg(months));
-    if(years>0)
-        result.append(QString("%1 years ").arg(years));
+        result.append(QString("%1 months, ").arg(months));*/
+    if(years == 1){
+        result.append(QString("1 year "));
+    }else if(years > 1){
+            result.append(QString("%1 years ").arg(years));
+    }
 
     return result;
 }

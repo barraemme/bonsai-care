@@ -3,3 +3,5 @@
 Scheduler::Scheduler()
 {
 }
+
+//get operation where specie_id = ? and month = ? and

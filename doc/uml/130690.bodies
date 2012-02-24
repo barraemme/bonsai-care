@@ -3,13 +3,11 @@ class QmlApplicationViewerPrivate
 #ifdef Q_OS_UNIX
 #ifdef Q_OS_MAC
     if (!QDir::isAbsolutePath(path))
-        return QCoreApplication::applicationDirPath()
-                + QLatin1String("/../Resources/") + path;
+        return QString::fromLatin1("%1/../Resources/%2")
+                .arg(QCoreApplication::applicationDirPath(), path);
 #else
-    QString pathInInstallDir;
-    const QString applicationDirPath = QCoreApplication::applicationDirPath();
-    pathInInstallDir = QString::fromAscii("%1/../%2").arg(applicationDirPath, path);
-
+    const QString pathInInstallDir =
+            QString::fromLatin1("%1/../%2").arg(QCoreApplication::applicationDirPath(), path);
     if (QFileInfo(pathInInstallDir).exists())
         return pathInInstallDir;
 #endif

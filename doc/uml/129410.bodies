@@ -1,9 +1,8 @@
 class DayModel
 !!!135554.cpp!!!	roleNames() : QHash<int, QByteArray>
-
-    QHash<int, QByteArray> roles;        
-    roles[WeekDayIndexRole] = "weekDayIndex";
-    roles[DayNameRole] = "dayName";
+    QHash<int, QByteArray> roles;
+    roles[WeekDayIndexRole] = "d_weekDayIndex";
+    roles[DayNameRole] = "d_dayName";
     return roles;
 !!!135682.cpp!!!	DayModel(in weekDayIndex : int, in name : QString, inout parent : QObject = 0)
 
@@ -64,19 +63,17 @@ class DayModel
 //        setHourSpan(qrand() % 24, (qrand() % 3) + 2);
 //    }
 !!!135810.cpp!!!	~DayModel()
-
     qDeleteAll(m_items);
     m_items.clear();
 !!!135938.cpp!!!	data(in index : QModelIndex, in role : int = Qt::DisplayRole) : QVariant
-
     if (index.isValid()) {
         int row = index.row();
         if (row >= 0 && row < m_items.count()) {
             Slot *slot = m_items[row];
             if (role == DayNameRole) {
-                return QVariant(m_dayName);
+                return QVariant(m_day.dayName());
             } else if (role == WeekDayIndexRole) {
-                return QVariant(m_weekDayIndex);
+                return QVariant(m_day.dayOfWeekIndex());
             } else {
                 return QVariant("ERR: Unknown role for daymodel: " + role);
             }
@@ -89,17 +86,14 @@ class DayModel
 
     return QVariant("ERR: other");
 !!!136066.cpp!!!	flags(in index : QModelIndex) : Qt::ItemFlags
-
     if (!index.isValid()) {
         return 0;
     }
 
     return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
 !!!136194.cpp!!!	headerData(in section : int, in orientation : Qt::Orientation, in role : int = Qt::DisplayRole) : QVariant
-
     return QVariant("HEADER");
 !!!136322.cpp!!!	rowCount(in parent : QModelIndex = QModelIndex()) : int
-
     return m_items.count();
 !!!136450.cpp!!!	setData(in index : QModelIndex, in value : QVariant, in role : int = Qt::EditRole) : bool
 
@@ -219,8 +213,7 @@ class DayModel
         return -1;
     }
 !!!137730.cpp!!!	dayName() : QString
-
-    return m_dayName;
+    return m_day.dayName();
 !!!137858.cpp!!!	indexFromItem(in item : Timeslot) : QModelIndex
 
   Q_ASSERT(item);
@@ -231,8 +224,7 @@ class DayModel
 
   return QModelIndex();
 !!!138114.cpp!!!	weekDayIndex() : int
-
-    return m_weekDayIndex;
+    return m_day.dayOfWeekIndex();
 !!!138242.cpp!!!	operator <<(inout stream : QDataStream, in dayModel : DayModel) : QDataStream
 
     stream << dayModel.m_weekDayIndex;

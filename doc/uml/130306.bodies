@@ -5,25 +5,21 @@ class QmlApplicationViewer
     // Qt versions prior to 4.8.0 don't have QML/JS debugging services built in
 #if defined(QMLJSDEBUGGER) && QT_VERSION < 0x040800
 #if !defined(NO_JSDEBUGGER)
-    new QmlJSDebugger::JSDebuggerAgent(d->view->engine());
+    new QmlJSDebugger::JSDebuggerAgent(engine());
 #endif
 #if !defined(NO_QMLOBSERVER)
-    new QmlJSDebugger::QDeclarativeViewObserver(d->view, d->view);
+    new QmlJSDebugger::QDeclarativeViewObserver(this, this);
 #endif
 #endif
 !!!143618.cpp!!!	~QmlApplicationViewer()
     delete d;
 !!!143746.cpp!!!	create() : QmlApplicationViewer
-#ifdef HARMATTAN_BOOSTER
-    return new QmlApplicationViewer(MDeclarativeCache::qDeclarativeView(), 0);
-#else
     return new QmlApplicationViewer();
-#endif
 !!!143874.cpp!!!	setMainQmlFile(in file : QString) : void
-    d->mainQmlFile = d->adjustPath(file);
-    d->view->setSource(QUrl::fromLocalFile(d->mainQmlFile));
+    d->mainQmlFile = QmlApplicationViewerPrivate::adjustPath(file);
+    setSource(QUrl::fromLocalFile(d->mainQmlFile));
 !!!144002.cpp!!!	addImportPath(in path : QString) : void
-    d->view->engine()->addImportPath(d->adjustPath(path));
+    engine()->addImportPath(QmlApplicationViewerPrivate::adjustPath(path));
 !!!144130.cpp!!!	setOrientation(in orientation : ScreenOrientation) : void
 #if defined(Q_OS_SYMBIAN)
     // If the version of Qt on the device is < 4.7.2, that attribute won't work
@@ -66,11 +62,11 @@ class QmlApplicationViewer
     setAttribute(attribute, true);
 !!!144258.cpp!!!	showExpanded() : void
 #if defined(Q_OS_SYMBIAN) || defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_SIMULATOR)
-    d->view->showFullScreen();
+    showFullScreen();
 #elif defined(Q_WS_MAEMO_5)
-    d->view->showMaximized();
+    showMaximized();
 #else
-    d->view->show();
+    show();
 #endif
 !!!144386.cpp!!!	QmlApplicationViewer(inout view : QDeclarativeView, inout parent : QWidget)
     connect(view->engine(), SIGNAL(quit()), view, SLOT(close()));

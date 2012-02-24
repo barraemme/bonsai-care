@@ -1,6 +1,6 @@
- <!DOCTYPE RCC>
- <RCC version="1.0">
-     <qresource>
-         <file>resources/db.xml</file>
-     </qresource>
- </RCC>
+<RCC>
+    <qresource prefix="/">
+        <file>resources/db.xml</file>
+        <file>resources/species.xq</file>
+    </qresource>
+</RCC>

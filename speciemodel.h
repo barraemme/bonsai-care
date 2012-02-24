@@ -8,6 +8,10 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include "specie.h"
+#include "bonsaiworker.h"
+
+Q_DECLARE_METATYPE(Specie)
+
 // ---------------------------------------------------------------------------
 // Specie
 // ---------------------------------------------------------------------------
@@ -16,7 +20,6 @@ class SpecieModel : public QAbstractListModel
     Q_OBJECT   
 
     Q_PROPERTY(int count READ count NOTIFY countChanged)
-
 
 public:
     enum Roles {
@@ -29,7 +32,7 @@ public:
     static QHash<int, QByteArray> roleNames();
 
 public:
-    explicit SpecieModel(QObject *parent = 0);
+    explicit SpecieModel(BonsaiWorker* worker, QObject *parent = 0);
     virtual ~SpecieModel();
 
 public: // From QAbstractListModel
@@ -38,9 +41,9 @@ public: // From QAbstractListModel
     QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     bool setData( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
-    int count() const;
+    int count() const;    
 
-public:
+    void init();
     // for SpecieTable
     Q_INVOKABLE QString getNameById(const int id) const;
     Q_INVOKABLE QString getNameByIndex(const int index) const;
@@ -52,14 +55,21 @@ public:
                                         const QVariant& name);
     Q_INVOKABLE void deleteSpecie(QSqlDatabase &db, const int id);
     */
+public slots:
+    // Exposed to QML for managing the model.
+    void addRow(Specie* specie);
+    void commit();
+
 signals:
     void countChanged(int newCount);
+    void doFetchSpecies();
+    void doInit();
 
 private:
-    QList<Specie*> m_items;    
+    QList<Specie*> m_items;
+    //QThread *thread;
+    BonsaiWorker *workerThread;
 
-private:
-    bool parseXML();
 };
 
 #endif // BONSAIITEMMODEL_H

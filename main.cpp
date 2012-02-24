@@ -5,6 +5,7 @@
 //#include <QOrientationSensor>
 #include <QThread>
 //#include <QGraphicsObject>
+
 #include "DatabaseManager.h"
 #include "speciemodel.h"
 #include "bonsaimodel.h"
@@ -50,6 +51,12 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     app->setApplicationVersion(VERSION_NUMBER);
 
+    BonsaiWorker* workerThread = new BonsaiWorker();
+    QThread* thread = new QThread;
+
+    workerThread->moveToThread(thread);
+    thread->start();
+
     //Open db connection
     DatabaseManager db;
     db.open();
@@ -58,23 +65,20 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     //used for displaying months on top
     MonthModel months;
     rootContext->setContextProperty("months", &months);
-
     //used to list all species of bonsais
-    SpecieModel species;
+    SpecieModel species(workerThread);
     qDebug() << "BONSAI ITEM ROW COUNT" << species.rowCount();
     rootContext->setContextProperty("species", &species);
 
     //used to get all custom bonsais
-    BonsaiModel bonsai(species);
+    BonsaiModel bonsai(species, workerThread);
     rootContext->setContextProperty("bonsai", &bonsai);
-    bonsai.init();
+
+    species.init();
 
     //used for displaying week days on top
     WeekModel week(bonsai);
     rootContext->setContextProperty("week", &week);
-
-
-
     rootContext->setContextProperty(QString("cp_versionNumber"), VERSION_NUMBER);
 
     // Setting database Qt class handle to QML
@@ -125,7 +129,12 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
      */
 
     // Start the application
-    int ret = app->exec();    
+
+    int ret = app->exec();
+    thread->exit(0);
+    thread->wait();
+    delete(workerThread);
+    delete(thread);
     db.close();
     return ret;
 }

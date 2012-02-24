@@ -3,29 +3,36 @@
 
 #include <QSqlDatabase>
 #include "bonsai.h"
-#include "speciemodel.h"
+#include "specie.h"
 
 class BonsaiWorker: public QObject {
 
     Q_OBJECT
 
 public:
-    BonsaiWorker(SpecieModel &m_model);
+    BonsaiWorker();
     virtual ~BonsaiWorker();
 
 signals:
-    void fetched(Bonsai* bonsai);
-    void finished();
+    void bonsaiRowFetchDone(Bonsai* bonsai);
+    void specieRowFetchDone(Specie* specie);
+    void fetchBonsaiDone();
+    void fetchSpeciesDone();
 
 public slots:
-    void readAll();
+    void fetchAllBonsai();
+    void fetchAllSpecies();
+
     void insertBonsai(const int specieId, const int year);
 
 public:
     int nextId();
+
+
 private:
-    SpecieModel &m_itemmodel;
     QSqlDatabase db;
+
+    void parseSpeciesWithXQuery();
 
 };
 

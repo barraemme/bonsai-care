@@ -59,9 +59,10 @@ class DatabaseManager
 
     // Create 4 tables
     if (createIdTable()) {
-        //createBonsaiItemTable();
-        BonsaiModel::createBonsaiTable(this->db);
-        OperationModel::createOperationsTable(this->db);
+        //createSpecieTable();
+        BonsaiModel::createTable(db);
+        OperationModel::createTable(db);
+        //SlotModel::createTable(db);
         //createBonsaierTable();
     }
 

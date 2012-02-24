@@ -10,7 +10,7 @@ class Day
     return QDate::longMonthName(m_day.month());
 !!!135298.cpp!!!	dayIndex() : int
 
-    return m_day.dayOfWeek();
+    return m_day.toJulianDay();
 !!!135426.cpp!!!	monthIndex() : int
 
     return m_day.month();

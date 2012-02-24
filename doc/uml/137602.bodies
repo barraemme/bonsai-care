@@ -4,7 +4,7 @@ class OperationModel
     roles[IndexRole] = "o_index";
     roles[NameRole] = "o_name";
     roles[LastDateRole] = "o_lastDate";
-    roles[BonsaiIdRole] = "o_bonsaiId";
+    roles[BonsaiIdRole] = "o_slotId";
 
     roles[SetIndexRole] = "o_setIndex";
     roles[SetNameRole] = "o_setName";
@@ -29,7 +29,7 @@ class OperationModel
             } else if (role == LastDateRole) {
                 return QVariant(item->lastDate());
             } else if (role == BonsaiIdRole) {
-                return QVariant(item->bonsaiId());
+                return QVariant(item->slotId());
             } else {
                 return QVariant("ERR: Unknown role for daymodel: " + role);
             }
@@ -68,7 +68,7 @@ class OperationModel
                 item->setLastDate(value.toDate());
                 return true;
             } else if (role == SetBonsaiIdRole) {
-                item->setBonsaiId(value.toInt());
+                item->setSlotId(value.toInt());
                 return true;
             } else {
                 return false;
@@ -81,6 +81,38 @@ class OperationModel
     }
 
     return false;
+!!!154370.cpp!!!	init() : void
+    /*thread->start();
+    connect(this, SIGNAL(fetch()), workerThread, SLOT(readAll()));
+    connect(workerThread, SIGNAL(fetched(Bonsai*)),this, SLOT(addRow(Bonsai*)));
+    connect(workerThread, SIGNAL(finished()),this, SLOT(endWorker()));
+
+    emit fetch();*/
+
+    db.open();
+
+        QSqlQuery query(db);
+
+        query.prepare("select id, last_date, name, bonsai_id,  from operations where bonsai_id = ? and last_date = ?");
+        query.bindValue(0, m_bonsai_id);
+        query.bindValue(1, m_last_date);
+
+        if( !query.exec() )
+            qDebug() << query.lastError();
+          else
+            qDebug() << "Table created!";
+
+        while (query.next()) {
+           Operation* op = new Operation(
+                       query.value(0).toInt(),
+                       query.value(1).toDate(),
+                       query.value(2).toString(),
+                       query.value(3).toInt()
+           );
+           addRow(op);
+        }
+   db.close();
+
 !!!154498.cpp!!!	createOperationsTable(inout db : QSqlDatabase) : bool
     // Create table
     bool ret = false;

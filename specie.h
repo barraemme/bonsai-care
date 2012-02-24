@@ -12,17 +12,19 @@ class Specie : public QObject
 
 public:
     Specie(const int id, const QString &name, QObject *parent = 0);
+    Specie(QObject *parent = 0);
+    Specie(const Specie &specie);
     virtual ~Specie();
 
 public slots:
-    QObject *items() const;
+    //QObject *items() const;
     int index() const;
     void setIndex(const int);
     QString name() const;
     void setName(const QString &name);
 
 private:
-    SpecieModel *m_model;
+    //SpecieModel *m_model;
     int m_id;
     QString m_name;
 };

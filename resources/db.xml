@@ -1,32 +1,29 @@
 <?xml version="1.0" ?>
-<items>
-   <item id="1" name="Acer buergerianum">
+<species>
+   <specie id="1" name="Acer buergerianum">
       <operations>
         <operation id="1">
             <name>watering</name>           
             <months>
-                <month id="1" type="every_day">2</month>
-                <month id="1" type="every_day">2</month>
+                <month id="1" type="every_days">2</month>
+                <month id="2" type="every_days">2</month>
+                <month id="3" type="every_days">1</month>
+                <month id="4" type="every_days">1</month>
+                <month id="5" type="every_days">1</month>
+                <month id="6" type="every_days">1</month>
+                <month id="7" type="every_days">1</month>
+                <month id="7" type="every_days">1</month>
+                <month id="8" type="every_days">1</month>
+                <month id="8" type="every_days">1</month>
+                <month id="9" type="every_days">1</month>
+                <month id="10" type="every_days">1</month>
+                <month id="11" type="every_days">2</month>
+                <month id="12" type="every_days">2</month>
             </months>
         </operation>       
       </operations>
-   </item>
-   <item id="5" name="Acer palmatum">
-
-   </item>
-   <item id="56" name="Bambusa">
-
-   </item>
-   <item id="22" name="Buxus harlandii">
-
-   </item>
-   <item id="8" name="Camellia">
-
-   </item>
-   <item id="62" name="Carmona macrophylla">
-
-   </item>
-   <item id="6" name="Carmona microphylla">
+   </specie>
+   <specie id="5" name="Acer palmatum">
        <operations>
          <operation id="1">
              <name>watering</name>
@@ -48,34 +45,147 @@
              </months>
          </operation>
        </operations>
-   </item>
-   <item id="7" name="Carpinus">
+   </specie>
+   <specie id="56" name="Bambusa">
+       <operations>
+         <operation id="1">
+             <name>watering</name>
+             <months>
+                 <month id="1" type="every_days">2</month>
+                 <month id="2" type="every_days">2</month>
+                 <month id="3" type="every_days">1</month>
+                 <month id="4" type="every_days">1</month>
+                 <month id="5" type="every_days">1</month>
+                 <month id="6" type="every_days">1</month>
+                 <month id="7" type="every_days">1</month>
+                 <month id="7" type="every_days">1</month>
+                 <month id="8" type="every_days">1</month>
+                 <month id="8" type="every_days">1</month>
+                 <month id="9" type="every_days">1</month>
+                 <month id="10" type="every_days">1</month>
+                 <month id="11" type="every_days">2</month>
+                 <month id="12" type="every_days">2</month>
+             </months>
+         </operation>
+       </operations>
+   </specie>
+   <specie id="22" name="Buxus harlandii">
+       <operations>
+         <operation id="1">
+             <name>watering</name>
+             <months>
+                 <month id="1" type="every_days">2</month>
+                 <month id="2" type="every_days">2</month>
+                 <month id="3" type="every_days">1</month>
+                 <month id="4" type="every_days">1</month>
+                 <month id="5" type="every_days">1</month>
+                 <month id="6" type="every_days">1</month>
+                 <month id="7" type="every_days">1</month>
+                 <month id="7" type="every_days">1</month>
+                 <month id="8" type="every_days">1</month>
+                 <month id="8" type="every_days">1</month>
+                 <month id="9" type="every_days">1</month>
+                 <month id="10" type="every_days">1</month>
+                 <month id="11" type="every_days">2</month>
+                 <month id="12" type="every_days">2</month>
+             </months>
+         </operation>
+       </operations>
+   </specie>
+   <specie id="8" name="Camellia">
+       <operations>
+         <operation id="1">
+             <name>watering</name>
+             <months>
+                 <month id="1" type="every_days">2</month>
+                 <month id="2" type="every_days">2</month>
+                 <month id="3" type="every_days">1</month>
+                 <month id="4" type="every_days">1</month>
+                 <month id="5" type="every_days">1</month>
+                 <month id="6" type="every_days">1</month>
+                 <month id="7" type="every_days">1</month>
+                 <month id="7" type="every_days">1</month>
+                 <month id="8" type="every_days">1</month>
+                 <month id="8" type="every_days">1</month>
+                 <month id="9" type="every_days">1</month>
+                 <month id="10" type="every_days">1</month>
+                 <month id="11" type="every_days">2</month>
+                 <month id="12" type="every_days">2</month>
+             </months>
+         </operation>
+       </operations>
+   </specie>
+   <specie id="62" name="Carmona macrophylla">
+       <operations>
+         <operation id="1">
+             <name>watering</name>
+             <months>
+                 <month id="1" type="every_days">2</month>
+                 <month id="2" type="every_days">2</month>
+                 <month id="3" type="every_days">1</month>
+                 <month id="4" type="every_days">1</month>
+                 <month id="5" type="every_days">1</month>
+                 <month id="6" type="every_days">1</month>
+                 <month id="7" type="every_days">1</month>
+                 <month id="7" type="every_days">1</month>
+                 <month id="8" type="every_days">1</month>
+                 <month id="8" type="every_days">1</month>
+                 <month id="9" type="every_days">1</month>
+                 <month id="10" type="every_days">1</month>
+                 <month id="11" type="every_days">2</month>
+                 <month id="12" type="every_days">2</month>
+             </months>
+         </operation>
+       </operations>
+   </specie>
+   <specie id="6" name="Carmona microphylla">
+       <operations>
+         <operation id="1">
+             <name>watering</name>
+             <months>
+                 <month id="1" type="every_days">2</month>
+                 <month id="2" type="every_days">2</month>
+                 <month id="3" type="every_days">1</month>
+                 <month id="4" type="every_days">1</month>
+                 <month id="5" type="every_days">1</month>
+                 <month id="6" type="every_days">1</month>
+                 <month id="7" type="every_days">1</month>
+                 <month id="7" type="every_days">1</month>
+                 <month id="8" type="every_days">1</month>
+                 <month id="8" type="every_days">1</month>
+                 <month id="9" type="every_days">1</month>
+                 <month id="10" type="every_days">1</month>
+                 <month id="11" type="every_days">2</month>
+                 <month id="12" type="every_days">2</month>
+             </months>
+         </operation>
+       </operations>
+   </specie>
+   <specie id="7" name="Carpinus">
 
-   </item>
-   <item id="9" name="Chaenomeles">
+   </specie>
+   <specie id="9" name="Chaenomeles">
 
-   </item>
-   <item id="10" name="Chamaecyparis">
+   </specie>
+   <specie id="10" name="Chamaecyparis">
 
-   </item>
-   <item id="52" name="Citrus limun">
+   </specie>
+   <specie id="52" name="Citrus limun">
 
-   </item>
-   <item id="11" name="Cotoneaster">
+   </specie>
+   <specie id="11" name="Cotoneaster">
 
-   </item>
-   <item id="51" name="Crassula arborescens">
+   </specie>
+   <specie id="51" name="Crassula arborescens">
 
-   </item>
-   <item id="23" name="Crataegus">
+   </specie>
+   <specie id="23" name="Crataegus">
 
-   </item>
-   <item id="12" name="Cryptomeria japonica">
+   </specie>
+   <specie id="12" name="Cryptomeria japonica">
 
-   </item>
-   <item id="66" name="Cydonia">
+   </specie>
+   <specie id="66" name="Cydonia">
 
-   </item>
-
-
-</items>
+   </specie>
+</species>

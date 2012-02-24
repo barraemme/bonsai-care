@@ -1,14 +1,15 @@
 window_sizes 1200 896 353 841 702 120
 diagrams
-  sequencediagram_ref 128002 // bonsai
+  active  sequencediagram_ref 128002 // bonsai
     841 702 100 4 0 0
-  active  classdiagram_ref 134530 // class
+  classdiagram_ref 134530 // class
     841 702 100 4 0 19
 end
 show_stereotypes
-selected classview_ref 128002 // Bonsaicare
+selected class_ref 144514 // Scheduler
 open
   classview_ref 128002 // Bonsaicare
+  deploymentview_ref 128002 // Bonsaicare
   classview_ref 128130 // qmlapplicationviewer
   deploymentview_ref 128130 // qmlapplicationviewer
   usecaseview_ref 128002 // uml

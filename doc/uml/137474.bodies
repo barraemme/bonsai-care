@@ -1,14 +1,13 @@
 class Operation
 !!!151938.cpp!!!	Operation(inout parent : QObject = 0)
-    //m_model = new BonsaiModel(m_date, m_name, m_itemId, this);
+
 !!!152066.cpp!!!	Operation(in operation : Operation)
     m_id = operation.index();
     m_last_date = operation.lastDate();
     m_name = operation.name();
-    m_bonsaiId = operation.bonsaiId();
-    //m_model = new BonsaiModel(m_date, m_name, m_itemId, this);
+    m_slot_id = operation.slotId();
 !!!152194.cpp!!!	~Operation()
-    //delete m_model;
+
 !!!152322.cpp!!!	index() : int
     return m_id;
 !!!152450.cpp!!!	setIndex(in index : int) : void
