@@ -21,7 +21,7 @@ class BonsaiModel : public QAbstractListModel // Bonsai data
 {
     Q_OBJECT
     //Q_PROPERTY(int index READ index WRITE setIndex)
-    //Q_PROPERTY(int itemId READ itemId WRITE setItemId)
+    //Q_PROPERTY(int specieId READ specieId WRITE setSpecieId)
     /*Q_PROPERTY(int BonsaierId READ BonsaierId WRITE setBonsaierId)*/
    // Q_PROPERTY(int date READ date WRITE setDate)
     /*Q_PROPERTY(int BonsaiBlockIndex READ BonsaiBlockIndex WRITE setBonsaiBlockIndex)*/
@@ -31,15 +31,15 @@ public:
         IndexRole = Qt::UserRole+1,
         NameRole,
         DateRole,
-        ItemIdRole,
+        SpecieIdRole,
         SetIndexRole,       
         SetDateRole,
-        SetItemIdRole
+        SetSpecieIdRole
       };
     static QHash<int, QByteArray> roleNames();
 
 public:
-    explicit BonsaiModel(SpecieModel &species, BonsaiWorker* worker, QObject* parent=0);
+    explicit BonsaiModel(SpecieModel &species, BonsaiWorker &worker, QObject* parent=0);
     virtual ~BonsaiModel();
 
 public: // From QAbstractListModel
@@ -74,7 +74,7 @@ signals:
 private:
     QList<Bonsai*> m_items;    
     SpecieModel &m_itemmodel;    
-    BonsaiWorker *workerThread;
+    BonsaiWorker &workerThread;
 
 };
 

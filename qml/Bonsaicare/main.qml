@@ -12,7 +12,7 @@ Window {
     state: "start"
     
     // Background image for the Pages
-    /*Image {
+    Image {
         id: bgImg
         anchors {
             top: statusBar.bottom
@@ -24,7 +24,7 @@ Window {
                     (visual.isE6 ? "Core/images/diary_640x480.png"
                                  : "Core/images/diary_640x360.png")
                   : "Core/images/diary_360x640.png"
-    }*/
+    }
 
     // Platform differentitation for visual style & theming.
     Visual {

@@ -13,11 +13,11 @@ QHash<int, QByteArray> BonsaiModel::roleNames()
     roles[IndexRole] = "b_index";
     roles[NameRole] = "b_name";
     roles[DateRole] = "b_date";
-    roles[ItemIdRole] = "b_itemId";
+    roles[SpecieIdRole] = "b_specieId";
 
     roles[SetIndexRole] = "b_setIndex";    
     roles[SetDateRole] = "b_setDate";
-    roles[SetItemIdRole] = "b_setItemId";
+    roles[SetSpecieIdRole] = "b_setSpecieId";
 
     return roles;
 }
@@ -26,7 +26,7 @@ QHash<int, QByteArray> BonsaiModel::roleNames()
 // Bonsai
 // ---------------------------------------------------------------------------
 
-BonsaiModel::BonsaiModel(SpecieModel &species, BonsaiWorker* worker, QObject* parent) :
+BonsaiModel::BonsaiModel(SpecieModel &species, BonsaiWorker &worker, QObject* parent) :
     QAbstractListModel(parent), m_items(), m_itemmodel(species), workerThread(worker)
 {
     qRegisterMetaType<Bonsai>("Bonsai");
@@ -37,13 +37,13 @@ BonsaiModel::BonsaiModel(SpecieModel &species, BonsaiWorker* worker, QObject* pa
 
     /** connect THIS -> WORKER THREAD **/
     //start thread with readAll on init
-    connect(this, SIGNAL(doFetchAllBonsai()), workerThread, SLOT(fetchAllBonsai()));
+    connect(this, SIGNAL(doFetchAllBonsai()), &workerThread, SLOT(fetchAllBonsai()));
     //add insert row to DB
-    connect(this, SIGNAL(doInsert(const int, const int)), workerThread, SLOT(insertBonsai(const int,const int)));
+    connect(this, SIGNAL(doInsert(const int, const int)), &workerThread, SLOT(insertBonsai(const int,const int)));
 
     /** connect WORKER HTREAD -> THIS **/
     //add row to model
-    connect(workerThread, SIGNAL(bonsaiRowFetchDone(Bonsai*)),this, SLOT(addRow(Bonsai*)));
+    connect(&workerThread, SIGNAL(fetchBonsaiRecordDone(Bonsai*)),this, SLOT(addRow(Bonsai*)));
     //notify job done
     //connect(workerThread, SIGNAL(jobDone()),thread, SLOT(quit()));
 
@@ -79,11 +79,11 @@ QVariant BonsaiModel::data(const QModelIndex &index, int role) const
             if (role == IndexRole){
                 return QVariant(item->index());
             } else if (role == NameRole) {
-                return QVariant(m_itemmodel.getNameById(item->itemId()));
+                return QVariant(m_itemmodel.getNameById(item->specieId()));
             } else if (role == DateRole) {
                 return QVariant(item->date());
-            } else if (role == ItemIdRole) {
-                return QVariant(item->itemId());
+            } else if (role == SpecieIdRole) {
+                return QVariant(item->specieId());
             } else {
                 return QVariant("ERR: Unknown role for daymodel: " + role);
             }
@@ -114,8 +114,6 @@ Qt::ItemFlags BonsaiModel::flags( const QModelIndex & index) const
 // For editing
 bool BonsaiModel::setData( const QModelIndex &index, const QVariant &value, int role)
 {
-    qDebug() << "setData(), index" << index << "role" << role;
-
     if (index.isValid()) {
         int row = index.row();
         if (row >= 0 && row < m_items.count()) {
@@ -126,8 +124,8 @@ bool BonsaiModel::setData( const QModelIndex &index, const QVariant &value, int 
             } else if (role == SetDateRole) {
                 item->setDate(value.toInt());
                 return true;
-            } else if (role == SetItemIdRole) {
-                item->setItemId(value.toInt());
+            } else if (role == SetSpecieIdRole) {
+                item->setSpecieId(value.toInt());
                 return true;
             } else {
                 return false;
@@ -148,34 +146,17 @@ bool BonsaiModel::createTable(QSqlDatabase &db)
     bool ret = false;
     if (db.isOpen()) {
         QSqlQuery query(db);
+
+        ret = query.exec("CREATE TABLE bonsai_id "
+                         "(id integer primary key)");
+        if( !ret ){
+           qDebug() << query.lastError();
+            return ret;
+        }
         ret = query.exec("CREATE TABLE bonsai "
-                         "(id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                         "(id INTEGER PRIMARY KEY, "
                          "item_id integer, "
-                         "date integer)");
-
-        /****** TODO da eliminare **********************/
-        /*query.prepare("INSERT INTO bonsai VALUES (?,?,?);");
-        query.bindValue(0,1);
-        query.bindValue(1,1);
-        query.bindValue(2,QDate::fromString("20000510", "yyyyMMdd"));
-
-        if( !query.exec() )
-            qDebug() << query.lastError();
-          else
-            qDebug() << "Table created!";
-
-
-         query.bindValue(0,2);
-         query.bindValue(1,5);
-         query.bindValue(2,QDate::fromString("20120110", "yyyyMMdd"));
-
-
-         if( !query.exec() )
-            qDebug() << query.lastError();
-         else
-            qDebug() << "Table created!";
-        */
-         /********* FINE ELIMINAZIONE *******************************/
+                         "date integer)");        
     }
     return ret;
 }
@@ -183,26 +164,18 @@ bool BonsaiModel::createTable(QSqlDatabase &db)
 void BonsaiModel::addRow(Bonsai* item)
  {
      qDebug() << Q_FUNC_INFO;
-
      //TODO bloccare m_items
-     qDebug() << "beginInsertRows";
      beginInsertRows(QModelIndex(), m_items.count(), m_items.count());
-
      m_items.append(item);
-
-     qDebug() << "endInsertRows "<<m_items.count();
      endInsertRows();
-
-     qDebug() << "emit addedBonsaiRow(item);";
-     emit addedBonsaiRow(item);     
-
+     //TODO che slot prende ?
+     emit addedBonsaiRow(item);
      qDebug() << "END " << Q_FUNC_INFO;
  }
 
 int BonsaiModel::getIdByIndex(const int index) const
 {
     qDebug() << Q_FUNC_INFO;
-    qDebug() << "count :"<< m_items.count() <<", index: "<<index;
     if(index < m_items.count())
         return m_items.at(index)->index();
     return 0;
@@ -241,14 +214,14 @@ bool BonsaiModel::readAll()
 {    
     QSqlQuery query("select * from bonsai", db);
     QString name;
-    int itemId;
+    int specieId;
     while (query.next()) {
-        itemId = query.value(1).toInt();
-        name = m_itemmodel->getSpecieNameById(itemId);
+        specieId = query.value(1).toInt();
+        name = m_itemmodel->getSpecieNameById(specieId);
         Bonsai* item = new Bonsai(query.value(0).toInt(),
                                   QDate::fromJulianDay(query.value(2).toInt()),
                                   name,
-                                  itemId
+                                  specieId
                                   );
         m_items.append(item);
     }
@@ -282,7 +255,7 @@ bool BonsaiModel::readAll()
     while (query.next()) {
         BonsaiModel* item = new BonsaiModel();
         item->m_id = query.value(0).toInt();
-        item->m_itemId = query.value(1).toInt();
+        item->m_specieId = query.value(1).toInt();
         item->m_date = query.value(2).toInt();
         result.append(item);
     }

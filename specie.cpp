@@ -55,3 +55,11 @@ void Specie::setName(const QString &name)
 {
     m_name = name;
 }
+
+Specie & Specie::operator=(const Specie & other){
+    if(this != &other){
+        m_name = other.name();
+        m_id = other.index();
+    }
+    return *this;
+}

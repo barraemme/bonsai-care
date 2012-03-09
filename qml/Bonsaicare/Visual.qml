@@ -5,19 +5,31 @@ Item {
 
     // Defines, if the screen is in landscape or portrait mode. This property
     // should be bound from outside to act on orientation changes correctly.
-    property bool inLandscape: false
+    property bool inLandscape: false    
 
     // E6 has different screen resolution & aspect ratio (640x480), thus
     // there's some differentation for it separately.
     property bool isE6: false
 
     // General definitions (to define the Cell & Header item height, colors etc.)
+    property int bonsaiNameMarginLeft: 50
+
+
+
+
+
+
+
+
+
+
+
     property int generalFontSize: platformStyle.fontSizeMedium
     property int generalLeftMargin: inLandscape ? 50 : 25
     property int generalRightMargin: inLandscape ? 50 : 10
     property int generalTopMargin: 10
     property int bonsaiMargin: generalLeftMargin
-    property int bonsaiMarginRight: inLandscape ? (isE6 ? 15 : 25) : 7
+
     property int textTopMargin: 3
     property color borderColor: "#C4AE94"
     property color generalTextColor: "#6A5147"

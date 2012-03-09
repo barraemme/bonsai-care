@@ -5,24 +5,24 @@
 #include <QtCore/QDebug>
 #include <QtCore/QDate>
 
-Bonsai::Bonsai(const int id, const int date, const int itemId, QObject *parent ):
-    QObject(parent), m_id(id), m_date(date), m_itemId(itemId)
+Bonsai::Bonsai(const int id, const int date, const int specie, QObject *parent ):
+    QObject(parent), m_id(id), m_date(date), m_specieId(specie)
 {
-    //m_model = new BonsaiModel(m_date, m_name, m_itemId, this);
+    //m_model = new BonsaiModel(m_date, m_name, m_specieId, this);
 }
 
 Bonsai::Bonsai(QObject *parent ):
-    QObject(parent), m_id(-1), m_date(), m_itemId(-1)
+    QObject(parent), m_id(-1), m_date(), m_specieId(-1)
 {
-    //m_model = new BonsaiModel(m_date, m_name, m_itemId, this);
+    //m_model = new BonsaiModel(m_date, m_name, m_specieId, this);
 }
 
 Bonsai::Bonsai(const Bonsai &bonsai): QObject(0)
 {
     m_id = bonsai.index();
     m_date = bonsai.date();   
-    m_itemId = bonsai.itemId();
-    //m_model = new BonsaiModel(m_date, m_name, m_itemId, this);
+    m_specieId = bonsai.specieId();
+    //m_model = new BonsaiModel(m_date, m_name, m_specieId, this);
 }
 
 Bonsai::~Bonsai()
@@ -46,14 +46,14 @@ void Bonsai::setIndex(const int index)
     m_id = index;
 }
 
-int Bonsai::itemId() const
+int Bonsai::specieId() const
 {
-    return m_itemId;
+    return m_specieId;
 }
 
-void Bonsai::setItemId(const int itemId)
+void Bonsai::setSpecieId(const int specieId)
 {
-    m_itemId = itemId;
+    m_specieId = specieId;
 }
 
 int Bonsai::date() const

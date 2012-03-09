@@ -9,22 +9,34 @@
 #include <QVariant>
 #include <QBuffer>
 #include <QFile>
-#include <QDesktopServices>
+#include <QtSql>
 #include <QDebug>
-#include <QXmlStreamReader>
+
 
 //models
-#include "speciemodel.h"
-#include "operationmodel.h"
 #include "bonsaimodel.h"
-#include "slotmodel.h"
+#include "operationmodel.h"
+
 // ---------------------------------------------------------------------------
 // DatabaseManager
 // ---------------------------------------------------------------------------
 DatabaseManager::DatabaseManager(QObject *parent) :
     QObject(parent)
 {
+
+    // Find QSLite driver
+    if(!QSqlDatabase::isDriverAvailable("QSQLITE")){
+        qDebug()<<"Driver SQLITE not avaiable";
+        return;
+    }
+    db = QSqlDatabase::addDatabase("QSQLITE", "bonsaiConnection");
+    QString path(QDir::home().path());
+    path.append(QDir::separator()).append("bonsai.db.sqlite");
+    path = QDir::toNativeSeparators(path);
+    db.setDatabaseName(path);
+
     qRegisterMetaType<QSqlDatabase>("QSqlDatabase");
+
 }
 
 DatabaseManager::~DatabaseManager()
@@ -34,50 +46,34 @@ DatabaseManager::~DatabaseManager()
 
 void DatabaseManager::open()
 {
-    openDB();
-    initDB();
+    db.open();
+    if(db.isOpenError())
+        qDebug()<<"Error opening DB connection: " <<db.lastError();
+
+    if(!initDB())
+        qDebug()<<"Error creating database tables";
 }
 
 void DatabaseManager::close()
 {
     if (db.isOpen()){
-        qDebug() << "DB closed";
+        qDebug() << "connection bonsaiConnection to bonsai-care.db closed";
         db.close();
     }
 }
 
-bool DatabaseManager::openDB()
-{
-    // Find QSLite driver
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    // http://doc.trolltech.com/sql-driver.html#qsqlite
-
-    QString path(QDir::home().path());
-    path.append(QDir::separator()).append("Bonsai.db.sqlite");
-    path = QDir::toNativeSeparators(path);
-    db.setDatabaseName(path);
-    qDebug() << "DB opened";
-
-    // Open databasee
-    return db.open();
-}
-
 bool DatabaseManager::initDB()
 {
-    bool ret = true;
 
-    // Create 4 tables
-    if (createIdTable()) {
-        //createSpecieTable();
+    bool ret = false;
+
+        // Create 4 tables
         BonsaiModel::createTable(db);
         OperationModel::createTable(db);
-        //SlotModel::createTable(db);
-        //createBonsaierTable();
-    }
 
-    // Check that tables exists
-    if (db.tables().count() != 4)
-        ret = false;
+        // Check that tables exists
+        if (db.tables().count() == 4)
+            ret = true;
 
     return ret;
 }
@@ -87,7 +83,7 @@ void DatabaseManager::deleteDB()
     db.close();
 
     QString path(QDir::home().path());
-    path.append(QDir::separator()).append("Bonsai.db.sqlite");
+    path.append(QDir::separator()).append("bonsai.db.sqlite");
     path = QDir::toNativeSeparators(path);
 
     QFile::remove(path);
@@ -98,36 +94,22 @@ QSqlError DatabaseManager::lastError()
     return db.lastError();
 }
 
-bool DatabaseManager::createIdTable()
-{
-    // Create table
-    bool ret = false;
-    if (db.isOpen()) {
-        QSqlQuery query;
-        ret = query.exec("create table id "
-                         "(id integer primary key)");
-    }
-    return ret;
-}
-
-
-
-int DatabaseManager::nextId()
+int DatabaseManager::nextId(const QString & table)
 {
     int ret = 0;
     if (db.isOpen()) {
-        QSqlQuery query("select id from id");
+        QSqlQuery query(QString("select id from %1_id").arg(table), db);
         if (query.next()) {
             // Get last used id
             ret = query.value(0).toInt();
             // Increase that
             ret++;
             // Store new value
-            query.exec(QString("update id set id=%1 where id=%2").arg(ret).arg(ret - 1));
+            query.exec(QString("update %1_id set id=%2 where id=%3").arg(table).arg(ret).arg(ret - 1));
         }
         else {
             // Set first id to zero
-            query.exec("insert into id values(1)");
+            query.exec(QString("insert into %1_id values(1)").arg(table));
             ret = 1;
         }
     }

@@ -13,6 +13,7 @@
 #include "slot.h"
 #include "bonsaimodel.h"
 #include "day.h"
+#include "bonsaiworker.h"
 
 class DayModel : public QAbstractListModel
 {
@@ -28,7 +29,7 @@ public:
 public:
     /*explicit DayModel(QObject *parent = 0);
     explicit DayModel(const DayModel &dayModel,  QObject *parent = 0);*/
-    explicit DayModel(const QDate &day, QObject *parent = 0);
+    explicit DayModel(const QDate &day, const BonsaiWorker  & workerThread, QObject *parent = 0);
     virtual ~DayModel();
 
 public: // From QAbstractListModel
@@ -38,7 +39,6 @@ public: // From QAbstractListModel
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     //bool setData( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
 
-    Day& day();
     QList<Slot*>& items();
 
 
@@ -46,9 +46,13 @@ public:
     Q_INVOKABLE QString dayName() const;
     Q_INVOKABLE int weekDayIndex() const;
     Q_INVOKABLE int monthDayIndex() const;
+    Q_INVOKABLE QObject * operationsBySlotIndex( const int index) const;
 
+signals:
+    void doFetchSlotOperations(const int, const QDate&);
 public slots:
-    void addRow(Bonsai* bonsai);
+    void addRow(Slot* sl);
+    void fetchSlot(Bonsai *bonsai);
     //Q_INVOKABLE OperationModel* dayOperations(const int bonsaiId);
     // Exposed to QML for managing the Cell.
     /*void handleItemChange();
@@ -68,11 +72,10 @@ private: // Methods
     int weekDayIndex() const;*/
 
 private: // Data    
-    Day m_day;
+    QDate m_day;
     QList<Slot*> m_items;
     QSqlDatabase db;
-
-
+    const BonsaiWorker &workerThread;
     /*friend QDataStream &operator<<(QDataStream &, const DayModel &);
     friend QDataStream &operator>>(QDataStream &, DayModel &);*/
 };

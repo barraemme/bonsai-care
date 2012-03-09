@@ -2,14 +2,17 @@ format 74
 
 classinstance 128002 class_ref 129026 // BonsaiWorker
   name ""   xyz 576 9 2000 life_line_z 2000
+classinstance 128004 class_ref 129156 // DayModel
+  name ""   xyz 313 4 2000 life_line_z 2000
 classinstance 128258 class_ref 128258 // BonsaiModel
   name ""   xyz 412 6 2000 life_line_z 2000
 classinstance 129282 class_ref 130946 // Main
   name ""   xyz 41 4 2000 life_line_z 2000
 classinstance 130690 class_ref 144770 // SpecieModel
   name ""   xyz 208 4 2000 life_line_z 2000
-classinstance 135426 class_ref 144514 // Scheduler
-  name ""   xyz 730 4 2000 life_line_z 2000
+durationcanvas 128132 classinstance_ref 128004 // :DayModel
+  xyzwh 343 462 2010 11 25
+end
 durationcanvas 130178 classinstance_ref 128002 // :BonsaiWorker
   xyzwh 616 188 2010 11 144
   overlappingdurationcanvas 134530
@@ -52,6 +55,11 @@ end
 durationcanvas 135554 classinstance_ref 128258 // :BonsaiModel
   xyzwh 450 421 2010 11 66
 end
+msg 128260 asynchronous
+  from durationcanvas_ref 135170
+  to durationcanvas_ref 128132
+  yz 462 3005 unspecifiedmsg
+  show_full_operations_definition default drawing_language default show_context_mode default
 msg 130562 asynchronous
   from durationcanvas_ref 130178
   to durationcanvas_ref 130434

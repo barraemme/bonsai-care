@@ -1,10 +1,23 @@
 #include "bonsaiserializer.h"
 #include "specie.h"
 #include "operation.h"
+#include <QDebug>
 
 BonsaiSerializer::BonsaiSerializer(const QXmlNamePool &namePool)
-    : namePool(namePool)
+    : QAbstractXmlReceiver(),namePool(namePool)
 {
+}
+
+BonsaiSerializer::~BonsaiSerializer(){
+    //qDebug()<<"BonsaiSerializer destroied";
+}
+
+void BonsaiSerializer::characters ( const QStringRef & valueref ){
+    QString currentElement = elements.top();
+
+    if (currentElement == "operation"){
+        currentOperation.setScheduleValue( valueref.toString());
+    }
 }
 
 void BonsaiSerializer::attribute(const QXmlName &xmlname, const QStringRef &valueref)
@@ -13,33 +26,59 @@ void BonsaiSerializer::attribute(const QXmlName &xmlname, const QStringRef &valu
     QString value = valueref.toString();
     QString currentElement = elements.top();
 
+    //qDebug()<<name<<" "<<value;
+
     /** SPECIE **/
-    if (currentElement == "specie" && name == "id")
-        currentSpecie->setIndex(value.toInt());
-    else if (currentElement == "specie" && name == "name")
-        currentSpecie->setName(value);
-
+    if (currentElement == "specie"){
+        if(name == "id")
+            currentSpecie.setIndex(value.toInt());
+        else if (name == "name")
+            currentSpecie.setName(value);
+    }else
     /** OPERATION **/
-    if (currentElement == "operation" && name == "id")
-        currentOperation->setIndex(value.toInt());
-
+    if (currentElement == "operation"){
+        if(name == "type")
+            currentOperation.setType(value.toInt());
+        else if(name == "name")
+            currentOperation.setName(value);
+        else if(name == "month")
+            currentOperation.setMonth(value.toInt());
+        else if(name == "schedule")
+            currentOperation.setSchedule(value);
+    }
 }
 
 void BonsaiSerializer::startElement(const QXmlName &xmlname)
 {
     QString name = xmlname.localName(namePool);
+
     elements.push(name);
 
-    if (name == "specie")
-        currentSpecie = new Specie();
-    if (name == "operation")
-        currentOperation = new Operation();
+    //qDebug()<<"<"<<name<<">";
+
+    if (name == "specie"){
+        currentSpecie =  Specie();
+
+    }
+    if (name == "operation"){
+        currentOperation = Operation();
+    }
+
+
 }
 
 void BonsaiSerializer::endElement()
 {
-    if (elements.pop() == "specie")
+   QString name = elements.pop();
+    if (name == "specie"){
         species.append(currentSpecie);
-    if (elements.pop() == "operation")
+
+    }
+    if (name == "operation"){
         operations.append(currentOperation);
+
+    }
+
+    //qDebug()<<"</"<<name<<">";
+
 }

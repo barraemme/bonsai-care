@@ -45,8 +45,6 @@ Page {
     }
 
     // Page attribute definitions.
-    onLandscapeLayoutChanged: console.log("Changed landscapelayout: "
-                                          + landscapeLayout)
     anchors.fill: parent
 
     // Use 2x1 or 1x2 type of grid for layouting the starttime & endtime

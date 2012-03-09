@@ -14,7 +14,7 @@ Item {
         query: "/items/item"
 
         XmlRole { name: "date"; query: "date/string()" }
-        XmlRole { name: "itemId"; query: "@id/number()" }
+        XmlRole { name: "specieId"; query: "@id/number()" }
         XmlRole { name: "ref"; query: "@ref/number()" }
 
     }    

@@ -56,8 +56,8 @@ SOURCES += main.cpp \
     operation.cpp \
     slot.cpp \
     slotmodel.cpp \
-    scheduler.cpp \
-    bonsaiserializer.cpp
+    bonsaiserializer.cpp \
+    task.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -92,8 +92,19 @@ HEADERS += \
     operation.h \
     slot.h \
     slotmodel.h \
-    scheduler.h \
-    bonsaiserializer.h
+    bonsaiserializer.h \
+    task.h
 
 RESOURCES += \
     resources.qrc
+
+
+
+
+
+
+
+
+
+
+

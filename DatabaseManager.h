@@ -25,19 +25,20 @@ public:
     ~DatabaseManager();
 
 public:
-    Q_INVOKABLE void open();
-    Q_INVOKABLE void close();
-    Q_INVOKABLE void deleteDB();
-    Q_INVOKABLE int nextId();
+    void open();
+    void close();
+    void deleteDB();
+    int nextId(const QString & table);
     QSqlError lastError();
     const QSqlDatabase getDB();
 private:
-    bool openDB();
+
     bool initDB();
     bool createIdTable();
 
 private:
     QSqlDatabase db;
+
 
 };
 

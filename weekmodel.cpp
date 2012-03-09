@@ -14,6 +14,7 @@
 
 // Internal includes
 #include "daymodel.h"
+#include "bonsaiworker.h"
 
 // Constants
 const int DAYS_IN_WEEK = 7;
@@ -33,23 +34,22 @@ QHash<int, QByteArray> WeekModel::roleNames()
     return roles;
 }
 
-WeekModel::WeekModel(const BonsaiModel &bonsaiModel, QObject *parent) :
-    QAbstractListModel(parent), m_days()
+WeekModel::WeekModel(const BonsaiModel &bonsaiModel, const BonsaiWorker &worker, QObject *parent) :
+    QAbstractListModel(parent), m_days(), workerThread(worker)
 {
     if ( !restore() ) {
         QDate startDay = QDate::currentDate ();
-
         int wDay = startDay.dayOfWeek();
-        if(wDay > 1)
-            startDay.setDate(startDay.year(), startDay.month(), startDay.day()-(wDay-1));
 
+        if(wDay > 1)
+            startDay = startDay.addDays(-(wDay-1));
         /*int startMonth = 0;
         int lastMonth = 0;*/
         for (int i = 0; i < DAYS_IN_WEEK; i++) {
-            DayModel* day = new DayModel(startDay.addDays(i));
-            connect(&bonsaiModel, SIGNAL(addedBonsaiRow(Bonsai*)),day, SLOT(addRow(Bonsai*)));
+            DayModel* day = new DayModel(startDay.addDays(i), workerThread);
+            //connect(&bonsaiModel, SIGNAL(addedBonsaiRow(Bonsai*)),day, SLOT(fetchSlot(Bonsai*)));
             m_days.append(day);
-
+            //day->init();
             //Add the month to model
            /* m_months.append(new QDate());
             //m_months.append(day);
@@ -148,9 +148,8 @@ int WeekModel::indexOfMonth(int dayIndex) const
     return monthNum-1;
 }
 
-DayModel* WeekModel::day(int dayIndex) const
+QObject* WeekModel::day(int dayIndex) const
 {
-    qDebug() << Q_FUNC_INFO;
     return m_days.at(dayIndex);
 }
 

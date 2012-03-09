@@ -32,7 +32,7 @@ public:
     static QHash<int, QByteArray> roleNames();
 
 public:
-    explicit SpecieModel(BonsaiWorker* worker, QObject *parent = 0);
+    explicit SpecieModel(const BonsaiWorker &worker, QObject *parent = 0);
     virtual ~SpecieModel();
 
 public: // From QAbstractListModel
@@ -40,7 +40,7 @@ public: // From QAbstractListModel
     Qt::ItemFlags flags( const QModelIndex & index ) const;
     QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    bool setData( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
+    //bool setData( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
     int count() const;    
 
     void init();
@@ -57,7 +57,7 @@ public: // From QAbstractListModel
     */
 public slots:
     // Exposed to QML for managing the model.
-    void addRow(Specie* specie);
+    void addRow(const Specie* specie);
     void commit();
 
 signals:
@@ -66,9 +66,9 @@ signals:
     void doInit();
 
 private:
-    QList<Specie*> m_items;
+    QList<const Specie*> m_items;
     //QThread *thread;
-    BonsaiWorker *workerThread;
+    const BonsaiWorker &workerThread;
 
 };
 

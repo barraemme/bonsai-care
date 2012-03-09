@@ -27,13 +27,7 @@ OperationModel::OperationModel(const int bonsaiId, const QDate &lastDate, QObjec
     QAbstractListModel(parent), m_items(), m_bonsai_id(bonsaiId), m_last_date(lastDate)
 {
     // Find QSLite driver
-    db = QSqlDatabase::addDatabase("QSQLITE", "OperationModelConnection"+bonsaiId+lastDate.toString());
-    // http://doc.trolltech.com/sql-driver.html#qsqlite
-
-    QString path(QDir::home().path());
-    path.append(QDir::separator()).append("Bonsai.db.sqlite");
-    path = QDir::toNativeSeparators(path);
-    db.setDatabaseName(path);
+    db = QSqlDatabase::database("bonsaiConnection");
 
     //init();
     setRoleNames(OperationModel::roleNames());
@@ -47,15 +41,7 @@ OperationModel::~OperationModel()
 
 void OperationModel::init()
 {
-    /*thread->start();
-    connect(this, SIGNAL(fetch()), workerThread, SLOT(readAll()));
-    connect(workerThread, SIGNAL(fetched(Bonsai*)),this, SLOT(addRow(Bonsai*)));
-    connect(workerThread, SIGNAL(finished()),this, SLOT(endWorker()));
-
-    emit fetch();*/
-
-    db.open();
-
+    //TODO if db open
         QSqlQuery query(db);
 
         query.prepare("select id, last_date, name, bonsai_id,  from operations where bonsai_id = ? and last_date = ?");
@@ -68,23 +54,40 @@ void OperationModel::init()
             qDebug() << "Table created!";
 
         while (query.next()) {
-           Operation* op = new Operation(
-                       query.value(0).toInt(),
-                       query.value(1).toDate(),
-                       query.value(2).toString(),
-                       query.value(3).toInt()
-           );
+           Operation op;
+           //query.value(0).toInt(),
+           //            query.value(1).toDate(),
+           //            query.value(2).toString(),
+           //            query.value(3).toInt()
+           //);
            addRow(op);
         }
-   db.close();
-
 }
 
-void OperationModel::addRow(Operation* item)
+bool OperationModel::insert(Operation &op)
+{
+    //TODO if db open
+    QSqlQuery query(db);
+    query.prepare("INSERT INTO operations ( name, bonsai_id, last_date) VALUES ( ?, ?, ? )");
+    query.bindValue(0, op.name());
+    query.bindValue(1, op.bonsaiId());
+    query.bindValue(2, op.lastDate());
+
+    bool ret = query.exec();
+
+    if(!ret)
+      qDebug() << query.lastError();
+
+   //addRow(op);
+   return ret;
+}
+
+
+void OperationModel::addRow(Operation &op)
  {
      qDebug() << Q_FUNC_INFO;
      beginInsertRows(QModelIndex(), m_items.count(), m_items.count()+1);
-     m_items.append(item);
+     m_items.append(&op);
      endInsertRows();
      qDebug() << "END " << Q_FUNC_INFO;
  }
@@ -107,7 +110,7 @@ QVariant OperationModel::data(const QModelIndex &index, int role) const
             } else if (role == LastDateRole) {
                 return QVariant(item->lastDate());
             } else if (role == BonsaiIdRole) {
-                return QVariant(item->slotId());
+                return QVariant(item->bonsaiId());
             } else {
                 return QVariant("ERR: Unknown role for daymodel: " + role);
             }
@@ -154,7 +157,7 @@ bool OperationModel::setData( const QModelIndex &index, const QVariant &value, i
                 item->setLastDate(value.toDate());
                 return true;
             } else if (role == SetBonsaiIdRole) {
-                item->setSlotId(value.toInt());
+                item->setBonsaiId(value.toInt());
                 return true;
             } else {
                 return false;
@@ -175,16 +178,27 @@ bool OperationModel::createTable(QSqlDatabase &db)
     bool ret = false;
     if (db.isOpen()) {
         QSqlQuery query(db);
+        ret = query.exec("CREATE TABLE operations_id "
+                         "(id integer primary key)");
+        if( !ret ){
+           qDebug() << query.lastError();
+            return ret;
+        }
         ret = query.exec("CREATE TABLE operations "
-                         "(id integer primary key, "
-                         "name varchar(15)"
+                         "(id integer PRIMARI KEY, "
+                         "name varchar(25),"
+                         "type integer,"
                          "bonsai_id integer, "
-                         "last_date date)");
+                         "last_date integer)");
 
          if( !ret )
             qDebug() << query.lastError();
-         else
-            qDebug() << "Table operations created!";
+
     }
     return ret;
+}
+
+int OperationModel::count() const
+{
+    return m_items.count();
 }

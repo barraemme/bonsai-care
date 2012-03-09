@@ -13,13 +13,13 @@ class BonsaiSerializer : public QAbstractXmlReceiver
 {
 public:
     BonsaiSerializer(const QXmlNamePool &namePool);
-
+    ~BonsaiSerializer();
     void attribute(const QXmlName &name, const QStringRef &value);
     void endElement();
     void startElement(const QXmlName &name);
 
     void atomicValue(const QVariant &) {}
-    void characters(const QStringRef &) {}
+    void characters(const QStringRef &);
     void comment(const QString &) {}
     void endDocument() {}
     void endOfSequence() {}
@@ -28,14 +28,14 @@ public:
     void startDocument() {}
     void startOfSequence() {}
 
-    QList<Specie*> species;
-    QList<Operation*> operations;
+    QList<Specie> species;
+    QList<Operation> operations;
 
 private:
     QXmlNamePool namePool;
     QStack<QString> elements;
-    Specie* currentSpecie;
-    Operation* currentOperation;
+    Specie currentSpecie;
+    Operation currentOperation;
 };
 
 #endif // BONSAISERIALIZER_H

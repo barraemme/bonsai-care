@@ -24,7 +24,7 @@ QHash<int, QByteArray> SpecieModel::roleNames()
     return roles;
 }
 
-SpecieModel::SpecieModel(BonsaiWorker* worker, QObject *parent):
+SpecieModel::SpecieModel(const BonsaiWorker & worker, QObject *parent):
     QAbstractListModel(parent), workerThread(worker), m_items()
 {
     //QSqlQuery query("select * from bonsai_item");
@@ -46,20 +46,19 @@ SpecieModel::SpecieModel(BonsaiWorker* worker, QObject *parent):
 
     /** connect THIS -> WORKER THREAD **/
     //start thread with readAll on init
-    connect(this, SIGNAL(doFetchSpecies()), workerThread, SLOT(fetchAllSpecies()));
+    connect(this, SIGNAL(doFetchSpecies()), &workerThread, SLOT(fetchAllSpecies()));
 
     /** connect WORKER HTREAD -> THIS **/
     //add row to model
-    connect(workerThread, SIGNAL(specieRowFetchDone(Specie*)),this, SLOT(addRow(Specie*)));
+    connect(&workerThread, SIGNAL(fetchSpecieRecordDone(const Specie*)),this, SLOT(addRow(const Specie*)));
     //notify job done
-    connect(workerThread, SIGNAL(fetchSpeciesDone()),this, SLOT(commit()));
+    connect(&workerThread, SIGNAL(fetchSpeciesDone()),this, SLOT(commit()));
 
     setRoleNames(SpecieModel::roleNames());
 }
 
 void SpecieModel::init()
-{
-    //thread->start();
+{    
     emit doFetchSpecies();
 }
 
@@ -75,11 +74,10 @@ int SpecieModel::rowCount(const QModelIndex &parent) const
 
 QVariant SpecieModel::data(const QModelIndex &index, int role) const
 {
-    qDebug()<<"Specie Model data: "<<role;
     if (index.isValid()) {
         int row = index.row();
         if (row >= 0 && row < m_items.count()) {
-            Specie *item = m_items[row];
+            const Specie *item = m_items[row];
             if (role == IndexRole){
                 return QVariant(item->index());
             } else if (role == NameRole || role == DataRole) {
@@ -112,14 +110,14 @@ Qt::ItemFlags SpecieModel::flags( const QModelIndex & index) const
 }
 
 // For editing
-bool SpecieModel::setData( const QModelIndex &index, const QVariant &value, int role)
+/*bool SpecieModel::setData( const QModelIndex &index, const QVariant &value, int role)
 {
     qDebug() << "setData(), index" << index << "role" << role;
 
     if (index.isValid()) {
         int row = index.row();
         if (row >= 0 && row < m_items.count()) {
-            Specie* item = m_items[row];
+            const Specie* item = m_items[row];
             if (role == SetIndexRole){
                 item->setIndex(value.toInt());
                 return true;
@@ -137,7 +135,7 @@ bool SpecieModel::setData( const QModelIndex &index, const QVariant &value, int 
     }
 
     return false;
-}
+}*/
 
 int SpecieModel::count() const
 {
@@ -164,20 +162,18 @@ int SpecieModel::getIdByIndex(const int index) const
   return m_items.at(index)->index();
 }
 
-void SpecieModel::addRow(Specie* item)
+void SpecieModel::addRow(const Specie* item)
  {
-     qDebug() << Q_FUNC_INFO;
+     //qDebug() << Q_FUNC_INFO;
 
      //TODO bloccare m_items
-     qDebug() << "beginInsertRows";
      beginInsertRows(QModelIndex(), m_items.count(), m_items.count());
 
      m_items.append(item);
 
-     qDebug() << "endInsertRows "<<m_items.count();
      endInsertRows();
 
-     qDebug() << "END " << Q_FUNC_INFO;
+     //qDebug() << "END " << Q_FUNC_INFO;
 }
 
 void SpecieModel::commit()

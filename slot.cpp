@@ -24,6 +24,16 @@ Slot::~Slot()
 {
 }
 
+QDate Slot::date() const
+{
+    return m_date;
+}
+
+OperationModel * Slot::operations()
+{
+    return m_operation_model;
+}
+
 /*
 bool Slot::setStartTime(const QTime &time)
 {

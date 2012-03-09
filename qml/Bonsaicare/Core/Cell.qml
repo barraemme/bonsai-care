@@ -1,14 +1,15 @@
 import QtQuick 1.0
 
+
 Item {
-    id: container
+    id: cell
 
     property variant model: null
     property int bonsaiMargin: visual.bonsaiMargin
     property int textTopMargin: visual.textTopMargin
     property int selectionIndicatorWidth: visual.selectionIndicatorWidth
     property color borderColor: visual.borderColor
-    property int itemHeight: visual.itemHeight
+    property int itemHeight: 70
     // Define color & size of the text
     property color textColor: visual.cellTextColor
     property int fontSize: visual.cellFontSize
@@ -19,12 +20,12 @@ Item {
     // Visible only, if not under bonsai spanning
     //visible: spanned ? false : true
     Component.onCompleted: {
-        console.log("Cell" +d_dayName);
+        console.log("QML Cell " +d_dayName);
     }
 
 
     // Gradient rectangle that indicates the "pressed" status of the item.
-    Rectangle {
+    /*Rectangle {
         id: gradientRect
         anchors.fill: parent
         //opacity: ma.pressed ? 1 : 0
@@ -40,24 +41,67 @@ Item {
                 duration: 100
             }
         }
-    }
-
-    // bonsais are being shown in a vertical list
-    /*ListView {
-        id: operationsList
-        anchors.fill: parent
-        orientation: ListView.Horizontal
-        model: container.model
-        delegate: bonsaiDelegate
-        snapMode: ListView.SnapToItem
-        clip: true
-        interactive: false
-        highlightRangeMode: ListView.StrictlyEnforceRange
-        // Cache the whole bonsaicolumn into memory.
-        cacheBuffer: 1920
     }*/
 
-    Item {
+    // bonsais are being shown in a vertical list
+    ListView {
+        id: operationsList
+        //anchors.fill: parent
+        orientation: ListView.Horizontal
+        model: cell.model.operationsBySlotIndex(index)
+        width: parent.width
+        height:parent.height
+        delegate: operationDelegate
+        snapMode: ListView.SnapToItem
+        //clip: true
+        interactive: false
+        highlightRangeMode: ListView.StrictlyEnforceRange
+        // Cache the whole bonsai into memory.
+        cacheBuffer: 1920
+    }
+
+    // bonsai prototype item.
+    Component {
+        id: operationDelegate
+
+        Item {
+                id: image;
+                width: 40;
+                height: 40;
+                smooth: true
+                /*anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                    top: nameTxt.bottom
+                    topMargin: container.textTopMargin
+                }*/
+
+                Core.Loading {
+                    width: 40;
+                    height: 40;
+                    visible: realImage.status != Image.Ready
+                }
+
+                Image {
+                    id: realImage;
+                    source: "images/"+o_name+".png";
+                    width:40; height:40; opacity:0 ;
+                    onStatusChanged: {
+                        if(status==Image.Ready)
+                            image.state="loaded"
+                    }
+
+                }
+                states: State {
+                    name: "loaded";
+                    PropertyChanges { target: realImage ; opacity:1 }
+                }
+                transitions: Transition { NumberAnimation { target: realImage; property: "opacity"; duration: 200 } }
+            }
+
+    }
+
+    /*Item {
         id: cellItem
 
         width: parent.width
@@ -65,7 +109,7 @@ Item {
         anchors.left: parent.left
         clip: true
 
-        /*BorderImage {
+        BorderImage {
             visible: cellText.text ? true : false
             width: container.selectionIndicatorWidth
             height: cellItem.height
@@ -73,7 +117,7 @@ Item {
                               : "gfx/selection_turquoise.png"
             border.left: 3; border.top: 10
             border.right: 35; border.bottom: 10
-        }*/
+        }
 
         Text {
             id: cellText

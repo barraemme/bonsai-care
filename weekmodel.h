@@ -10,6 +10,7 @@
 
 #include "daymodel.h"
 #include "bonsaimodel.h"
+#include "bonsaiworker.h"
 
 //Q_DECLARE_METATYPE(DayModel)
 
@@ -26,7 +27,7 @@ public:
     static QHash<int, QByteArray> roleNames();
 
 public:
-    explicit WeekModel(const BonsaiModel &bonsaiModel, QObject *parent = 0);
+    explicit WeekModel(const BonsaiModel &bonsaiModel, const BonsaiWorker & worker, QObject *parent = 0);
     virtual ~WeekModel();
 
 public: // From QAbstractListModel
@@ -42,13 +43,14 @@ public:
     Q_INVOKABLE bool restore();
     Q_INVOKABLE int indexOfFirstDay(int month) const;
     Q_INVOKABLE int indexOfMonth(int dayIndex) const;
-    Q_INVOKABLE DayModel* day(int dayIndex) const;
+    Q_INVOKABLE QObject* day(int dayIndex) const;
 
 private:
     QString getSaveFileName() const;
 
 private:
     QList<DayModel*> m_days;
+    const BonsaiWorker& workerThread;
 };
 
 #endif // WEEKMODEL_H

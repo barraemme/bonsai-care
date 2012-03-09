@@ -16,6 +16,7 @@ public:
     Specie(const Specie &specie);
     virtual ~Specie();
 
+    Specie & operator =(const Specie &other);
 public slots:
     //QObject *items() const;
     int index() const;

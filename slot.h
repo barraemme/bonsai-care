@@ -20,6 +20,8 @@ public:
     virtual ~Slot();
 
 public:
+    QDate date() const;
+    OperationModel* operations();
     /*bool setStartTime(const QTime &time);
     bool setItemData(const QString &data);
     bool setHourSpan(int hours);

@@ -7,13 +7,11 @@
 
 // Platform includes
 #include <QtCore/QDebug>
-#include <QSqlQuery>
 #include <QThread>
-
 #include "operationmodel.h"
 #include "slotmodel.h"
 #include "day.h"
-
+#include "bonsaiworker.h"
 // Constants
 //const int DAYS_FIRST_SLOT = 6;
 
@@ -46,16 +44,22 @@ DayModel::DayModel(const DayModel &dayModel,  QObject *parent):
 }*/
 
 
-DayModel::DayModel(const QDate &day, QObject *parent) :
-    QAbstractListModel(parent), m_day(day), m_items()
+DayModel::DayModel(const QDate &day, const BonsaiWorker & worker, QObject *parent) :
+    QAbstractListModel(parent), m_day(day), m_items(), workerThread(worker)
 {    
 
 //    // Enable following comments, if you would like to generate the day
 //    // full of example events.
 //    QString templateItem("Day %1 Item %2");    
+    //start thread with readAll on init
+    /** connect WORKER THREAD -> THIS **/
+    connect(&workerThread, SIGNAL(fetchBonsaiRecordDone(Bonsai*)),this, SLOT(fetchSlot(Bonsai*)));
+    connect(&workerThread, SIGNAL(fetchSlotDone(Slot*)),this, SLOT(addRow(Slot*)));
 
-
-
+    //add insert row to DB
+    /** connect THIS -> WORKER THREAD **/
+    connect(this, SIGNAL(doFetchSlotOperations(const int, const QDate&)), &workerThread, SLOT(fetchSlot(const int,const QDate&)));
+   //add row to model
     setRoleNames(DayModel::roleNames());
 
 //    // Code for generating randomly hour spans to events.
@@ -67,30 +71,28 @@ DayModel::DayModel(const QDate &day, QObject *parent) :
 //    }
 }
 
-Day& DayModel::day()
-{
-    return m_day;
-}
-
 QList<Slot*>& DayModel::items()
 {
     return m_items;
 }
 
+void DayModel::fetchSlot(Bonsai* bonsai)
+{
+    qDebug() << Q_FUNC_INFO << QThread::currentThread();
+    emit doFetchSlotOperations(bonsai->index(), m_day);
+    qDebug() << "END " << Q_FUNC_INFO << QThread::currentThread();
+}
 
-void DayModel::addRow(Bonsai* bonsai)
+void DayModel::addRow(Slot* sl)
 {    
+    if(sl->date() != m_day)
+        return;
     qDebug() << Q_FUNC_INFO;
 
-    OperationModel* op = new OperationModel(bonsai->index(), m_day.date());
-    Slot *sl = new Slot(bonsai->index(), m_day.date(), op);
-
-    qDebug() << "beginInsertRows";
     beginInsertRows(QModelIndex(), m_items.count(), m_items.count());
 
     m_items.append(sl);
 
-    qDebug() << "endInsertRows "<<m_items.count();
     endInsertRows();
     qDebug() << "END" <<Q_FUNC_INFO;
 }
@@ -123,9 +125,9 @@ QVariant DayModel::data(const QModelIndex &index, int role) const
         if (row >= 0 && row < m_items.count()) {
             Slot *slot = m_items[row];
             if (role == DayNameRole) {
-                return QVariant(m_day.dayName());
+                return QVariant(QDate::longDayName(m_day.dayOfWeek()));
             } else if (role == WeekDayIndexRole) {
-                return QVariant(m_day.dayOfWeekIndex());
+                return QVariant(m_day.dayOfWeek());
             } else {
                 return QVariant("ERR: Unknown role for daymodel: " + role);
             }
@@ -302,19 +304,29 @@ int DayModel::itemsParent(int index)
     }
 }
 */
+
+
 QString DayModel::dayName() const
 {
-    return m_day.dayName();
+    return QDate::longDayName(m_day.dayOfWeek());
 }
 
 int DayModel::weekDayIndex() const
 {
-    return m_day.dayOfWeekIndex();
+    return m_day.dayOfWeek();
 }
 
 int DayModel::monthDayIndex() const
 {
-    return m_day.monthIndex();
+    return m_day.month();
+}
+
+QObject * DayModel::operationsBySlotIndex(const int index) const
+{
+    qDebug() << Q_FUNC_INFO << QThread::currentThread()<< " index:"<<index;
+    OperationModel* op = m_items.at(index)->operations();
+    qDebug() << op->count();
+    return op;
 }
 /*
 QDataStream &operator<<(QDataStream &stream, const DayModel &dayModel)

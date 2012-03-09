@@ -51,42 +51,38 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     app->setApplicationVersion(VERSION_NUMBER);
 
-    BonsaiWorker* workerThread = new BonsaiWorker();
-    QThread* thread = new QThread;
-
-    workerThread->moveToThread(thread);
-    thread->start();
-
     //Open db connection
     DatabaseManager db;
     db.open();
+
+    BonsaiWorker worker;
+    worker.cleanOldOperations();
+    QThread worker_thread;
+    worker.moveToThread(&worker_thread);
+    worker_thread.start();
 
     //Setting models
     //used for displaying months on top
     MonthModel months;
     rootContext->setContextProperty("months", &months);
     //used to list all species of bonsais
-    SpecieModel species(workerThread);
-    qDebug() << "BONSAI ITEM ROW COUNT" << species.rowCount();
+    SpecieModel species(worker);
     rootContext->setContextProperty("species", &species);
 
     //used to get all custom bonsais
-    BonsaiModel bonsai(species, workerThread);
+    BonsaiModel bonsai(species, worker);
     rootContext->setContextProperty("bonsai", &bonsai);
 
     species.init();
 
     //used for displaying week days on top
-    WeekModel week(bonsai);
+    WeekModel week(bonsai, worker);
     rootContext->setContextProperty("week", &week);
     rootContext->setContextProperty(QString("cp_versionNumber"), VERSION_NUMBER);
 
     // Setting database Qt class handle to QML
     /*
     rootContext->setContextProperty("db", db.data());*/
-
-
-
 
     // App version to QML in Symbian^3 version build
 #ifndef Q_OS_SYMBIAN_1
@@ -131,10 +127,9 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     // Start the application
 
     int ret = app->exec();
-    thread->exit(0);
-    thread->wait();
-    delete(workerThread);
-    delete(thread);
+    worker_thread.exit(0);
+    worker_thread.wait();
+
     db.close();
     return ret;
 }

@@ -2,163 +2,127 @@
 <species>
    <specie id="1" name="Acer buergerianum">
       <operations>
-        <operation id="1">
-            <name>watering</name>           
-            <months>
-                <month id="1" type="every_days">2</month>
-                <month id="2" type="every_days">2</month>
-                <month id="3" type="every_days">1</month>
-                <month id="4" type="every_days">1</month>
-                <month id="5" type="every_days">1</month>
-                <month id="6" type="every_days">1</month>
-                <month id="7" type="every_days">1</month>
-                <month id="7" type="every_days">1</month>
-                <month id="8" type="every_days">1</month>
-                <month id="8" type="every_days">1</month>
-                <month id="9" type="every_days">1</month>
-                <month id="10" type="every_days">1</month>
-                <month id="11" type="every_days">2</month>
-                <month id="12" type="every_days">2</month>
-            </months>
-        </operation>       
+        <operation type="1" name="watering" month="1" schedule="every_days">2</operation>
+        <operation type="1" name="watering" month="2" schedule="every_days">2</operation>
+        <operation type="1" name="watering" month="3" schedule="every_days">1</operation>
+        <operation type="1" name="watering" month="4" schedule="every_days">1</operation>
+        <operation type="1" name="watering" month="5" schedule="every_days">1</operation>
+        <operation type="1" name="watering" month="6" schedule="every_days">1</operation>
+        <operation type="1" name="watering" month="7" schedule="every_days">1</operation>
+        <operation type="1" name="watering" month="8" schedule="every_days">1</operation>
+        <operation type="1" name="watering" month="9" schedule="every_days">1</operation>
+        <operation type="1" name="watering" month="10" schedule="every_days">1</operation>
+        <operation type="1" name="watering" month="11" schedule="every_days">2</operation>
+        <operation type="1" name="watering" month="12" schedule="every_days">2</operation>
+
+        <operation type="2" name="potatura" month="1" schedule="every_days">2</operation>
+        <operation type="2" name="potatura" month="2" schedule="every_days">2</operation>
+        <operation type="2" name="potatura" month="3" schedule="every_days">1</operation>
+        <operation type="2" name="potatura" month="4" schedule="every_days">1</operation>
+        <operation type="2" name="potatura" month="5" schedule="every_days">1</operation>
+        <operation type="2" name="potatura" month="6" schedule="every_days">1</operation>
+        <operation type="2" name="potatura" month="7" schedule="every_days">1</operation>
+        <operation type="2" name="potatura" month="8" schedule="every_days">1</operation>
+        <operation type="2" name="potatura" month="9" schedule="every_days">1</operation>
+        <operation type="2" name="potatura" month="10" schedule="every_days">1</operation>
+        <operation type="2" name="potatura" month="11" schedule="every_days">2</operation>
+        <operation type="2" name="potatura" month="12" schedule="every_days">2</operation>
       </operations>
    </specie>
    <specie id="5" name="Acer palmatum">
        <operations>
-         <operation id="1">
-             <name>watering</name>
-             <months>
-                 <month id="1" type="every_days">2</month>
-                 <month id="2" type="every_days">2</month>
-                 <month id="3" type="every_days">1</month>
-                 <month id="4" type="every_days">1</month>
-                 <month id="5" type="every_days">1</month>
-                 <month id="6" type="every_days">1</month>
-                 <month id="7" type="every_days">1</month>
-                 <month id="7" type="every_days">1</month>
-                 <month id="8" type="every_days">1</month>
-                 <month id="8" type="every_days">1</month>
-                 <month id="9" type="every_days">1</month>
-                 <month id="10" type="every_days">1</month>
-                 <month id="11" type="every_days">2</month>
-                 <month id="12" type="every_days">2</month>
-             </months>
-         </operation>
+       <operation type="1" name="watering" month="1" schedule="every_days">2</operation>
+       <operation type="1" name="watering" month="2" schedule="every_days">2</operation>
+       <operation type="1" name="watering" month="3" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="4" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="5" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="6" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="7" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="8" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="9" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="10" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="11" schedule="every_days">2</operation>
+       <operation type="1" name="watering" month="12" schedule="every_days">2</operation>
        </operations>
    </specie>
    <specie id="56" name="Bambusa">
        <operations>
-         <operation id="1">
-             <name>watering</name>
-             <months>
-                 <month id="1" type="every_days">2</month>
-                 <month id="2" type="every_days">2</month>
-                 <month id="3" type="every_days">1</month>
-                 <month id="4" type="every_days">1</month>
-                 <month id="5" type="every_days">1</month>
-                 <month id="6" type="every_days">1</month>
-                 <month id="7" type="every_days">1</month>
-                 <month id="7" type="every_days">1</month>
-                 <month id="8" type="every_days">1</month>
-                 <month id="8" type="every_days">1</month>
-                 <month id="9" type="every_days">1</month>
-                 <month id="10" type="every_days">1</month>
-                 <month id="11" type="every_days">2</month>
-                 <month id="12" type="every_days">2</month>
-             </months>
-         </operation>
+       <operation type="1" name="watering" month="1" schedule="every_days">2</operation>
+       <operation type="1" name="watering" month="2" schedule="every_days">2</operation>
+       <operation type="1" name="watering" month="3" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="4" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="5" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="6" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="7" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="8" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="9" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="10" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="11" schedule="every_days">2</operation>
+       <operation type="1" name="watering" month="12" schedule="every_days">2</operation>
        </operations>
    </specie>
    <specie id="22" name="Buxus harlandii">
        <operations>
-         <operation id="1">
-             <name>watering</name>
-             <months>
-                 <month id="1" type="every_days">2</month>
-                 <month id="2" type="every_days">2</month>
-                 <month id="3" type="every_days">1</month>
-                 <month id="4" type="every_days">1</month>
-                 <month id="5" type="every_days">1</month>
-                 <month id="6" type="every_days">1</month>
-                 <month id="7" type="every_days">1</month>
-                 <month id="7" type="every_days">1</month>
-                 <month id="8" type="every_days">1</month>
-                 <month id="8" type="every_days">1</month>
-                 <month id="9" type="every_days">1</month>
-                 <month id="10" type="every_days">1</month>
-                 <month id="11" type="every_days">2</month>
-                 <month id="12" type="every_days">2</month>
-             </months>
-         </operation>
+       <operation type="1" name="watering" month="1" schedule="every_days">2</operation>
+       <operation type="1" name="watering" month="2" schedule="every_days">2</operation>
+       <operation type="1" name="watering" month="3" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="4" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="5" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="6" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="7" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="8" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="9" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="10" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="11" schedule="every_days">2</operation>
+       <operation type="1" name="watering" month="12" schedule="every_days">2</operation>
        </operations>
    </specie>
    <specie id="8" name="Camellia">
        <operations>
-         <operation id="1">
-             <name>watering</name>
-             <months>
-                 <month id="1" type="every_days">2</month>
-                 <month id="2" type="every_days">2</month>
-                 <month id="3" type="every_days">1</month>
-                 <month id="4" type="every_days">1</month>
-                 <month id="5" type="every_days">1</month>
-                 <month id="6" type="every_days">1</month>
-                 <month id="7" type="every_days">1</month>
-                 <month id="7" type="every_days">1</month>
-                 <month id="8" type="every_days">1</month>
-                 <month id="8" type="every_days">1</month>
-                 <month id="9" type="every_days">1</month>
-                 <month id="10" type="every_days">1</month>
-                 <month id="11" type="every_days">2</month>
-                 <month id="12" type="every_days">2</month>
-             </months>
-         </operation>
+       <operation type="1" name="watering" month="1" schedule="every_days">2</operation>
+       <operation type="1" name="watering" month="2" schedule="every_days">2</operation>
+       <operation type="1" name="watering" month="3" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="4" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="5" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="6" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="7" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="8" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="9" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="10" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="11" schedule="every_days">2</operation>
+       <operation type="1" name="watering" month="12" schedule="every_days">2</operation>
        </operations>
    </specie>
    <specie id="62" name="Carmona macrophylla">
        <operations>
-         <operation id="1">
-             <name>watering</name>
-             <months>
-                 <month id="1" type="every_days">2</month>
-                 <month id="2" type="every_days">2</month>
-                 <month id="3" type="every_days">1</month>
-                 <month id="4" type="every_days">1</month>
-                 <month id="5" type="every_days">1</month>
-                 <month id="6" type="every_days">1</month>
-                 <month id="7" type="every_days">1</month>
-                 <month id="7" type="every_days">1</month>
-                 <month id="8" type="every_days">1</month>
-                 <month id="8" type="every_days">1</month>
-                 <month id="9" type="every_days">1</month>
-                 <month id="10" type="every_days">1</month>
-                 <month id="11" type="every_days">2</month>
-                 <month id="12" type="every_days">2</month>
-             </months>
-         </operation>
+       <operation type="1" name="watering" month="1" schedule="every_days">2</operation>
+       <operation type="1" name="watering" month="2" schedule="every_days">2</operation>
+       <operation type="1" name="watering" month="3" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="4" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="5" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="6" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="7" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="8" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="9" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="10" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="11" schedule="every_days">2</operation>
+       <operation type="1" name="watering" month="12" schedule="every_days">2</operation>
        </operations>
    </specie>
    <specie id="6" name="Carmona microphylla">
        <operations>
-         <operation id="1">
-             <name>watering</name>
-             <months>
-                 <month id="1" type="every_days">2</month>
-                 <month id="2" type="every_days">2</month>
-                 <month id="3" type="every_days">1</month>
-                 <month id="4" type="every_days">1</month>
-                 <month id="5" type="every_days">1</month>
-                 <month id="6" type="every_days">1</month>
-                 <month id="7" type="every_days">1</month>
-                 <month id="7" type="every_days">1</month>
-                 <month id="8" type="every_days">1</month>
-                 <month id="8" type="every_days">1</month>
-                 <month id="9" type="every_days">1</month>
-                 <month id="10" type="every_days">1</month>
-                 <month id="11" type="every_days">2</month>
-                 <month id="12" type="every_days">2</month>
-             </months>
-         </operation>
+       <operation type="1" name="watering" month="1" schedule="every_days">2</operation>
+       <operation type="1" name="watering" month="2" schedule="every_days">2</operation>
+       <operation type="1" name="watering" month="3" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="4" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="5" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="6" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="7" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="8" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="9" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="10" schedule="every_days">1</operation>
+       <operation type="1" name="watering" month="11" schedule="every_days">2</operation>
+       <operation type="1" name="watering" month="12" schedule="every_days">2</operation>
        </operations>
    </specie>
    <specie id="7" name="Carpinus">

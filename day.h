@@ -31,7 +31,7 @@ public:
     QDate date() const;
 
 private:
-    QDate m_day;
+    const QDate & m_day;
 
 
     /*friend QDataStream &operator<<(QDataStream &, const Day &);

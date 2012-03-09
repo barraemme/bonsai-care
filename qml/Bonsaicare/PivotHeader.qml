@@ -135,7 +135,7 @@ Item {
         preferredHighlightEnd: parent.landscapeLayout ? 1/4 : 1/3
         currentIndex: container.currentIndex
         onCurrentIndexChanged: {
-            console.log(parent.width +" dayPathView index change " + dayPathView.currentIndex);
+            //console.log(parent.width +" dayPathView index change " + dayPathView.currentIndex);
             container.currentIndex = dayPathView.currentIndex;            
             container.currentMonthIndex = dayPathView.model.indexOfMonth(dayPathView.currentIndex)
             container.indexChanged(dayPathView.currentIndex);           

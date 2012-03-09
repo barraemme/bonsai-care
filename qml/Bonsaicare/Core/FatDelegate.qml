@@ -89,7 +89,7 @@ Component {
 
             ItemModel{
                 id: itemModel
-                iId: itemId
+                iId: specieId
             }
 
             // The actual list

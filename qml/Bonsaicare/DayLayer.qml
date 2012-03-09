@@ -8,7 +8,9 @@ Flickable {
 
     // Model *MUST BE* set from outside!
     property variant model: null
-    property int itemHeight: 70
+    property int itemHeight: visual.itemHeight
+    property int marginTop: 40
+    property int marginLeft: 40
     property color borderColor: "#C4AE94"
     property color textColor: "#6A5147"
 
@@ -61,14 +63,21 @@ Flickable {
         id: weekDay
 
         anchors.fill: parent
+        anchors.bottomMargin: 30
         model: container.model
         snapMode: ListView.SnapToItem
         interactive: true
+        anchors.topMargin: container.marginTop
+        anchors.leftMargin: visual.bonsaiNameMarginLeft
         //contentHeight: container.itemHeight * container.model.count
-        //cacheBuffer: 1920
+        cacheBuffer: 1920
+        //flickableDirection: Flickable.HorizontalFlick
 
-        delegate: Core.Cell {
-            itemHeight: container.itemHeight
+        delegate:  Operation {
+            model: container.model
+            //itemHeight: container.itemHeight
+            width: container.width
+            height: container.itemHeight
             textColor: container.textColor
             borderColor: container.borderColor
         }
@@ -76,9 +85,6 @@ Flickable {
 
         onCountChanged: {
             // When the component is FINALLY loaded, set the list to correct position.
-            console.log("WEEKDAY + its model loaded fully, position the ListView at: "
-                        + container.__startingBonsaiIndex);
-            console.log("PIVOTPAGE index: "+ container.bonsaiIndex+" WEEKDAY count:"+weekDay.model.count);
             var idx = container.__startingBonsaiIndex;
             /*if (model.isItemSpanned(idx)) {
                 // Ask for the spanned item's parent index and
@@ -135,7 +141,6 @@ Flickable {
         }
 
         onCurrentIndexChanged: {
-            console.log("Current Item changed: " + currentIndex);
             container.indexChanged(currentIndex);
         }
 

@@ -25,7 +25,7 @@
 
 }*/
 
-Day::Day(const QDate &date, QObject *parent) :
+Day::Day(const QDate & date, QObject *parent) :
     QObject(parent), m_day(date)
 {
 

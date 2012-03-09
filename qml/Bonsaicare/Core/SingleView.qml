@@ -16,7 +16,7 @@ Item {
 
     ItemModel{
         id: itemModel
-        iId: myItem.itemId
+        iId: myItem.specieId
     }
 
 

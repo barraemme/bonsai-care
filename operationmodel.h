@@ -39,10 +39,11 @@ public: // From QAbstractListModel
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     bool setData( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
     void init();
+    int count() const;
 
     // for BonsaiTable
     static bool createTable(QSqlDatabase &db);
-    void addRow(Operation* item);
+    void addRow(Operation &item);
 
     /*Q_INVOKABLE void insertBonsai(QSqlDatabase &db, const int year, const int month, const int day,
                                   const int SpecieId);
@@ -61,6 +62,7 @@ public: // From QAbstractListModel
 //signals:
     //void fetch();
 
+    bool insert(Operation &op);
 private:
     QList<Operation*> m_items;
     QSqlDatabase db;
