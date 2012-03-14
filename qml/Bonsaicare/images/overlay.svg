@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48px"
+   height="48px"
+   id="svg3900"
+   version="1.1"
+   inkscape:version="0.48.2 r9819"
+   sodipodi:docname="overlay.svg"
+   inkscape:export-filename="/home/stark/Projects/bonsai-care/qml/Bonsaicare/images/overlay.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs3902" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="39.59798"
+     inkscape:cx="1.2071099"
+     inkscape:cy="24.835918"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:window-width="1366"
+     inkscape:window-height="687"
+     inkscape:window-x="0"
+     inkscape:window-y="26"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata3905">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <path
+       sodipodi:type="arc"
+       style="fill:#358a2f;fill-opacity:0.26829273;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:0.00696864000000000;stroke-dasharray:none"
+       id="path2985"
+       sodipodi:cx="390"
+       sodipodi:cy="396.64789"
+       sodipodi:rx="195.71428"
+       sodipodi:ry="195.71428"
+       d="m 585.71428,396.64789 a 195.71428,195.71428 0 1 1 -391.42856,0 195.71428,195.71428 0 1 1 391.42856,0 z"
+       transform="matrix(0.12233949,0,0,0.12239976,-23.67461,-24.549523)"
+       inkscape:export-filename="/home/stark/Projects/bonsai-care/qml/Bonsaicare/images/overlay.png"
+       inkscape:export-xdpi="281.04944"
+       inkscape:export-ydpi="281.04944" />
+  </g>
+</svg>

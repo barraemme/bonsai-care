@@ -1,0 +1,6 @@
+class Slot
+!!!141700.cpp!!!	Slot(in bonsaiId : int, in day : QDate, inout operationModel : OperationModel, inout parent : QObject = 0)
+
+    qDebug() << "created Slot " << bonsaiId << " - " << day;
+!!!141828.cpp!!!	~Slot()
+

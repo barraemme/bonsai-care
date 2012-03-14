@@ -2,8 +2,146 @@ import QtQuick 1.0
 import com.nokia.symbian 1.1
 import "Core" 1.1 as Core
 
+Item{
+
+    property alias model: pathOperations.model
+    state: "normal"
+    width: 250
+    height: width
+    z:2
+
+    states: [
+        State {
+            name: "overlayed"
+            PropertyChanges { target: overlay; enabled: true; opacity:1 }
+        },
+        State {
+            name: "normal"
+            PropertyChanges { target: overlay; enabled: false; opacity:0 }
+        }
+    ]
+
+    transitions: [
+        Transition {
+               from: "normal"; to: "overlayed"
+               PropertyAnimation { target: overlay
+                                   properties: "opacity"; duration: 1000; easing.type: Easing.OutQuad }
+           },
+           Transition {
+               from: "overlayed"; to: "normal"
+               PropertyAnimation { target: overlay
+                                   properties: "opacity"; duration: 1000; easing.type: Easing.OutQuad }
+           }
+    ]
+
+    Item {
+         id: overlay
+
+         enabled: false
+         opacity: 0
+         width: parent.width
+         height: width
+         /*color: "transparent"
+         border.color: "black"
+         border.width: 1
+         radius: width
+         */
+
+         Image {
+             id: realImage;
+             source: "images/overlay.png";
+             width:parent.width-100
+             height:parent.height-100
+             anchors.horizontalCenter: parent.horizontalCenter
+             anchors.verticalCenter: parent.verticalCenter
+         }
+
+
+
+
+         PathView {
+             id: pathOperations
+             property int itemPerArc: 2
+             anchors.horizontalCenter: parent.horizontalCenter
+             anchors.verticalCenter: parent.verticalCenter
+             width: parent.width
+             height: parent.height
+             model: 0
+
+             //offset:1
+             delegate: Rectangle {
+                 width: 50
+                 height: width
+                 color: "red"
+                 border.color: "white"
+                 border.width: 5
+                 radius: width
+
+
+             }
+             path: Core.EllipsePath {
+                     id: ellipsePath
+                     width: 250
+                     height: 250
+                 }
+
+             onCountChanged: {
+                 console.log("changed item of day layer to "+count);
+
+                 var maxArc = Math.ceil(count / pathOperations.itemPerArc);
+
+                 ellipsePath.tlq = 1*1/maxArc;
+                 if(ellipsePath.tlq>1) ellipsePath.tlq = 0
+
+                 ellipsePath.trq = 1*2/maxArc;
+                 if(ellipsePath.trq>1) ellipsePath.trq = 0
+
+                 ellipsePath.brq = 1*3/maxArc;
+                 if(ellipsePath.brq>1) ellipsePath.brq = 0
+
+                 ellipsePath.blq = 1*4/maxArc;
+                 if(ellipsePath.blq>1) ellipsePath.blq = 0
+
+                 console.log(ellipsePath.tlq+" "+ellipsePath.trq+" "+ellipsePath.brq+" "+ellipsePath.blq+" ");
+
+             }
+
+         }
+
+         /*Rectangle {
+             width: bonsaiLayer.cellWidth; height: bonsaiLayer.cellHeight
+             color: "lightsteelblue"; radius: 5
+             x: bonsaiLayer.currentItem.x
+             y: bonsaiLayer.currentItem.y
+             Behavior on x { SpringAnimation { spring: 3; damping: 0.2 } }
+             Behavior on y { SpringAnimation { spring: 3; damping: 0.2 } }
+         }*/
+     }
+
+    ListView {
+        id: priority
+        //anchors.horizontalCenter: parent.horizontalCenter
+        //anchors.verticalCenter: parent.verticalCenter
+        width: 30
+        height: 30
+        model: 1
+        x: parent.width/2+15
+        y: parent.height/2+15
+        //offset:1
+
+        delegate: Rectangle {
+            width: 30
+            height: width
+            color: "blue"
+            border.color: "white"
+            border.width: 5
+            radius: width
+        }
+
+    }
+}
 // Flickable element is used for emulating left/right swiping page switch.
-Flickable {
+/*Flickable {
     id: container
 
     // Model *MUST BE* set from outside!
@@ -86,17 +224,10 @@ Flickable {
         onCountChanged: {
             // When the component is FINALLY loaded, set the list to correct position.
             var idx = container.__startingBonsaiIndex;
-            /*if (model.isItemSpanned(idx)) {
-                // Ask for the spanned item's parent index and
-                // focus on that instead!
-                container.__startingBonsaiIndex = model.itemsParent(idx);
-                console.log("Trying to position on spanned index. " +
-                            "New parent index to be focused: "
-                            + container.__startingBonsaiIndex);
-            }*/
+
             /*weekDay.positionViewAtIndex(container.__startingBonsaiIndex,
                                         ListView.Beginning);
-            currentIndex = container.__startingBonsaiIndex;*/
+            currentIndex = container.__startingBonsaiIndex;
 
             // ALARM! Here's an ugly hack fix for the issue with long events not
             // focusing the lists (weekDay & hourColumn) correctly. The root cause
@@ -106,7 +237,7 @@ Flickable {
             //
             // TODO HACK FIX WARNING ALARM
             //
-            /*if (contentY != container.itemHeight*currentIndex) {
+            if (contentY != container.itemHeight*currentIndex) {
                 // Don't set the hack fix offset if it's negative
                 var offset = contentY - container.itemHeight*currentIndex;
                 if (offset > 0) {
@@ -117,7 +248,7 @@ Flickable {
                                 + container.hackFixListOffset);
                 }
                 console.log("Offset was: " + offset);
-            }*/
+            }
         }
 
         Component.onCompleted: {
@@ -412,4 +543,4 @@ Flickable {
         }
     ]
 
-}
+}*/

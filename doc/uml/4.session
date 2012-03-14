@@ -1,0 +1,12 @@
+window_sizes 1280 672 320 954 534 64
+diagrams
+  active  sequencediagram_ref 128002 // bonsai
+    954 534 100 4 10 0
+end
+show_stereotypes
+selected class_ref 129156 // DayModel
+open
+  classview_ref 128004 // bonsai-care
+  usecaseview_ref 128002 // uml
+end
+end

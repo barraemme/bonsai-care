@@ -1,0 +1,16 @@
+class Day
+!!!133124.cpp!!!	Day(in date : QDate, inout parent : QObject = 0)
+
+
+!!!133252.cpp!!!	dayOfWeekIndex() : Q_INVOKABLE int
+
+    return m_day.dayOfWeek();
+!!!133380.cpp!!!	monthIndex() : Q_INVOKABLE int
+
+    return m_day.month();
+!!!133508.cpp!!!	dayIndex() : Q_INVOKABLE int
+
+    return m_day.toJulianDay();
+!!!133636.cpp!!!	date() : QDate
+
+    return m_day;

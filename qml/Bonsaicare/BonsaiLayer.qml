@@ -20,7 +20,44 @@ Item {
     property bool landscapeLayout: mainWindow.landscapeLayout
 
     // bonsais are being shown in a vertical list
-    ListView {
+
+    GridView {
+        id: bonsaiLayer
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 20
+        anchors.left: parent.left
+        anchors.leftMargin: 20
+        anchors.right: parent.right
+        anchors.rightMargin: 20
+
+        model: container.model
+        delegate: BonsaiDelegate{
+            width: bonsaiLayer.cellWidth
+            height: bonsaiLayer.cellHeight
+        }
+        snapMode: GridView.SnapToRow
+        //clip: true
+        //interactive: true
+        //highlightRangeMode: ListView.StrictlyEnforceRange
+        // Cache the whole bonsaiLayer into memory.
+        cacheBuffer: 1920
+        height: Math.floor((parent.width-40)/3)//300
+        cellWidth: Math.floor((parent.width-40)/3)
+        cellHeight: Math.floor((parent.width-40)/3)
+        //highlight: overlayOperations
+        highlightFollowsCurrentItem: false
+        //focus: true
+        //x: -(screen.width * 1.5)
+        currentIndex: -1
+        onCurrentItemChanged: {
+        //    currentItem.state = "overlayed"
+        }
+
+        //contentHeight:  container.model.count * container.itemHeight
+        onCurrentIndexChanged: console.log("bonsayLayer current index changed to " +currentIndex)
+    }
+
+    /*ListView {
         id: bonsaiLayer
 
         anchors.fill: parent
@@ -47,75 +84,7 @@ Item {
             // flickableItem binds the scroll decorator to the ListView.
             flickableItem: bonsaiLayer
         }
-    }
+    }*/
 
-    // bonsai prototype item.
-    Component {
-        id: bonsaiDelegate
 
-        Item {
-            id: bonsaiRect
-            width: container.width
-            height: container.itemHeight
-
-            Text {
-                id: nameTxt
-                color: container.textColor
-                anchors {
-                    top: parent.top
-                    topMargin: visual.textTopMargin
-                    left: parent.left
-                    leftMargin: visual.bonsaiNameMarginLeft
-                }
-                font.weight: Font.Bold
-                font.pixelSize: container.fontSize
-                wrapMode : Text.Wrap
-                text: b_name+", "+ container.model.getAgeString(b_date)
-            }
-
-            Item {
-                id: image;
-                width: 100;
-                height: 100;
-                smooth: true
-                anchors {
-                    top: nameTxt.bottom
-                    topMargin: visual.textTopMargin
-                    right: parent.right
-                    rightMargin:20
-                }
-
-                Core.Loading {
-                    width: 100;
-                    height: 100;
-                    visible: realImage.status != Image.Ready
-                }
-
-                Image {
-                    id: realImage;
-                    source: "images/medium/m_spc_"+b_specieId+".png";
-                    width:100; height:100; opacity:0 ;
-                    onStatusChanged: {
-                        if(status==Image.Ready)
-                            image.state="loaded"
-                    }
-
-                }
-                states: State {
-                    name: "loaded";
-                    PropertyChanges { target: realImage ; opacity:1 }
-                }
-                transitions: Transition { NumberAnimation { target: realImage; property: "opacity"; duration: 200 } }
-            }
-
-            // Line in the bottom of the item.
-            Rectangle {
-                color: visual.borderColor
-                width: parent.width-visual.bonsaiNameMarginLeft
-                height: 1
-                anchors.top: parent.bottom
-                anchors.right: parent.right
-            }
-        }
-    }
 }

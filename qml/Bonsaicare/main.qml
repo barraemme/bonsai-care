@@ -12,6 +12,7 @@ Window {
     state: "start"
     
     // Background image for the Pages
+    /*
     Image {
         id: bgImg
         anchors {
@@ -23,8 +24,10 @@ Window {
         source: landscapeLayout ?
                     (visual.isE6 ? "Core/images/diary_640x480.png"
                                  : "Core/images/diary_640x360.png")
-                  : "Core/images/diary_360x640.png"
-    }
+                  : "images/japanese_room_center_480x854.jpg"
+                  //: "images/japanese_room_side_480x854.jpg"
+                    //: "Core/images/diary_360x640.png"
+    }*/
 
     // Platform differentitation for visual style & theming.
     Visual {
@@ -37,17 +40,6 @@ Window {
         // Check, whether or not the device is E6
         isE6: mainWindow.height == 480
     }
-
-    /*ListModel {
-        id: titles
-                ListElement {
-                    title: "New Bonsai"
-                }
-
-                ListElement {
-                    title: "Edit Bonsai"
-                }
-            }*/
 
     // Application uses the statusbar, for balancing the view look and feel
     // as it also uses the toolbar.
@@ -139,7 +131,6 @@ Window {
             }
         }
     ]
-
 
     Component.onCompleted: {
         pageStack.push(mainPivot);

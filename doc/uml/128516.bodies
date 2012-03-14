@@ -1,0 +1,25 @@
+class Specie
+!!!141956.cpp!!!	Specie(in id : int, in name : QString, inout parent : QObject = 0)
+    //m_model = new SpecieModel(m_id, m_name, this);
+!!!142084.cpp!!!	Specie(inout parent : QObject = 0)
+
+!!!142212.cpp!!!	Specie(in specie : Specie)
+    m_id = specie.index();
+    m_name = specie.name();
+
+!!!142340.cpp!!!	~Specie()
+   // delete m_model;
+!!!142468.cpp!!!	operator =(in other : Specie) : Specie
+    if(this != &other){
+        m_name = other.name();
+        m_id = other.index();
+    }
+    return *this;
+!!!142596.cpp!!!	index() : int
+    return m_id;
+!!!142724.cpp!!!	setIndex(in id : int) : void
+    m_id = id;
+!!!142852.cpp!!!	name() : QString
+    return m_name;
+!!!142980.cpp!!!	setName(in name : QString) : void
+    m_name = name;

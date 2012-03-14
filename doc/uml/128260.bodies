@@ -1,0 +1,63 @@
+class BonsaiSerializer
+!!!129540.cpp!!!	~BonsaiSerializer()
+    qDebug()<<"BonsaiSerializer destroied";
+!!!129668.cpp!!!	attribute(in xmlname : QXmlName, in valueref : QStringRef) : void
+    QString name = xmlname.localName(namePool);
+    QString value = valueref.toString();
+    QString currentElement = elements.top();
+
+    qDebug()<<name<<" "<<value;
+
+    /** SPECIE **/
+    if (currentElement == "specie"){
+        if(name == "id")
+            currentSpecie.setIndex(value.toInt());
+        else if (name == "name")
+            currentSpecie.setName(value);
+    }else
+    /** OPERATION **/
+    if (currentElement == "operation"){
+        if(name == "type")
+            currentOperation.setType(value.toInt());
+        else if(name == "name")
+            currentOperation.setName(value);
+        else if(name == "month")
+            currentOperation.setMonth(value.toInt());
+        else if(name == "schedule")
+            currentOperation.setSchedule(value);
+    }
+!!!129796.cpp!!!	endElement() : void
+   QString name = elements.pop();
+    if (name == "specie"){
+        species.append(currentSpecie);
+
+    }
+    if (name == "operation"){
+        operations.append(currentOperation);
+
+    }
+
+    qDebug()<<"</"<<name<<">";
+
+!!!129924.cpp!!!	startElement(in xmlname : QXmlName) : void
+    QString name = xmlname.localName(namePool);
+
+    elements.push(name);
+
+    qDebug()<<"<"<<name<<">";
+
+    if (name == "specie"){
+        currentSpecie =  Specie();
+
+    }
+    if (name == "operation"){
+        currentOperation = Operation();
+    }
+
+
+!!!130180.cpp!!!	characters(in valueref : QStringRef) : void
+    QString currentElement = elements.top();
+
+    if (currentElement == "operation"){
+        currentOperation.setScheduleValue( valueref.toString());
+    }

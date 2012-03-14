@@ -122,8 +122,7 @@ QVariant DayModel::data(const QModelIndex &index, int role) const
 {
     if (index.isValid()) {
         int row = index.row();
-        if (row >= 0 && row < m_items.count()) {
-            Slot *slot = m_items[row];
+        if (row >= 0 && row < m_items.count()) {            
             if (role == DayNameRole) {
                 return QVariant(QDate::longDayName(m_day.dayOfWeek()));
             } else if (role == WeekDayIndexRole) {
@@ -325,9 +324,10 @@ QObject * DayModel::operationsBySlotIndex(const int index) const
 {
     qDebug() << Q_FUNC_INFO << QThread::currentThread()<< " index:"<<index;
     OperationModel* op = m_items.at(index)->operations();
-    qDebug() << op->count();
     return op;
 }
+
+
 /*
 QDataStream &operator<<(QDataStream &stream, const DayModel &dayModel)
 {

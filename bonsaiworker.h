@@ -37,8 +37,8 @@ public:
 
 private:
     QSqlDatabase db;
-
     void parseSpeciesWithXQuery();
+    OperationModel* getOperations(const int bonsai_id);
 
 };
 

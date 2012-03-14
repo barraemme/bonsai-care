@@ -1,52 +1,25 @@
-/**
- * Copyright (c) 2011 Nokia Corporation.
- */
+class WeekModel
+!!!145412.cpp!!!	roleNames() : QHash<int, QByteArray>
 
-// Class header
-#include "weekmodel.h"
-
-// Platform includes
-#include <QtCore/QDebug>
-#include <QtCore/QDir>
-#include <QtCore/QFile>
-#include <QtCore/qmath.h>
-#include <QtGui/QDesktopServices>
-
-// Internal includes
-#include "daymodel.h"
-#include "bonsaiworker.h"
-
-// Constants
-const int DAYS_IN_WEEK = 7;
-
-/*!
-  \class WeekModel
-  \brief WeekModel depicts one week and holds the day objects.
-*/
-
-QHash<int, QByteArray> WeekModel::roleNames()
-{
     QHash<int, QByteArray> roles;
     roles[DayIndexRole] = "dayIndex";
     roles[DayNameRole] = "dayName";
     roles[MonthIndexRole] = "monthIndex";
     return roles;
-}
+!!!145540.cpp!!!	WeekModel(in bonsaiModel : BonsaiModel, in worker : BonsaiWorker, inout parent : QObject = 0)
 
-WeekModel::WeekModel(const BonsaiModel &bonsaiModel, const BonsaiWorker &worker, QObject *parent) :
-    QAbstractListModel(parent), m_days(), workerThread(worker)
-{
     if ( !restore() ) {
         QDate startDay = QDate::currentDate ();
-        int wDay = startDay.dayOfWeek();
 
+        int wDay = startDay.dayOfWeek();
         if(wDay > 1)
-            startDay = startDay.addDays(-(wDay-1));
+            startDay.setDate(startDay.year(), startDay.month(), startDay.day()-(wDay-1));
+
         /*int startMonth = 0;
         int lastMonth = 0;*/
         for (int i = 0; i < DAYS_IN_WEEK; i++) {
             DayModel* day = new DayModel(startDay.addDays(i), workerThread);
-            //connect(&bonsaiModel, SIGNAL(addedBonsaiRow(Bonsai*)),day, SLOT(fetchSlot(Bonsai*)));
+            connect(&bonsaiModel, SIGNAL(addedBonsaiRow(Bonsai*)),day, SLOT(insert(Bonsai*)));
             m_days.append(day);
             //day->init();
             //Add the month to model
@@ -64,22 +37,16 @@ WeekModel::WeekModel(const BonsaiModel &bonsaiModel, const BonsaiWorker &worker,
     }
 
     setRoleNames(WeekModel::roleNames());
-}
+!!!145668.cpp!!!	~WeekModel()
 
-WeekModel::~WeekModel()
-{
     save();
     qDeleteAll(m_days);
     m_days.clear();   
-}
+!!!145796.cpp!!!	rowCount(in parent : QModelIndex = QModelIndex()) : int
 
-int WeekModel::rowCount(const QModelIndex &parent) const
-{
     return m_days.count();
-}
+!!!145924.cpp!!!	data(in index : QModelIndex, in role : int = Qt::DisplayRole) : QVariant
 
-QVariant WeekModel::data(const QModelIndex &index, int role) const
-{
     if (index.isValid()) {
         int row = index.row();
         if (row >= 0 && row < m_days.count()) {
@@ -102,58 +69,17 @@ QVariant WeekModel::data(const QModelIndex &index, int role) const
     }
 
     return QVariant("ERR: other");
-}
+!!!146052.cpp!!!	headerData(in section : int, in orientation : Qt::Orientation, in role : int = Qt::DisplayRole) : QVariant
 
-QVariant WeekModel::headerData( int section, Qt::Orientation orientation, int role) const
-{
     return QVariant("HEADER");
-}
+!!!146180.cpp!!!	flags(in index : QModelIndex) : Qt::ItemFlags
 
-Qt::ItemFlags WeekModel::flags( const QModelIndex &index) const
-{
     return Qt::ItemIsEnabled;
-}
+!!!146308.cpp!!!	setData(in index : QModelIndex, in value : QVariant, in role : int = Qt::EditRole) : bool
 
-// For editing
-bool WeekModel::setData( const QModelIndex &index, const QVariant &value, int role)
-{
     return true;
-}
+!!!146436.cpp!!!	save() : bool
 
-QString WeekModel::dayName(int index) const
-{
-    if (index >= 0 && index < m_days.count()) {
-        return QDate::longDayName(m_days.at(index)->weekDayIndex());
-    }
-
-    return "";
-}
-
-int WeekModel::indexOfFirstDay(int month) const
-{
-    int index = 0;
-    foreach(DayModel *day, m_days) {
-        if(day->monthDayIndex() == month)
-            return index;
-        index++;
-    }
-    return 0;
-}
-
-
-int WeekModel::indexOfMonth(int dayIndex) const
-{    
-    int monthNum = m_days.at(dayIndex)->monthDayIndex();
-    return monthNum-1;
-}
-
-QObject* WeekModel::day(int dayIndex) const
-{
-    return m_days.at(dayIndex);
-}
-
-bool WeekModel::save()
-{
     bool ret = true;
     QFile file( getSaveFileName() );
     ret = file.open(QIODevice::WriteOnly);
@@ -167,10 +93,8 @@ bool WeekModel::save()
     }
 
     return ret;
-}
+!!!146564.cpp!!!	restore() : bool
 
-bool WeekModel::restore()
-{
 
     bool ret = false;
     QFile file( getSaveFileName() );
@@ -206,10 +130,21 @@ bool WeekModel::restore()
 
     qDebug() << "Restore returning: " << ret;
     return ret;
-}
+!!!146692.cpp!!!	indexOfFirstDay(in month : int) : Q_INVOKABLE int
 
-QString WeekModel::getSaveFileName() const
-{
+    int index = 0;
+    foreach(DayModel *day, m_days) {
+        if(day->monthDayIndex() == month)
+            return index;
+        index++;
+    }
+    return 0;
+!!!146820.cpp!!!	indexOfMonth(in dayIndex : int) : Q_INVOKABLE int
+    
+    int monthNum = m_days.at(dayIndex)->monthDayIndex();
+    return monthNum-1;
+!!!146948.cpp!!!	getSaveFileName() : QString
+
     QString location = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
     QString subDir = "weeklyplanner";
 
@@ -230,4 +165,3 @@ QString WeekModel::getSaveFileName() const
     qDebug() << "Returning path: " << path;
 
     return path;
-}

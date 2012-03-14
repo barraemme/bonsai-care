@@ -63,8 +63,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     //Setting models
     //used for displaying months on top
-    MonthModel months;
-    rootContext->setContextProperty("months", &months);
+    //MonthModel months;
+    //rootContext->setContextProperty("months", &months);
     //used to list all species of bonsais
     SpecieModel species(worker);
     rootContext->setContextProperty("species", &species);
@@ -76,8 +76,11 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     species.init();
 
     //used for displaying week days on top
-    WeekModel week(bonsai, worker);
-    rootContext->setContextProperty("week", &week);
+    //WeekModel week(bonsai, worker);
+    //rootContext->setContextProperty("week", &week);
+
+    DayModel day(QDate::currentDate(), worker);
+    rootContext->setContextProperty("days", &day);
     rootContext->setContextProperty(QString("cp_versionNumber"), VERSION_NUMBER);
 
     // Setting database Qt class handle to QML

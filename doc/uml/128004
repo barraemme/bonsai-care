@@ -1,0 +1,4052 @@
+format 74
+"bonsai-care" // Bonsaicare::bonsai-care
+  revision 1
+  modified_by 4 "stark"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  cpp_h_dir "/home/stark/Projects/bonsai-care/"
+  cpp_src_dir "/home/stark/Projects/bonsai-care/"
+  classview 128004 "bonsai-care"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    class 128004 "Bonsai"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 128004 // <generalisation>
+	relation 128004 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 128004 // <generalisation>
+	  b parent class_ref 128132 // typedef1
+      end
+
+      extra_member 128004 "Q_OBJECT"
+	
+	cpp "  Q_OBJECT" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      operation 128004 "Bonsai"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 4
+	  param in name "id" explicit_type "int"
+	  param in name "date" explicit_type "int"
+	  param in name "specie" explicit_type "int"
+	  param inout name "parent" explicit_type "QObject"
+	    defaultvalue "0 "
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} ${p0}${v0}, const ${t1} ${p1}${v1}, const ${t2} ${p2}${v2}, ${t3} * ${p3}${v3}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} ${p0}, const ${t1} ${p1}, const ${t2} ${p2}, ${t3} * ${p3}${)}:
+    QObject(parent), m_id(id), m_date(date), m_specieId(specie)
+${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 128132 "Bonsai"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 1
+	  param inout name "parent" explicit_type "QObject"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}${)}:
+    QObject(parent), m_id(-1), m_date(), m_specieId(-1)
+${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 128260 "Bonsai"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 1
+	  param in name "bonsai" type class_ref 128004 // Bonsai
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}: QObject(0)
+${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 128388 "~Bonsai"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 128516 "index"
+	preserve_cpp_body_indent const public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "//QObject* Bonsai::items() const
+//{
+//    qDebug() << \"Requested Bonsai items. We have\" << m_model->rowCount();
+//    return m_model;
+//}
+
+${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "QObject *items() const;"
+      end
+
+      operation 128644 "setIndex"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param in name "index" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 128772 "specieId"
+	preserve_cpp_body_indent const public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 128900 "setSpecieId"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param in name "specieId" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 129028 "date"
+	preserve_cpp_body_indent const public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 129156 "setDate"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param in name "date" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 129284 "name"
+	const public explicit_return_type "QString"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 128004 "m_id"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 128132 "m_specieId"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 128260 "m_date"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 128132 "typedef1"
+      visibility package stereotype "typedef" explicit_base_type "QObject"
+      cpp_decl "${comment}typedef ${type} ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+    end
+
+    class 128260 "BonsaiSerializer"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 128132 // <generalisation>
+	relation 128132 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 128132 // <generalisation>
+	  b parent class_ref 128388 // typedef2
+      end
+
+      operation 129412 "BonsaiSerializer"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 1
+	  param in name "namePool" explicit_type "QXmlNamePool"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}
+    : QAbstractXmlReceiver(),namePool(namePool)
+${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 129540 "~BonsaiSerializer"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 129668 "attribute"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 2
+	  param in name "xmlname" explicit_type "QXmlName"
+	  param in name "valueref" explicit_type "QStringRef"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 129796 "endElement"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 129924 "startElement"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param in name "xmlname" explicit_type "QXmlName"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 130052 "atomicValue"
+	cpp_inline public explicit_return_type "void"
+	nparams 1
+	  param in name "" explicit_type "QVariant"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract} {};
+"
+	
+	
+	
+	
+      end
+
+      operation 130180 "characters"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param in name "valueref" explicit_type "QStringRef"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 130308 "comment"
+	cpp_inline public explicit_return_type "void"
+	nparams 1
+	  param in name "" explicit_type "QString"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract} {};
+"
+	
+	
+	
+	
+      end
+
+      operation 130436 "endDocument"
+	cpp_inline public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract} {};
+"
+	
+	
+	
+	
+      end
+
+      operation 130564 "endOfSequence"
+	cpp_inline public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract} {};
+"
+	
+	
+	
+	
+      end
+
+      operation 130692 "namespaceBinding"
+	cpp_inline public explicit_return_type "void"
+	nparams 1
+	  param in name "" explicit_type "QXmlName"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract} {};
+"
+	
+	
+	
+	
+      end
+
+      operation 130820 "processingInstruction"
+	cpp_inline public explicit_return_type "void"
+	nparams 2
+	  param in name "" explicit_type "QXmlName"
+	  param in name "" explicit_type "QString"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract} {};
+"
+	
+	
+	
+	
+      end
+
+      operation 130948 "startDocument"
+	cpp_inline public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract} {};
+"
+	
+	
+	
+	
+      end
+
+      operation 131076 "startOfSequence"
+	cpp_inline public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract} {};
+"
+	
+	
+	
+	
+      end
+
+      classrelation 128260 // species (<directional composition>)
+	relation 128260 *-->
+	  stereotype "QList"
+	  a role_name "species" public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 128260 // species (<directional composition>)
+	  b parent class_ref 128516 // Specie
+      end
+
+      classrelation 128388 // operations (<directional composition>)
+	relation 128388 *-->
+	  stereotype "QList"
+	  a role_name "operations" public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 128388 // operations (<directional composition>)
+	  b parent class_ref 128644 // Operation
+      end
+
+      attribute 128388 "namePool"
+	private explicit_type "QXmlNamePool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 128516 "elements"
+	private explicit_type "QString"
+	stereotype "QStack"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 128516 // currentSpecie (<directional composition>)
+	relation 128516 *-->
+	  a role_name "currentSpecie" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 128516 // currentSpecie (<directional composition>)
+	  b parent class_ref 128516 // Specie
+      end
+
+      classrelation 128644 // currentOperation (<directional composition>)
+	relation 128644 *-->
+	  a role_name "currentOperation" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 128644 // currentOperation (<directional composition>)
+	  b parent class_ref 128644 // Operation
+      end
+    end
+
+    class 128388 "typedef2"
+      visibility package stereotype "typedef" explicit_base_type "QAbstractXmlReceiver"
+      cpp_decl "${comment}typedef ${type} ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+    end
+
+    class 128516 "Specie"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 130692 // <generalisation>
+	relation 130692 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 130692 // <generalisation>
+	  b parent class_ref 128132 // typedef1
+      end
+
+      extra_member 130180 "Q_OBJECT"
+	
+	cpp "  Q_OBJECT" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      operation 141956 "Specie"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 3
+	  param in name "id" explicit_type "int"
+	  param in name "name" explicit_type "QString"
+	  param inout name "parent" explicit_type "QObject"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} * ${p2}${v2}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} ${p0}, const ${t1} & ${p1}, ${t2} * ${p2}${)}:
+            QObject(parent), m_id(id), m_name(name)
+${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 142084 "Specie"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 1
+	  param inout name "parent" explicit_type "QObject"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}${)}:
+    QObject(parent),m_id(-1), m_name()
+${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 142212 "Specie"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 1
+	  param in name "specie" type class_ref 128516 // Specie
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}: QObject(0)
+${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 142340 "~Specie"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 142468 "operator ="
+	preserve_cpp_body_indent public return_type class_ref 128516 // Specie
+	nparams 1
+	  param in name "other" type class_ref 128516 // Specie
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} & ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} & ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      extra_member 130308 "slots"
+	
+	cpp "  public slots:" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      operation 142596 "index"
+	preserve_cpp_body_indent const public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "//QObject* Specie::items() const
+//{
+//    qDebug() << \"Requested Specie items. We have\" << m_model->rowCount();
+//    return m_model;
+//}
+
+${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "QObject *items() const;"
+      end
+
+      operation 142724 "setIndex"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param in name "id" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 142852 "name"
+	preserve_cpp_body_indent const public explicit_return_type "QString"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 142980 "setName"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param in name "name" explicit_type "QString"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 132740 "m_id"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 132868 "m_name"
+	private explicit_type "QString"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 128644 "Operation"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 129796 // <generalisation>
+	relation 129796 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 129796 // <generalisation>
+	  b parent class_ref 128132 // typedef1
+      end
+
+      extra_member 129156 "Q_OBJECT"
+	
+	cpp "  Q_OBJECT" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      operation 136580 "Operation"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 1
+	  param inout name "parent" explicit_type "QObject"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} * ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}${)}:
+    QObject(parent), m_id(0), m_name(), m_type(0), m_month(0),
+    m_schedule(\"never\"), m_schedule_value(0), m_last_date(), m_bonsai_id(-1)
+${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 136708 "Operation"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 1
+	  param in name "operation" type class_ref 128644 // Operation
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}: QObject(0)
+${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 136836 "~Operation"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 136964 "operator ="
+	preserve_cpp_body_indent public return_type class_ref 128644 // Operation
+	nparams 1
+	  param in name "operation" type class_ref 128644 // Operation
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} & ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} & ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 137092 "index"
+	preserve_cpp_body_indent const public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 137220 "setIndex"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param in name "index" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 137348 "type"
+	preserve_cpp_body_indent const public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 137476 "setType"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param in name "type" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 137604 "name"
+	preserve_cpp_body_indent const public explicit_return_type "QString"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 137732 "setName"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param in name "name" explicit_type "QString"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 137860 "month"
+	preserve_cpp_body_indent const public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 137988 "setMonth"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param in name "month" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 138116 "schedule"
+	preserve_cpp_body_indent const public explicit_return_type "QString"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 138244 "setSchedule"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param in name "schedule" explicit_type "QString"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 138372 "scheduleValue"
+	preserve_cpp_body_indent const public explicit_return_type "QVariant"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 138500 "setScheduleValue"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param in name "value" explicit_type "QVariant"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 138628 "bonsaiId"
+	preserve_cpp_body_indent const public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 138756 "setBonsaiId"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param in name "slot_id" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 138884 "lastDate"
+	preserve_cpp_body_indent const public explicit_return_type "QDate"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 139012 "setLastDate"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param in name "date" explicit_type "QDate"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 129668 "m_id"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 129796 "m_type"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 129924 "m_name"
+	private explicit_type "QString"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130052 "m_month"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130180 "m_schedule"
+	private explicit_type "QString"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130308 "m_schedule_value"
+	private explicit_type "QVariant"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130436 "m_bonsai_id"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130564 "m_last_date"
+	private explicit_type "QDate"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 128772 "BonsaiWorker"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 128772 // <generalisation>
+	relation 128772 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 128772 // <generalisation>
+	  b parent class_ref 128132 // typedef1
+      end
+
+      extra_member 128132 "Q_OBJECT"
+	
+	cpp "  Q_OBJECT" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      operation 131204 "BonsaiWorker"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 131332 "~BonsaiWorker"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      extra_member 128260 "signals"
+	
+	cpp "  signals:" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      operation 131460 "bonsaiRowFetchDone"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "bonsai" type class_ref 128004 // Bonsai
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 131588 "specieRowFetchDone"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "specie" type class_ref 128516 // Specie
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 131716 "fetchBonsaiDone"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 131844 "fetchSpeciesDone"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      extra_member 128388 "slots"
+	
+	cpp "  public slots:" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      operation 131972 "fetchAllBonsai"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 132100 "fetchAllSpecies"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 132228 "fetchOperationsBySlot"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 2
+	  param in name "bonsai_id" explicit_type "int"
+	  param in name "date" explicit_type "QDate"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 132356 "insertBonsai"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 2
+	  param in name "specieId" explicit_type "int"
+	  param in name "year" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} ${p0}${v0}, const ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} ${p0}, const ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 132484 "nextId"
+	preserve_cpp_body_indent public explicit_return_type "int"
+	nparams 1
+	  param in name "table" explicit_type "QString"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 132612 "schedule"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param inout name "bonsai" type class_ref 128004 // Bonsai
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 132740 "cleanOldOperations"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 132868 "insertOperation"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param inout name "op" type class_ref 128644 // Operation
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 128644 "db"
+	private explicit_type "QSqlDatabase"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 128900 // sch (<directional composition>)
+	relation 128900 *-->
+	  a role_name "sch" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 128900 // sch (<directional composition>)
+	  b parent class_ref 128900 // Scheduler
+      end
+
+      operation 132996 "parseSpeciesWithXQuery"
+	preserve_cpp_body_indent private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 128900 "Scheduler"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 130308 // <generalisation>
+	relation 130308 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 130308 // <generalisation>
+	  b parent class_ref 128132 // typedef1
+      end
+
+      extra_member 129924 "Q_OBJECT"
+	
+	cpp "  Q_OBJECT" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      operation 141316 "Scheduler"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 141444 "~Scheduler"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 141572 "schedule"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 2
+	  param inout name "bonsai" type class_ref 128004 // Bonsai
+	  param in name "month" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}, const ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}, const ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 132356 "db"
+	private explicit_type "QSqlDatabase"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 129028 "Day"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 129028 // <generalisation>
+	relation 129028 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 129028 // <generalisation>
+	  b parent class_ref 128132 // typedef1
+      end
+
+      extra_member 128516 "Q_OBJECT"
+	
+	cpp "  Q_OBJECT" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      operation 133124 "Day"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 2
+	  param in name "date" explicit_type "QDate"
+	  param inout name "parent" explicit_type "QObject"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, ${t1} * ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "//#include \"timeslot.h\"
+//!
+//  \\class Day
+//  \\brief Day is a wrapper class for DayModel.
+//
+//Day::Day(QObject *parent) :
+//    QObject(parent), m_day()
+//{
+//
+//}
+
+${inline}${class}::${name}${(}const ${t0} & ${p0}, ${t1} * ${p1}${)} :
+    QObject(parent), m_day(date)
+${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "Day(QObject *parent = 0);"
+      end
+
+      operation 133252 "dayOfWeekIndex"
+	preserve_cpp_body_indent const public explicit_return_type "Q_INVOKABLE int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 133380 "monthIndex"
+	preserve_cpp_body_indent const public explicit_return_type "Q_INVOKABLE int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 133508 "dayIndex"
+	preserve_cpp_body_indent const public explicit_return_type "Q_INVOKABLE int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 133636 "date"
+	preserve_cpp_body_indent const public explicit_return_type "QDate"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 128772 "m_day"
+	private explicit_type "QDate"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 129156 "DayModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 129156 // <generalisation>
+	relation 129156 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 129156 // <generalisation>
+	  b parent class_ref 129284 // typedef3
+      end
+
+      extra_member 128644 "Q_OBJECT"
+	
+	cpp "  Q_OBJECT" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      class 129412 "Roles"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	
+	attribute 128900 "WeekDayIndexRole"
+	  public type class_ref 129412 // Roles
+	  init_value " Qt::UserRole+1"
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 129028 "DayNameRole"
+	  public type class_ref 129412 // Roles
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+      end
+
+      operation 133764 "roleNames"
+	class_operation preserve_cpp_body_indent public explicit_return_type "QHash<int, QByteArray>"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "// Constants
+//const int DAYS_FIRST_SLOT = 6;
+//!
+//  \\class DayModel
+//  \\brief DayModel depicts one day and holds the Timeslot objects.
+
+${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 133892 "DayModel"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 3
+	  param in name "day" explicit_type "QDate"
+	  param in name "worker" type class_ref 128772 // BonsaiWorker
+	  param inout name "parent" explicit_type "QObject"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}explicit ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} * ${p2}${v2}${)}${volatile}${throw};
+"
+	cpp_def "//DayModel::DayModel(QObject *parent):
+//    QAbstractListModel(parent), m_day(), m_items()
+//{
+//    setRoleNames(DayModel::roleNames());
+//}
+//
+//DayModel::DayModel(const DayModel &dayModel,  QObject *parent):
+//    QAbstractListModel(parent)
+//{
+//    m_day = dayModel.day();
+//    m_items = dayModel.items();
+//    setRoleNames(DayModel::roleNames());
+//}
+
+${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} * ${p2}${)} :
+    QAbstractListModel(parent), m_day(day), m_items(), workerThread(worker)
+${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "explicit DayModel(QObject *parent = 0);
+    explicit DayModel(const DayModel &dayModel,  QObject *parent = 0);"
+      end
+
+      operation 134020 "~DayModel"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 134148 "data"
+	preserve_cpp_body_indent const public explicit_return_type "QVariant"
+	nparams 2
+	  param in name "index" explicit_type "QModelIndex"
+	  param in name "role" explicit_type "int"
+	    defaultvalue "Qt::DisplayRole"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment " From QAbstractListModel"
+      end
+
+      operation 134276 "flags"
+	preserve_cpp_body_indent const public explicit_return_type "Qt::ItemFlags"
+	nparams 1
+	  param in name "index" explicit_type "QModelIndex"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 134404 "headerData"
+	preserve_cpp_body_indent const public explicit_return_type "QVariant"
+	nparams 3
+	  param in name "section" explicit_type "int"
+	  param in name "orientation" explicit_type "Qt::Orientation"
+	  param in name "role" explicit_type "int"
+	    defaultvalue "Qt::DisplayRole "
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 134532 "rowCount"
+	preserve_cpp_body_indent const public explicit_return_type "int"
+	nparams 1
+	  param in name "parent" explicit_type "QModelIndex"
+	    defaultvalue "QModelIndex()"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "//OperationModel* DayModel::daySlots(){
+//    SlotModel *sl = new SlotModel(m_day.date());
+//    return sl;
+//}
+//
+//OperationModel* DayModel::dayOperationsByBonsaiId(const int bonsaiId){
+//    OperationModel *op = new OperationModel(bonsaiId, m_day.date());
+//    return op;
+//}
+
+${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 134660 "day"
+	preserve_cpp_body_indent public return_type class_ref 129028 // Day
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} & ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} & ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "bool setData( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );"
+      end
+
+      operation 134788 "items"
+	preserve_cpp_body_indent public explicit_return_type "QList<Slot*>"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} & ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} & ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 134916 "weekDayIndex"
+	preserve_cpp_body_indent const public explicit_return_type "Q_INVOKABLE int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 135044 "monthDayIndex"
+	preserve_cpp_body_indent const public explicit_return_type "Q_INVOKABLE int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 135172 "fetchSlot"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param inout name "bonsai" type class_ref 128004 // Bonsai
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      extra_member 128772 "signals"
+	
+	cpp "  signals:" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      operation 135300 "doFetchSlotOperations"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "" explicit_type "int"
+	  param in name "" explicit_type "QDate"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      extra_member 128900 "slots"
+	
+	cpp "  public slots:" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      operation 135428 "addRow"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param inout name "sl" type class_ref 129540 // Slot
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} * ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} * ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 129284 // m_day (<directional composition>)
+	relation 129284 *-->
+	  a role_name "m_day" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 129284 // m_day (<directional composition>)
+	  b parent class_ref 129028 // Day
+      end
+
+      classrelation 129412 // m_items (<unidirectional association>)
+	relation 129412 --->
+	  stereotype "QList"
+	  a role_name "m_items" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}*> ${name}${value};
+"
+	    classrelation_ref 129412 // m_items (<unidirectional association>)
+	  b parent class_ref 129540 // Slot
+      end
+
+      attribute 129156 "db"
+	private explicit_type "QSqlDatabase"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 129540 // workerThread (<unidirectional association>)
+	relation 129540 --->
+	  a role_name "workerThread" const_relation private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} & ${name}${value};
+"
+	    classrelation_ref 129540 // workerThread (<unidirectional association>)
+	  b parent class_ref 128772 // BonsaiWorker
+      end
+    end
+
+    class 129284 "typedef3"
+      visibility package stereotype "typedef" explicit_base_type "QAbstractListModel"
+      cpp_decl "${comment}typedef ${type} ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+    end
+
+    class 129540 "Slot"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 130436 // <generalisation>
+	relation 130436 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 130436 // <generalisation>
+	  b parent class_ref 128132 // typedef1
+      end
+
+      extra_member 130052 "Q_OBJECT"
+	
+	cpp "  Q_OBJECT" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      operation 141700 "Slot"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 4
+	  param in name "bonsaiId" explicit_type "int"
+	  param in name "day" explicit_type "QDate"
+	  param inout name "operationModel" type class_ref 129924 // OperationModel
+	  param inout name "parent" explicit_type "QObject"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} * ${p2}${v2}, ${t3} * ${p3}${v3}${)}${volatile}${throw};
+"
+	cpp_def "//!
+//  \\class Slot
+//  \\brief Slot depicts one calendar event, which can span over multiple hours.
+
+${inline}${class}::${name}${(}const ${t0} ${p0}, const ${t1} & ${p1}, ${t2} * ${p2}, ${t3} * ${p3}${)} :
+    QObject(parent), m_bonsai_id(bonsaiId), m_date(day), m_operation_model(operationModel)
+${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 141828 "~Slot"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 132484 "m_bonsai_id"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 132612 "m_date"
+	private explicit_type "QDate"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 130564 // m_operation_model (<unidirectional association>)
+	relation 130564 --->
+	  a role_name "m_operation_model" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 130564 // m_operation_model (<unidirectional association>)
+	  b parent class_ref 129924 // OperationModel
+      end
+    end
+
+    class 129668 "MonthModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "#include \"day.h\""
+      classrelation 129668 // <generalisation>
+	relation 129668 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 129668 // <generalisation>
+	  b parent class_ref 129284 // typedef3
+      end
+
+      extra_member 129028 "Q_OBJECT"
+	
+	cpp "  Q_OBJECT" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      class 129796 "Roles"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	
+	attribute 129284 "MonthIndexRole"
+	  public type class_ref 129796 // Roles
+	  init_value " Qt::UserRole+1"
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 129412 "MonthNameRole"
+	  public type class_ref 129796 // Roles
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+      end
+
+      operation 135556 "roleNames"
+	class_operation preserve_cpp_body_indent public explicit_return_type "QHash<int, QByteArray>"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 135684 "MonthModel"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 1
+	  param inout name "parent" explicit_type "QObject"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}explicit ${name}${(}${t0} * ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}${)} :
+    QAbstractListModel(parent), m_months()
+${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 135812 "~MonthModel"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 135940 "data"
+	preserve_cpp_body_indent const public explicit_return_type "QVariant"
+	nparams 2
+	  param in name "index" explicit_type "QModelIndex"
+	  param in name "role" explicit_type "int"
+	    defaultvalue "Qt::DisplayRole"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment " From QAbstractListModel"
+      end
+
+      operation 136068 "flags"
+	preserve_cpp_body_indent const public explicit_return_type "Qt::ItemFlags"
+	nparams 1
+	  param in name "index" explicit_type "QModelIndex"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 136196 "headerData"
+	preserve_cpp_body_indent const public explicit_return_type "QVariant"
+	nparams 3
+	  param in name "section" explicit_type "int"
+	  param in name "orientation" explicit_type "Qt::Orientation"
+	  param in name "role" explicit_type "int"
+	    defaultvalue "Qt::DisplayRole "
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 136324 "rowCount"
+	preserve_cpp_body_indent const public explicit_return_type "int"
+	nparams 1
+	  param in name "parent" explicit_type "QModelIndex"
+	    defaultvalue "QModelIndex()"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 136452 "setData"
+	preserve_cpp_body_indent public explicit_return_type "bool"
+	nparams 3
+	  param in name "index" explicit_type "QModelIndex"
+	  param in name "value" explicit_type "QVariant"
+	  param in name "role" explicit_type "int"
+	    defaultvalue "Qt::EditRole "
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "// For editing
+
+${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 129540 "m_months"
+	private explicit_type "QString"
+	stereotype "QList"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 129924 "OperationModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 129924 // <generalisation>
+	relation 129924 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 129924 // <generalisation>
+	  b parent class_ref 129284 // typedef3
+      end
+
+      extra_member 129284 "Q_OBJECT"
+	
+	cpp "  Q_OBJECT" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      class 130052 "Roles"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	
+	attribute 130692 "IndexRole"
+	  public type class_ref 130052 // Roles
+	  init_value " Qt::UserRole+1"
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 130820 "NameRole"
+	  public type class_ref 130052 // Roles
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 130948 "LastDateRole"
+	  public type class_ref 130052 // Roles
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 131076 "BonsaiIdRole"
+	  public type class_ref 130052 // Roles
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 131204 "SetIndexRole"
+	  public type class_ref 130052 // Roles
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 131332 "SetNameRole"
+	  public type class_ref 130052 // Roles
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 131460 "SetLastDateRole"
+	  public type class_ref 130052 // Roles
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 131588 "SetBonsaiIdRole"
+	  public type class_ref 130052 // Roles
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+      end
+
+      operation 139140 "roleNames"
+	class_operation preserve_cpp_body_indent public explicit_return_type "QHash<int, QByteArray>"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 139268 "OperationModel"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 3
+	  param in name "bonsaiId" explicit_type "int"
+	  param in name "lastDate" explicit_type "QDate"
+	  param inout name "parent" explicit_type "QObject"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}explicit ${name}${(}const ${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} * ${p2}${v2}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} ${p0}, const ${t1} & ${p1}, ${t2} * ${p2}${)} :
+    QAbstractListModel(parent), m_items(), m_bonsai_id(bonsaiId), m_last_date(lastDate)
+${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 139396 "~OperationModel"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 139524 "data"
+	preserve_cpp_body_indent const public explicit_return_type "QVariant"
+	nparams 2
+	  param in name "index" explicit_type "QModelIndex"
+	  param in name "role" explicit_type "int"
+	    defaultvalue "Qt::DisplayRole"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment " From QAbstractListModel"
+      end
+
+      operation 139652 "flags"
+	preserve_cpp_body_indent const public explicit_return_type "Qt::ItemFlags"
+	nparams 1
+	  param in name "index" explicit_type "QModelIndex"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 139780 "headerData"
+	preserve_cpp_body_indent const public explicit_return_type "QVariant"
+	nparams 3
+	  param in name "section" explicit_type "int"
+	  param in name "orientation" explicit_type "Qt::Orientation"
+	  param in name "role" explicit_type "int"
+	    defaultvalue "Qt::DisplayRole "
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 139908 "rowCount"
+	preserve_cpp_body_indent const public explicit_return_type "int"
+	nparams 1
+	  param in name "parent" explicit_type "QModelIndex"
+	    defaultvalue "QModelIndex()"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 140036 "setData"
+	preserve_cpp_body_indent public explicit_return_type "bool"
+	nparams 3
+	  param in name "index" explicit_type "QModelIndex"
+	  param in name "value" explicit_type "QVariant"
+	  param in name "role" explicit_type "int"
+	    defaultvalue "Qt::EditRole "
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "// For editing
+
+${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 140164 "init"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 140292 "createTable"
+	class_operation preserve_cpp_body_indent public explicit_return_type "bool"
+	nparams 1
+	  param inout name "db" explicit_type "QSqlDatabase"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment " for BonsaiTable"
+      end
+
+      operation 140420 "addRow"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 1
+	  param inout name "op" type class_ref 128644 // Operation
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 140548 "insert"
+	preserve_cpp_body_indent public explicit_return_type "bool"
+	nparams 1
+	  param inout name "op" type class_ref 128644 // Operation
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "Q_INVOKABLE void insertBonsai(QSqlDatabase &db, const int year, const int month, const int day,
+                                  const int SpecieId);
+    Q_INVOKABLE void deleteBonsai(QSqlDatabase &db, const int id);
+    Q_INVOKABLE QList<QObject*> Bonsais(QSqlDatabase &db);
+    Q_INVOKABLE QList<QObject*> dateBonsais(QSqlDatabase &db, const int year,
+                                          const int month,
+                                          const int day);
+Q_INVOKABLE int nextId();
+QList<Operation*> getAgeString(QDate date);
+public slots:
+ Exposed to QML for managing the model.
+void addRow(Bonsai* item);
+signals:
+void fetch();"
+      end
+
+      classrelation 130052 // m_items (<unidirectional association>)
+	relation 130052 --->
+	  stereotype "QList"
+	  a role_name "m_items" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}*> ${name}${value};
+"
+	    classrelation_ref 130052 // m_items (<unidirectional association>)
+	  b parent class_ref 128644 // Operation
+      end
+
+      attribute 131716 "db"
+	private explicit_type "QSqlDatabase"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 131844 "m_bonsai_id"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 131972 "m_last_date"
+	private explicit_type "QDate"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 130180 "Orientation"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 130180 // <generalisation>
+	relation 130180 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 130180 // <generalisation>
+	  b parent class_ref 128132 // typedef1
+      end
+
+      extra_member 129412 "Q_OBJECT"
+	
+	cpp "  Q_OBJECT" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      extra_member 129540 "Q_PROPERTY"
+	
+	cpp "    Q_PROPERTY(QString state READ state NOTIFY orientationChanged)" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      operation 140676 "Orientation"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 1
+	  param inout name "parent" explicit_type "QObject"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}explicit ${name}${(}${t0} * ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} * ${p0}${)} :
+    QObject(parent), m_state(\"Portrait\")
+${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 140804 "~Orientation"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 140932 "state"
+	const cpp_inline public explicit_return_type "QString"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract} { return m_state; };
+"
+	
+	
+	
+	
+      end
+
+      extra_member 129668 "signals"
+	
+	cpp "  signals:" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      operation 141060 "orientationChanged"
+	preserve_cpp_body_indent public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "// SIGNAL 0
+
+${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      extra_member 129796 "slots"
+	
+	cpp "  private slots:" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      operation 141188 "onReadingChanged"
+	preserve_cpp_body_indent private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 132100 "m_state"
+	private explicit_type "QString"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 132228 "m_sensor"
+	private explicit_type "QtMobility::QOrientationSensor"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 130308 "Task"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      operation 143108 "Task"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 130436 "Timeslot"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 130820 // <generalisation>
+	relation 130820 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 130820 // <generalisation>
+	  b parent class_ref 128132 // typedef1
+      end
+
+      extra_member 130436 "Q_OBJECT"
+	
+	cpp "  Q_OBJECT" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      operation 143236 "Timeslot"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 3
+	  param in name "hourId" explicit_type "int"
+	  param in name "start" explicit_type "QTime"
+	  param inout name "parent" explicit_type "QObject"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} * ${p2}${v2}${)}${volatile}${throw};
+"
+	cpp_def "//!
+//  \\class Timeslot
+//  \\brief Timeslot depicts one calendar event, which can span over multiple hours.
+
+${inline}${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} * ${p2}${)} :
+    QObject(parent), m_hourId(hourId), m_start(start), m_data(\"\"), m_hours(1),
+    m_spanned(false), m_parentIndex(-1)
+${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 143364 "~Timeslot"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 143492 "setStartTime"
+	preserve_cpp_body_indent public explicit_return_type "bool"
+	nparams 1
+	  param in name "time" explicit_type "QTime"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 143620 "setItemData"
+	preserve_cpp_body_indent public explicit_return_type "bool"
+	nparams 1
+	  param in name "data" explicit_type "QString"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 143748 "setHourSpan"
+	preserve_cpp_body_indent public explicit_return_type "bool"
+	nparams 1
+	  param in name "hours" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 143876 "setSpanStatus"
+	preserve_cpp_body_indent public explicit_return_type "bool"
+	nparams 2
+	  param in name "spanned" explicit_type "bool"
+	  param in name "parentIndex" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 144004 "startTime"
+	preserve_cpp_body_indent const public explicit_return_type "QString"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 144132 "endTime"
+	preserve_cpp_body_indent const public explicit_return_type "QString"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 144260 "itemData"
+	preserve_cpp_body_indent const public explicit_return_type "QString"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 144388 "hourSpan"
+	preserve_cpp_body_indent const public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 144516 "toString"
+	preserve_cpp_body_indent const public explicit_return_type "QString"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 144644 "spanned"
+	preserve_cpp_body_indent const public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 144772 "parentIndex"
+	preserve_cpp_body_indent const public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 144900 "hourId"
+	preserve_cpp_body_indent const public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      extra_member 130564 "signals"
+	
+	cpp "  signals:" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      operation 145028 "dataChanged"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 132996 "m_hourId"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 133124 "m_start"
+	private explicit_type "QTime"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 133252 "m_data"
+	private explicit_type "QString"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 133380 "m_hours"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 133508 "m_spanned"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 133636 "m_parentIndex"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 145156 "operator <<"
+	preserve_cpp_body_indent friend private explicit_return_type "QDataStream"
+	nparams 2
+	  param inout name "stream" explicit_type "QDataStream"
+	  param in name "timeSlot" type class_ref 130436 // Timeslot
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} & ${name}${(}${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} & ${class}::${name}${(}${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 145284 "operator >>"
+	preserve_cpp_body_indent friend private explicit_return_type "QDataStream"
+	nparams 2
+	  param inout name "stream" explicit_type "QDataStream"
+	  param inout name "timeSlot" type class_ref 130436 // Timeslot
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} & ${name}${(}${t0} & ${p0}${v0}, ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} & ${class}::${name}${(}${t0} & ${p0}, ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 130564 "WeekModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "Q_DECLARE_METATYPE(DayModel)"
+      classrelation 130948 // <generalisation>
+	relation 130948 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 130948 // <generalisation>
+	  b parent class_ref 129284 // typedef3
+      end
+
+      extra_member 130692 "Q_OBJECT"
+	
+	cpp "  Q_OBJECT" ""
+	java ""
+	php ""
+	python ""
+	idl ""
+      end
+
+      class 130692 "Roles"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	
+	attribute 133764 "DayIndexRole"
+	  public type class_ref 130692 // Roles
+	  init_value " Qt::UserRole+1"
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 133892 "DayNameRole"
+	  public type class_ref 130692 // Roles
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+
+	attribute 134020 "MonthIndexRole"
+	  public type class_ref 130692 // Roles
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	end
+      end
+
+      operation 145412 "roleNames"
+	class_operation preserve_cpp_body_indent public explicit_return_type "QHash<int, QByteArray>"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "//!
+//  \\class WeekModel
+//  \\brief WeekModel depicts one week and holds the day objects.
+
+${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 145540 "WeekModel"
+	preserve_cpp_body_indent public explicit_return_type ""
+	nparams 3
+	  param in name "bonsaiModel" explicit_type "BonsaiModel"
+	  param in name "worker" type class_ref 128772 // BonsaiWorker
+	  param inout name "parent" explicit_type "QObject"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}explicit ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} * ${p2}${v2}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} * ${p2}${)} :
+    QAbstractListModel(parent), m_days(), workerThread(worker)
+${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 145668 "~WeekModel"
+	preserve_cpp_body_indent cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${throw}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 145796 "rowCount"
+	preserve_cpp_body_indent const public explicit_return_type "int"
+	nparams 1
+	  param in name "parent" explicit_type "QModelIndex"
+	    defaultvalue "QModelIndex()"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment " From QAbstractListModel"
+      end
+
+      operation 145924 "data"
+	preserve_cpp_body_indent const public explicit_return_type "QVariant"
+	nparams 2
+	  param in name "index" explicit_type "QModelIndex"
+	  param in name "role" explicit_type "int"
+	    defaultvalue "Qt::DisplayRole"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 146052 "headerData"
+	preserve_cpp_body_indent const public explicit_return_type "QVariant"
+	nparams 3
+	  param in name "section" explicit_type "int"
+	  param in name "orientation" explicit_type "Qt::Orientation"
+	  param in name "role" explicit_type "int"
+	    defaultvalue "Qt::DisplayRole"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 146180 "flags"
+	preserve_cpp_body_indent const public explicit_return_type "Qt::ItemFlags"
+	nparams 1
+	  param in name "index" explicit_type "QModelIndex"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 146308 "setData"
+	preserve_cpp_body_indent public explicit_return_type "bool"
+	nparams 3
+	  param in name "index" explicit_type "QModelIndex"
+	  param in name "value" explicit_type "QVariant"
+	  param in name "role" explicit_type "int"
+	    defaultvalue "Qt::EditRole"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "// For editing
+
+${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 146436 "save"
+	preserve_cpp_body_indent public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 146564 "restore"
+	preserve_cpp_body_indent public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 146692 "indexOfFirstDay"
+	preserve_cpp_body_indent const public explicit_return_type "Q_INVOKABLE int"
+	nparams 1
+	  param in name "month" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 146820 "indexOfMonth"
+	preserve_cpp_body_indent const public explicit_return_type "Q_INVOKABLE int"
+	nparams 1
+	  param in name "dayIndex" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 146948 "getSaveFileName"
+	preserve_cpp_body_indent const private explicit_return_type "QString"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 131076 // m_days (<unidirectional association>)
+	relation 131076 --->
+	  stereotype "QList"
+	  a role_name "m_days" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}*> ${name}${value};
+"
+	    classrelation_ref 131076 // m_days (<unidirectional association>)
+	  b parent class_ref 129156 // DayModel
+      end
+
+      classrelation 131204 // workerThread (<unidirectional association>)
+	relation 131204 --->
+	  a role_name "workerThread" const_relation private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} & ${name}${value};
+"
+	    classrelation_ref 131204 // workerThread (<unidirectional association>)
+	  b parent class_ref 128772 // BonsaiWorker
+      end
+    end
+  end
+
+  deploymentview 128004 "bonsai-care"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 128004 "bonsai"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 128132 // typedef1
+	class_ref 128004 // Bonsai
+      end
+    end
+
+    artifact 128132 "bonsaiserializer"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 128388 // typedef2
+	class_ref 128260 // BonsaiSerializer
+      end
+    end
+
+    artifact 128260 "bonsaiworker"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 128772 // BonsaiWorker
+      end
+    end
+
+    artifact 128388 "day"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 129028 // Day
+      end
+    end
+
+    artifact 128516 "daymodel"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 129284 // typedef3
+	class_ref 129156 // DayModel
+      end
+    end
+
+    artifact 128644 "monthmodel"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 129668 // MonthModel
+      end
+    end
+
+    artifact 128772 "operation"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 128644 // Operation
+      end
+    end
+
+    artifact 128900 "operationmodel"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 129924 // OperationModel
+      end
+    end
+
+    artifact 129028 "Orientation"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 130180 // Orientation
+      end
+    end
+
+    artifact 129156 "scheduler"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 128900 // Scheduler
+      end
+    end
+
+    artifact 129284 "slot"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 129540 // Slot
+      end
+    end
+
+    artifact 129412 "specie"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 128516 // Specie
+      end
+    end
+
+    artifact 129540 "task"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 130308 // Task
+      end
+    end
+
+    artifact 129668 "timeslot"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 130436 // Timeslot
+      end
+    end
+
+    artifact 129796 "weekmodel"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 130564 // WeekModel
+      end
+    end
+
+    artifact 130052 "main"
+      stereotype "source"
+      cpp_src "//#ifdef Q_OS_SYMBIAN
+//    // Lock orientation in Symbian
+//    #include <eikenv.h>
+//    #include <eikappui.h>
+//    #include <aknenv.h>
+//    #include <aknappui.h>
+//#endif
+//
+
+Q_DECL_EXPORT int main(int argc, char *argv[])
+{
+    QScopedPointer<QApplication> app(createApplication(argc, argv));
+    QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
+
+    qDebug() << \"Main thread id:\" << QThread::currentThreadId();
+
+    QDeclarativeContext *rootContext = viewer->rootContext();
+
+    // Set font
+    QFontDatabase::addApplicationFont(\"qml/Bonsaicare/resources/NokiaPureText.ttf\");
+    QFontDatabase::addApplicationFont(\"qml/Bonsaicare/resources/NokiaPureTextBold.ttf\");
+    QFontDatabase::addApplicationFont(\"qml/Bonsaicare/resources/NokiaPureTextLight.ttf\");
+
+
+    QFont nokiaFont;
+    nokiaFont.setFamily(\"Nokia Pure Text\");
+    QApplication::setFont(nokiaFont);
+
+    viewer->setAttribute(Qt::WA_NoSystemBackground);
+
+#if defined(Q_OS_SYMBIAN)
+    // Workaround for an issue with Symbian: \"X.Y.Z\" -> X.Y.Z
+    static const QString VERSION_NUMBER(QString(\"%1\").arg(VER).mid(1, QString(VER).length()-2));
+#else
+    static const QString VERSION_NUMBER(QString(\"%1\").arg(VER)); // X.Y.Z by itself
+#endif
+
+    app->setApplicationVersion(VERSION_NUMBER);
+
+    //Open db connection
+    DatabaseManager db;
+    db.open();
+
+    BonsaiWorker worker;
+    worker.cleanOldOperations();
+    QThread worker_thread;
+    worker.moveToThread(&worker_thread);
+    worker_thread.start();
+
+    //Setting models
+    //used for displaying months on top
+    MonthModel months;
+    rootContext->setContextProperty(\"months\", &months);
+    //used to list all species of bonsais
+    SpecieModel species(worker);
+    qDebug() << \"BONSAI ITEM ROW COUNT\" << species.rowCount();
+    rootContext->setContextProperty(\"species\", &species);
+
+    //used to get all custom bonsais
+    BonsaiModel bonsai(species, worker);
+    rootContext->setContextProperty(\"bonsai\", &bonsai);
+
+    species.init();
+
+    //used for displaying week days on top
+    WeekModel week(bonsai, worker);
+    rootContext->setContextProperty(\"week\", &week);
+    rootContext->setContextProperty(QString(\"cp_versionNumber\"), VERSION_NUMBER);
+
+    // Setting database Qt class handle to QML
+    /*
+    rootContext->setContextProperty(\"db\", db.data());*/
+
+    // App version to QML in Symbian^3 version build
+#ifndef Q_OS_SYMBIAN_1
+    rootContext->setContextProperty(\"appversion\", app->applicationVersion());
+#endif
+
+    viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+    viewer->setMainQmlFile(QLatin1String(\"qml/Bonsaicare/main.qml\"));
+
+    //Attivo il sensore di orientamento
+    /*QOrientationSensor sensor;
+    OrientationFilter filter;
+    sensor.addFilter(&filter);
+    QObject *item = viewer->rootObject();
+
+    // Connect the Qt signal to QML function
+    QObject::connect(&filter, SIGNAL(orientationChanged(const QVariant&)),
+                     item , SLOT(orientationChanged(const QVariant&)));
+    sensor.start();
+
+#ifdef Q_WS_MAEMO_5
+    QGLFormat fmt = QGLFormat::defaultFormat();
+    fmt.setDoubleBuffer(true);
+
+    QGLWidget *glWidget = new QGLWidget(fmt);
+    viewer->setViewport(glWidget);
+#endif*/
+
+#if defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(QT_SIMULATOR)
+    viewer->showFullScreen();
+#else
+    viewer->showExpanded();
+#endif
+    /*con splash screen
+    // First set a QML file that's quick to load and show it as a splash screen.
+    viewer.setMainQmlFile(QLatin1String(\"qml/weeklyplanner/Splash.qml\"));
+    // Then trigger loading the *real* main.qml file, which can take longer to load.
+    LoadHelper loadHelper(&viewer);
+    QTimer::singleShot(1, &loadHelper, SLOT(loadMainQML()));
+     */
+
+    // Start the application
+
+    int ret = app->exec();
+    worker_thread.exit(0);
+    worker_thread.wait();
+
+    db.close();
+    return ret;
+}
+"
+      associated_classes
+      end
+    end
+  end
+
+  package_ref 128132 // qmlapplicationviewer
+end

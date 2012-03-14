@@ -15,7 +15,7 @@ Page {
                                                   : visual.portraitHeaderItemWidth
 
     // This index is used to change the day to the selected index.
-    property alias headerPageIndex: headerRow.currentIndex
+    //property alias headerPageIndex: headerRow.currentIndex
     // Attributes to define the Cell item height, colors etc.
     property int itemHeight: visual.itemHeight
     //property int bonsaiColumnWidth: visual.bonsaiColumnWidth
@@ -82,8 +82,27 @@ Page {
         }
     }    
 
+    // Background image for the Pages
+    Image {
+        id: bgImg
+        anchors.fill: parent
+        /*anchors {
+            top: statusBar.bottom
+            bottom: toolBar.top
+            left: parent.left
+            right: parent.right
+        }*/
+        source: landscapeLayout ?
+                    (visual.isE6 ? "Core/images/diary_640x480.png"
+                                 : "Core/images/diary_640x360.png")
+                  : "images/japanese_room_center_480x854.jpg"
+                  //: "images/japanese_room_side_480x854.jpg"
+                    //: "Core/images/diary_360x640.png"
+    }
+
+
     // Pivot headers, used for navigation.
-    PivotHeader {
+    /*PivotHeader {
         id: headerRow
 
         model: parent.model
@@ -114,7 +133,7 @@ Page {
             console.log("AFTER PAGECHANGE, container.currentPage: "
                         + container.currentPage);
         }
-    }
+    }*/
 
     // Show an hour column on the left side of the screen. Doesn't 'slide in/out'
     // with the rest of the content area and PivotPages.
@@ -152,7 +171,7 @@ Page {
     }
 
     //Layer with tasks
-    Component {
+    /*Component {
         id: dayLayerComp
 
         DayLayer {
@@ -185,10 +204,10 @@ Page {
                 container.headerPageIndex = idxx;
             }
         }
-    }
+    }*/
 
 
-    Item {
+    /*Item {
         id: contentArea
         z: 1;
         clip: true
@@ -199,13 +218,13 @@ Page {
             bottom: parent.bottom
         }
 
-    }
+    }*/
 
     // Initialize the first Day item.
-    Component.onCompleted: {
+    /*Component.onCompleted: {
         var now = new Date();
         var dayNum = now.getDay();
         dayNum = dayNum-1;
         __initializePage(dayNum);        
-    }
+    }*/
 }

@@ -1,0 +1,24 @@
+class Bonsai
+!!!128004.cpp!!!	Bonsai(in id : int, in date : int, in specie : int, inout parent : QObject = 0)
+    //m_model = new BonsaiModel(m_date, m_name, m_specieId, this);
+!!!128132.cpp!!!	Bonsai(inout parent : QObject = 0)
+    //m_model = new BonsaiModel(m_date, m_name, m_specieId, this);
+!!!128260.cpp!!!	Bonsai(in bonsai : Bonsai)
+    m_id = bonsai.index();
+    m_date = bonsai.date();   
+    m_specieId = bonsai.specieId();
+    //m_model = new BonsaiModel(m_date, m_name, m_specieId, this);
+!!!128388.cpp!!!	~Bonsai()
+    //delete m_model;
+!!!128516.cpp!!!	index() : int
+    return m_id;
+!!!128644.cpp!!!	setIndex(in index : int) : void
+    m_id = index;
+!!!128772.cpp!!!	specieId() : int
+    return m_specieId;
+!!!128900.cpp!!!	setSpecieId(in specieId : int) : void
+    m_specieId = specieId;
+!!!129028.cpp!!!	date() : int
+    return m_date;
+!!!129156.cpp!!!	setDate(in date : int) : void
+    m_date = date;

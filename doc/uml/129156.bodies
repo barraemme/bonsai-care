@@ -1,0 +1,86 @@
+class DayModel
+!!!133764.cpp!!!	roleNames() : QHash<int, QByteArray>
+    QHash<int, QByteArray> roles;
+    roles[WeekDayIndexRole] = "d_weekDayIndex";
+    roles[DayNameRole] = "d_dayName";
+    return roles;
+!!!133892.cpp!!!	DayModel(in day : QDate, in worker : BonsaiWorker, inout parent : QObject = 0)
+    
+
+//    // Enable following comments, if you would like to generate the day
+//    // full of example events.
+//    QString templateItem("Day %1 Item %2");    
+    //start thread with readAll on init
+    /** connect WORKER HTREAD -> THIS **/
+    //add insert row to DB
+    connect(this, SIGNAL(doFetchSlotOperations(const int, const QDate&)), &workerThread, SLOT(fetchOperationsBySlot(const int,const QDate&)));
+   //add row to model
+    //connect(workerThread, SIGNAL(operationRowFetchDone(Slot*)),this, SLOT(addRow(Slot*)));
+    setRoleNames(DayModel::roleNames());
+
+//    // Code for generating randomly hour spans to events.
+//    // Sets the seed within the range 0-999
+//    qsrand(QTime::currentTime().msec());
+//    // Set 0 to 3 spans / day
+//    for (int i = qrand() % 4; i > 0; i--) {
+//        setHourSpan(qrand() % 24, (qrand() % 3) + 2);
+//    }
+!!!134020.cpp!!!	~DayModel()
+    qDeleteAll(m_items);
+    m_items.clear();
+!!!134148.cpp!!!	data(in index : QModelIndex, in role : int = Qt::DisplayRole) : QVariant
+    if (index.isValid()) {
+        int row = index.row();
+        if (row >= 0 && row < m_items.count()) {
+            Slot *slot = m_items[row];
+            if (role == DayNameRole) {
+                return QVariant(m_day.dayName());
+            } else if (role == WeekDayIndexRole) {
+                return QVariant(m_day.dayOfWeekIndex());
+            } else {
+                return QVariant("ERR: Unknown role for daymodel: " + role);
+            }
+        } else {
+            return QVariant("ERR: Invalid index");
+        }
+    } else {
+        return QVariant("ERR: Invalid index");
+    }
+
+    return QVariant("ERR: other");
+!!!134276.cpp!!!	flags(in index : QModelIndex) : Qt::ItemFlags
+    if (!index.isValid()) {
+        return 0;
+    }
+
+    return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
+!!!134404.cpp!!!	headerData(in section : int, in orientation : Qt::Orientation, in role : int = Qt::DisplayRole) : QVariant
+    return QVariant("HEADER");
+!!!134532.cpp!!!	rowCount(in parent : QModelIndex = QModelIndex()) : int
+    return m_items.count();
+!!!134660.cpp!!!	day() : Day
+    return m_day;
+!!!134788.cpp!!!	items() : QList<Slot*>
+    return m_items;
+!!!134916.cpp!!!	weekDayIndex() : Q_INVOKABLE int
+    return m_day.dayOfWeekIndex();
+!!!135044.cpp!!!	monthDayIndex() : Q_INVOKABLE int
+    return m_day.monthIndex();
+!!!135172.cpp!!!	fetchSlot(inout bonsai : Bonsai) : void
+    qDebug() << Q_FUNC_INFO << QThread::currentThread();
+    emit doFetchSlotOperations(bonsai->index(), m_day.date());
+    qDebug() << "END " << Q_FUNC_INFO << QThread::currentThread();
+!!!135428.cpp!!!	addRow(inout sl : Slot) : void
+    
+    qDebug() << Q_FUNC_INFO;
+
+    //Slot *sl = new Slot(op->m_bonsai_id, m_day.date(), op);
+
+    qDebug() << "beginInsertRows";
+    beginInsertRows(QModelIndex(), m_items.count(), m_items.count());
+
+    m_items.append(sl);
+
+    qDebug() << "endInsertRows "<<m_items.count();
+    endInsertRows();
+    qDebug() << "END" <<Q_FUNC_INFO;

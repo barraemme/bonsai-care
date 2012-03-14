@@ -1,0 +1,49 @@
+class Scheduler
+!!!141316.cpp!!!	Scheduler()
+    // Find QSLite driver
+    db = QSqlDatabase::database("bonsaiConnection");
+
+!!!141444.cpp!!!	~Scheduler()
+
+!!!141572.cpp!!!	schedule(inout bonsai : Bonsai, in month : int) : void
+    QFile sourceDocument(":/resources/db.xml");
+    QFile xq(":/resources/operations-by-specie.xq");
+
+    if ( !sourceDocument.exists()){
+        qDebug() << "species DB not exist";
+        return;
+    }
+
+    if (!sourceDocument.open(QIODevice::ReadOnly | QIODevice::Text)){
+        qDebug() << "species DB not ReadOnly";
+        return;
+    }
+
+    if ( !xq.exists()){
+        qDebug() << "species query not exist";
+        return;
+    }
+
+    if (!xq.open(QIODevice::ReadOnly | QIODevice::Text)){
+        qDebug() << "species query not ReadOnly";
+        return;
+    }
+
+
+    QXmlQuery query;
+    query.bindVariable("inputDocument", &sourceDocument);
+    query.bindVariable("specie_id", QVariant(bonsai->specieId()));
+    query.bindVariable("month", QVariant(month));
+    query.setQuery(&xq/*, QUrl::fromLocalFile(xq.fileName())*/);
+
+    if( query.isValid() )
+    {
+        BonsaiSerializer serializer(query.namePool());
+
+        if (query.evaluateTo(&serializer))
+        {
+            /*foreach (Specie* specie, serializer.species) {
+                emit specieRowFetchDone(specie);
+            }*/
+        }
+    }

@@ -1,0 +1,54 @@
+class MonthModel
+!!!135556.cpp!!!	roleNames() : QHash<int, QByteArray>
+    QHash<int, QByteArray> roles;
+    roles[MonthIndexRole] = "monthIndex";
+    roles[MonthNameRole] = "monthName";
+
+    return roles;
+!!!135684.cpp!!!	MonthModel(inout parent : QObject = 0)
+//    // Enable following comments, if you would like to generate the day
+//    // full of example events.
+//    QString templateItem("Day %1 Item %2");
+    for (int i = 0; i < 12; i++) {
+       m_months.append(QDate::longMonthName(i+1, QDate::StandaloneFormat));
+
+    }
+
+    setRoleNames(MonthModel::roleNames());
+
+//    // Code for generating randomly hour spans to events.
+//    // Sets the seed within the range 0-999
+//    qsrand(QTime::currentTime().msec());
+//    // Set 0 to 3 spans / day
+//    for (int i = qrand() % 4; i > 0; i--) {
+//        setHourSpan(qrand() % 24, (qrand() % 3) + 2);
+//    }
+!!!135812.cpp!!!	~MonthModel()
+   m_months.clear();
+!!!135940.cpp!!!	data(in index : QModelIndex, in role : int = Qt::DisplayRole) : QVariant
+    if (index.isValid()) {
+        int row = index.row();
+        if (row >= 0 && row < m_months.count()) {                 
+            if (role == MonthIndexRole){               
+                return row+1;
+            } if (role == MonthNameRole){
+                return m_months[row];
+            } else {
+                return QVariant("ERR: UnkstartDayn role for MonthModel");
+            }
+        } else {
+            return QVariant("ERR: Invalid index");
+        }
+    } else {
+        return QVariant("ERR: Invalid index");
+    }
+
+    return QVariant("ERR: other");
+!!!136068.cpp!!!	flags(in index : QModelIndex) : Qt::ItemFlags
+    return Qt::ItemIsEnabled;
+!!!136196.cpp!!!	headerData(in section : int, in orientation : Qt::Orientation, in role : int = Qt::DisplayRole) : QVariant
+    return QVariant("HEADER");
+!!!136324.cpp!!!	rowCount(in parent : QModelIndex = QModelIndex()) : int
+    return m_months.count();
+!!!136452.cpp!!!	setData(in index : QModelIndex, in value : QVariant, in role : int = Qt::EditRole) : bool
+    return true;
