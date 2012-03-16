@@ -23,8 +23,8 @@ QHash<int, QByteArray> OperationModel::roleNames()
     return roles;
 }
 
-OperationModel::OperationModel(const int bonsaiId, const QDate &lastDate, QObject* parent) :
-    QAbstractListModel(parent), m_items(), m_bonsai_id(bonsaiId), m_last_date(lastDate)
+OperationModel::OperationModel(const int bonsaiId, QObject* parent) :
+    QAbstractListModel(parent), m_items(), m_bonsai_id(bonsaiId)
 {
     // Find QSLite driver
     db = QSqlDatabase::database("bonsaiConnection");
@@ -42,7 +42,7 @@ OperationModel::~OperationModel()
 void OperationModel::init()
 {
     //TODO if db open
-        QSqlQuery query(db);
+     /*   QSqlQuery query(db);
 
         query.prepare("select id, last_date, name, bonsai_id,  from operations where bonsai_id = ? and last_date = ?");
         query.bindValue(0, m_bonsai_id);
@@ -61,7 +61,7 @@ void OperationModel::init()
            //            query.value(3).toInt()
            //);
            addRow(op);
-        }
+        }*/
 }
 
 bool OperationModel::insert(Operation &op)
@@ -105,7 +105,7 @@ QVariant OperationModel::data(const QModelIndex &index, int role) const
             Operation *item = m_items[row];
             if (role == IndexRole){
                 return QVariant(item->index());
-            } else if (role == NameRole) {
+            } else if (role == Qt::DisplayRole || role == NameRole) {
                 return QVariant(item->name());
             } else if (role == LastDateRole) {
                 return QVariant(item->lastDate());

@@ -49,7 +49,7 @@ Item{
 
          Image {
              id: realImage;
-             source: "images/overlay.png";
+             source: "images/overlay_meego.png";
              width:parent.width-100
              height:parent.height-100
              anchors.horizontalCenter: parent.horizontalCenter
@@ -69,16 +69,24 @@ Item{
              model: 0
 
              //offset:1
-             delegate: Rectangle {
-                 width: 50
-                 height: width
-                 color: "red"
-                 border.color: "white"
-                 border.width: 5
-                 radius: width
+             delegate:
+                 Image {
+                     source: "images/operation_meego.png";
+                     width:50; height:50;
 
+                     Image {
+                         id: realOperationImage;
+                         source: "images/"+o_name+".png";
+                         width:40; height:40;
+                          anchors.fill: parent
+                         anchors {
+                             horizontalCenter: parent.horizontalCenter
+                             verticalCenter: parent.verticalCenter
+                         }
+                     }
 
-             }
+                 }
+
              path: Core.EllipsePath {
                      id: ellipsePath
                      width: 250
@@ -129,14 +137,12 @@ Item{
         y: parent.height/2+15
         //offset:1
 
-        delegate: Rectangle {
-            width: 30
-            height: width
-            color: "blue"
-            border.color: "white"
-            border.width: 5
-            radius: width
-        }
+        delegate:
+            Image {
+                source: "images/operation_meego.png";
+                width:30; height:30;
+
+            }
 
     }
 }

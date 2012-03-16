@@ -60,7 +60,7 @@ public: // From QAbstractListModel
                                           const int day);*/
     Q_INVOKABLE QString getAgeString(const int date);
     Q_INVOKABLE int getIdByIndex(const int index) const;
-
+    Q_INVOKABLE QObject* getOperationsByIndex(const int index) const;
 public slots:
     // Exposed to QML for managing the model.
     void addRow(Bonsai* item);    

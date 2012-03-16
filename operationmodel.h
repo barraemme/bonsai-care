@@ -29,7 +29,7 @@ public:
     static QHash<int, QByteArray> roleNames();
 
 public:
-    explicit OperationModel(const int bonsaiId, const QDate &lastDate, QObject* parent=0);
+    explicit OperationModel(const int bonsaiId, QObject *paren=0);
     virtual ~OperationModel();
 
 public: // From QAbstractListModel
@@ -66,8 +66,7 @@ public: // From QAbstractListModel
 private:
     QList<Operation*> m_items;
     QSqlDatabase db;
-    int m_bonsai_id;
-    QDate m_last_date;
+    int m_bonsai_id;    
     //QThread *thread;
     //BonsaiWorker *workerThread;
 

@@ -5,16 +5,16 @@
 #include <QtCore/QDebug>
 #include <QtCore/QDate>
 
-Bonsai::Bonsai(const int id, const int date, const int specie, QObject *parent ):
-    QObject(parent), m_id(id), m_date(date), m_specieId(specie)
+Bonsai::Bonsai(const int id, const int date, const int specie, OperationModel* operationModel, QObject *parent ):
+    QObject(parent), m_id(id), m_date(date), m_specieId(specie), m_operation_model(operationModel)
 {
-    //m_model = new BonsaiModel(m_date, m_name, m_specieId, this);
+
 }
 
 Bonsai::Bonsai(QObject *parent ):
-    QObject(parent), m_id(-1), m_date(), m_specieId(-1)
+    QObject(parent), m_id(-1), m_date(), m_specieId(-1), m_operation_model()
 {
-    //m_model = new BonsaiModel(m_date, m_name, m_specieId, this);
+
 }
 
 Bonsai::Bonsai(const Bonsai &bonsai): QObject(0)
@@ -22,19 +22,13 @@ Bonsai::Bonsai(const Bonsai &bonsai): QObject(0)
     m_id = bonsai.index();
     m_date = bonsai.date();   
     m_specieId = bonsai.specieId();
-    //m_model = new BonsaiModel(m_date, m_name, m_specieId, this);
+    m_operation_model = qobject_cast<OperationModel *>(bonsai.operations(QDate::currentDate()));
 }
 
 Bonsai::~Bonsai()
 {
-    //delete m_model;
+    delete m_operation_model;
 }
-
-/*QObject* Bonsai::items() const
-{
-    qDebug() << "Requested Bonsai items. We have" << m_model->rowCount();
-    return m_model;
-}*/
 
 int Bonsai::index() const
 {
@@ -64,4 +58,9 @@ int Bonsai::date() const
 void Bonsai::setDate(const int date)
 {
     m_date = date;
+}
+
+QObject* Bonsai::operations(const QDate &date) const
+{
+    return m_operation_model;
 }

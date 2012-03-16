@@ -181,6 +181,11 @@ int BonsaiModel::getIdByIndex(const int index) const
     return 0;
 }
 
+QObject* BonsaiModel::getOperationsByIndex(const int index) const
+{
+    return m_items.at(index)->operations();
+}
+
 /*bool BonsaiModel::removeRows(int position, int rows, const QModelIndex &parent)
 {
     beginRemoveRows(QModelIndex(), position, position+rows-1);

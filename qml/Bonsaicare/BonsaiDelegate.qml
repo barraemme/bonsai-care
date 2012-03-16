@@ -6,7 +6,7 @@ import "Core" 1.1 as Core
 Item {
         id: bonsaiDelegate
         z:1
-        property alias modelData: model
+        property variant modelData: model
 
         onFocusChanged: {
             if(bonsaiLayer.currentIndex === index){
@@ -30,7 +30,7 @@ Item {
 
         DayLayer{
             id: pathOperations
-            model: days.operationsBySlotIndex();
+            model: bonsai.getOperationsByIndex(index);
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
         }

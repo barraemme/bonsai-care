@@ -149,13 +149,13 @@ void BonsaiWorker::fetchAllBonsai() {
 
     while (query.next()) {
         specieId = query.value(1).toInt();
-        //opm = this->getOperations(query.value(0).toInt(), QDate::currentDate());
+        opm = getOperations(query.value(0).toInt(), QDate::currentDate());
         Bonsai* item = new Bonsai(query.value(0).toInt(),
                                   query.value(2).toInt(),                                  
-                                  specieId
-                                  //,opm
+                                  specieId,
+                                  opm
                                   );
-
+        this->schedule(item);
         //TODO emit signal after N fetches
         //qDebug() << "emit fetched(item)";
         emit fetchBonsaiRecordDone(item);
@@ -165,10 +165,11 @@ void BonsaiWorker::fetchAllBonsai() {
     qDebug() << "END" << Q_FUNC_INFO << QThread::currentThread();
 }
 
-/*OperationModel* getOperations(const int bonsai_id, const QDate &date){
+OperationModel* BonsaiWorker::getOperations(const int bonsai_id, const QDate &date){
     qDebug() << Q_FUNC_INFO << QThread::currentThread();
     //TODO if db open
     QSqlQuery query(db);
+
     query.prepare("SELECT id, name, type, bonsai_id, last_date FROM operations  WHERE bonsai_id = ? AND last_date = ? ");
     query.bindValue(0, bonsai_id);
     query.bindValue(1, date.toJulianDay());
@@ -176,7 +177,7 @@ void BonsaiWorker::fetchAllBonsai() {
     if(!query.exec())
         qDebug() << query.lastError().text();
 
-    OperationModel* opm = new OperationModel(bonsai_id, date);
+    OperationModel* opm = new OperationModel(bonsai_id);
     while (query.next()) {
         Operation* op = new Operation();
         op->setIndex(query.value(0).toInt());
@@ -189,7 +190,7 @@ void BonsaiWorker::fetchAllBonsai() {
 
     qDebug() << "END" << Q_FUNC_INFO << QThread::currentThread();
     return opm;
-}*/
+}
 
 void BonsaiWorker::fetchSlot(const int bonsai_id, const QDate &date) {
 
@@ -204,7 +205,7 @@ void BonsaiWorker::fetchSlot(const int bonsai_id, const QDate &date) {
     if(!query.exec())
         qDebug() << query.lastError().text();
 
-    OperationModel* opm = new OperationModel(bonsai_id, date);
+    OperationModel* opm = new OperationModel(bonsai_id);
     while (query.next()) {
         Operation* op = new Operation();
         op->setIndex(query.value(0).toInt());
@@ -259,8 +260,8 @@ void BonsaiWorker::insertBonsai(const int specieId, const int year)
 
     if( !ret )
         qDebug() << query.lastError();
-
-    Bonsai* item = new Bonsai(id, year, specieId);
+    OperationModel* opm = new OperationModel(id);
+    Bonsai* item = new Bonsai(id, year, specieId, opm);
     //add schedule
     this->schedule(item);
 

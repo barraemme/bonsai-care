@@ -2,6 +2,7 @@
 #define BONSAIWORKER_H
 
 #include <QSqlDatabase>
+#include <QDate>
 #include "bonsai.h"
 #include "specie.h"
 #include "operation.h"
@@ -34,12 +35,11 @@ public:
     void schedule(Bonsai *bonsai);
     void cleanOldOperations();
     void insertOperation(Operation &op);
+    OperationModel* getOperations(const int bonsai_id, const QDate &date);
 
 private:
     QSqlDatabase db;
     void parseSpeciesWithXQuery();
-    OperationModel* getOperations(const int bonsai_id);
-
 };
 
 #endif // BONSAIWORKER_H

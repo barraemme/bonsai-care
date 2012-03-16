@@ -155,7 +155,7 @@ QObject* WeekModel::day(int dayIndex) const
 bool WeekModel::save()
 {
     bool ret = true;
-    QFile file( getSaveFileName() );
+    /*QFile file( getSaveFileName() );
     ret = file.open(QIODevice::WriteOnly);
     if (ret) {
         QDataStream out(&file);
@@ -163,8 +163,8 @@ bool WeekModel::save()
         out << m_days.size();
         /*foreach(Day *day, m_days) {
             out << *day;
-        }*/
-    }
+        }
+    }*/
 
     return ret;
 }
@@ -173,7 +173,7 @@ bool WeekModel::restore()
 {
 
     bool ret = false;
-    QFile file( getSaveFileName() );
+    /*QFile file( getSaveFileName() );
     //ret = file.open(QIODevice::ReadOnly);
     if (ret) {
         qDebug() << "WeekModel::restore";
@@ -190,10 +190,10 @@ bool WeekModel::restore()
             int size = 0;
             in >> size;
             for (int i=0; i < size; i++) {
-                /*Day *day = new Day(0, QString(""), this);
+                Day *day = new Day(0, QString(""), this);
                 in >> *day;
-                m_days.append(day);*/
-            }
+                m_days.append(day);
+
         }
 
         if (in.status() != QDataStream::Ok) {
@@ -202,7 +202,7 @@ bool WeekModel::restore()
             m_days.clear();
             ret = false;
         }
-    }
+    }*/
 
     qDebug() << "Restore returning: " << ret;
     return ret;

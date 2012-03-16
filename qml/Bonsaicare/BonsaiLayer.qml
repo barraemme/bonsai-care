@@ -24,16 +24,16 @@ Item {
     GridView {
         id: bonsaiLayer
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 20
+        anchors.bottomMargin: 30
         anchors.left: parent.left
-        anchors.leftMargin: 20
+        anchors.leftMargin: 30
         anchors.right: parent.right
-        anchors.rightMargin: 20
+        anchors.rightMargin: 30
 
         model: container.model
         delegate: BonsaiDelegate{
             width: bonsaiLayer.cellWidth
-            height: bonsaiLayer.cellHeight
+            height: bonsaiLayer.cellHeight           
         }
         snapMode: GridView.SnapToRow
         //clip: true
